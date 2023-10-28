@@ -24,18 +24,18 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // Get the navigation host fragment from this Activity
-        //val navHostFragment = supportFragmentManager
-        //    .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         // Instantiate the navController using the NavHostFragment
-        //navController = navHostFragment.navController
+        navController = navHostFragment.navController
         // Make sure actions in the ActionBar get propagated to the NavController
         //Log.d("act", navController.toString())
         setSupportActionBar(findViewById(R.id.my_toolbar))
-        //setupActionBarWithNavController(navController)
+        setupActionBarWithNavController(navController)
 
     }
 
-    //override fun onSupportNavigateUp(): Boolean {
-    //    return navController.navigateUp() || super.onSupportNavigateUp()
-    //}
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp() || super.onSupportNavigateUp()
+    }
 }
