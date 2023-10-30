@@ -1,4 +1,4 @@
-package com.example.vinyls_jetpack_application.ui.adapters
+package co.edu.uniandes.miswmobile.vinilosapp.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,7 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.vinyls_jetpack_application.R
 import com.example.vinyls_jetpack_application.databinding.AlbumItemBinding
-import com.example.vinyls_jetpack_application.models.Album
+import co.edu.uniandes.miswmobile.vinilosapp.models.Album
 import com.squareup.picasso.Picasso
 
 class AlbumsAdapter : RecyclerView.Adapter<AlbumsAdapter.AlbumViewHolder>() {

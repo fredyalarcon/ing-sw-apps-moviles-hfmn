@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable name="album" type="com.example.vinyls_jetpack_application.models.Album"/>
+        <variable name="album" type="co.edu.uniandes.miswmobile.vinilosapp.models.Album"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

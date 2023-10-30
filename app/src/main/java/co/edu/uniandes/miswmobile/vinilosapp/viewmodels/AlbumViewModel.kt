@@ -1,4 +1,4 @@
-package com.example.vinyls_jetpack_application.viewmodels
+package co.edu.uniandes.miswmobile.vinilosapp.viewmodels
 
 
 import android.app.Application
@@ -8,8 +8,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.vinyls_jetpack_application.models.Album
-import com.example.vinyls_jetpack_application.network.NetworkServiceAdapter
+import co.edu.uniandes.miswmobile.vinilosapp.models.Album
+import co.edu.uniandes.miswmobile.vinilosapp.network.NetworkServiceAdapter
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Locale

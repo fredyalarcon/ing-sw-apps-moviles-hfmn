@@ -1,21 +1,20 @@
-package com.example.vinyls_jetpack_application.ui
+package co.edu.uniandes.miswmobile.vinilosapp.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import co.edu.uniandes.miswmobile.vinilosapp.models.Album
+import co.edu.uniandes.miswmobile.vinilosapp.ui.adapters.AlbumsAdapter
+import co.edu.uniandes.miswmobile.vinilosapp.viewmodels.AlbumViewModel
 import com.example.vinyls_jetpack_application.R
 import com.example.vinyls_jetpack_application.databinding.AlbumFragmentBinding
-import com.example.vinyls_jetpack_application.models.Album
-import com.example.vinyls_jetpack_application.ui.adapters.AlbumsAdapter
-import com.example.vinyls_jetpack_application.viewmodels.AlbumViewModel
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
@@ -52,7 +51,8 @@ class AlbumFragment : Fragment() {
             "You can only access the viewModel after onActivityCreated()"
         }
         activity.actionBar?.title = getString(R.string.title_albums)
-        viewModel = ViewModelProvider(this, AlbumViewModel.Factory(activity.application)).get(AlbumViewModel::class.java)
+        viewModel = ViewModelProvider(this, AlbumViewModel.Factory(activity.application)).get(
+            AlbumViewModel::class.java)
         viewModel.albums.observe(viewLifecycleOwner, Observer<List<Album>> {
             it.apply {
                 viewModelAdapter!!.albums = this
