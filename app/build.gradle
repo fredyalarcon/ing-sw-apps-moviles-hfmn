@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    compileSdk 31
+    compileSdk 32
     buildToolsVersion "30.0.3"
 
     defaultConfig {
@@ -47,6 +47,8 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
     // Network invocations lib
     implementation 'com.android.volley:volley:1.2.1'
+    //Librería picasso para el manejo de imágenes
+    implementation 'com.squareup.picasso:picasso:2.71828'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
