@@ -1,4 +1,4 @@
-package com.example.vinyls_jetpack_application
+package co.edu.uniandes.miswmobile.vinilosapp
 
 import org.junit.Test
 
