@@ -9,8 +9,8 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.example.vinyls_jetpack_application"
-        minSdk 21
+        applicationId "co.edu.uniandes.miswmobile.vinilosapp"
+        minSdk 23
         targetSdk 31
         versionCode 1
         versionName "1.0"

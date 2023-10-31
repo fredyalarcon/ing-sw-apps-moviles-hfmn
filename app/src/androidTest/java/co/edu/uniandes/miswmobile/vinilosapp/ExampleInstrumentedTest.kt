@@ -1,4 +1,4 @@
-package com.example.vinyls_jetpack_application
+package co.edu.uniandes.miswmobile.vinilosapp
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
