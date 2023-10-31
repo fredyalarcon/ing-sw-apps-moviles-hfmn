@@ -4,7 +4,18 @@ plugins {
     id 'androidx.navigation.safeargs.kotlin'
 }
 
+def localProperties = new Properties()
+localProperties.load(new FileInputStream(rootProject.file("local.properties")))
+
 android {
+    signingConfigs {
+        release {
+            storePassword localProperties['RELEASE_STORE_PASSWORD']
+            keyAlias localProperties['RELEASE_KEY_ALIAS']
+            keyPassword localProperties['RELEASE_KEY_PASSWORD']
+            storeFile file(localProperties['RELEASE_STORE_FILE'])
+        }
+    }
     compileSdk 32
     buildToolsVersion "30.0.3"
 
@@ -20,8 +31,9 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {
