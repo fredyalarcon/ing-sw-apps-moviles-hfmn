@@ -10,10 +10,10 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import co.edu.uniandes.miswmobile.vinilosapp.viewmodels.ArtistViewModel
 import co.edu.uniandes.miswmobile.vinilosapp.R
 import co.edu.uniandes.miswmobile.vinilosapp.databinding.ArtistFragmentBinding
-import co.edu.uniandes.miswmobile.vinilosapp.viewmodels.AlbumViewModel
+import co.edu.uniandes.miswmobile.vinilosapp.viewmodels.ArtistViewModel
+
 
 class ArtistFragment : Fragment() {
 
