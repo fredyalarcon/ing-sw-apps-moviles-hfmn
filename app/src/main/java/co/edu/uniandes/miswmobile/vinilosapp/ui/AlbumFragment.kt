@@ -10,11 +10,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import co.edu.uniandes.miswmobile.vinilosapp.databinding.AlbumFragmentBinding
 import co.edu.uniandes.miswmobile.vinilosapp.models.Album
 import co.edu.uniandes.miswmobile.vinilosapp.ui.adapters.AlbumsAdapter
 import co.edu.uniandes.miswmobile.vinilosapp.viewmodels.AlbumViewModel
-import com.example.vinyls_jetpack_application.R
-import com.example.vinyls_jetpack_application.databinding.AlbumFragmentBinding
+import co.edu.uniandes.miswmobile.vinilosapp.R
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.

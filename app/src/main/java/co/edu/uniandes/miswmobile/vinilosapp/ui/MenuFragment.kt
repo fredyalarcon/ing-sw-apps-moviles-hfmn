@@ -1,7 +1,5 @@
 package co.edu.uniandes.miswmobile.vinilosapp.ui
 
-import android.R
-import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,9 +7,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
-
-import com.example.vinyls_jetpack_application.databinding.MenuFragmentBinding
+import co.edu.uniandes.miswmobile.vinilosapp.R
+import co.edu.uniandes.miswmobile.vinilosapp.databinding.MenuFragmentBinding
 
 /**
  * A simple [Fragment] subclass.
@@ -38,15 +35,15 @@ class MenuFragment : Fragment() {
         val activity = requireNotNull(this.activity) {
             "You can only access the viewModel after onActivityCreated()"
         }
-        activity.actionBar?.title = getString(com.example.vinyls_jetpack_application.R.string.title_menu)
+        activity.actionBar?.title = getString(R.string.title_menu)
 
         buttonAlbums = binding.buttonAlbums
         buttonAlbums?.setOnClickListener(
             View.OnClickListener {
                 // Get the navigation host fragment from this Activity
-                val navController = activity.findNavController(com.example.vinyls_jetpack_application.R.id.nav_host_fragment)
+                val navController = activity.findNavController(R.id.nav_host_fragment)
                 // Instantiate the navController using the NavHostFragment
-                navController.navigate(com.example.vinyls_jetpack_application.R.id.action_menuFragment_to_albumFragment)
+                navController.navigate(R.id.action_menuFragment_to_albumFragment)
             }
         )
     }
