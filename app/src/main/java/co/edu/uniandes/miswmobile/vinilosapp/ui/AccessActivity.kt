@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.vinyls_jetpack_application.databinding.ActivityAccessBinding
 import com.example.vinyls_jetpack_application.databinding.AlbumFragmentBinding
 
-class AccessActivity : AppCompatActivity() {
+public class AccessActivity : AppCompatActivity() {
     private lateinit var _binding: ActivityAccessBinding
     private val binding get() = _binding!!
     private lateinit var buttonVisitor: Button

@@ -23,7 +23,7 @@
     <string name="collector">Coleccionista</string>
     <string name="visitor">Visitante</string>
     <string name="welcome">Bienvenido\n</string>
-    <string name="albums">Albumes</string>
+    <string name="albums">Álbumes</string>
     <string name="artists">Artistas</string>
     <string name="collectors">Coleccionistas</string>
 </resources>
