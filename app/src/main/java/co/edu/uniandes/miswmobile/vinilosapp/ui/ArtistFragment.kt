@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,6 +23,7 @@ class ArtistFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewModel: ArtistViewModel
     //todo private var viewModelAdapter: ArtistAdater? = null
+    private lateinit var progressBar: ProgressBar
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,22 +36,30 @@ class ArtistFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        //recyclerView = binding.artistRv
+        recyclerView = binding.artistsRv
         recyclerView.layoutManager = LinearLayoutManager(context)
         //todo recyclerView.adapter = viewModelAdapter
-
+    }
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
         val activity = requireNotNull(this.activity) {
             "You can only access the viewModel after onActivityCreated()"
         }
 
         activity.actionBar?.title = getString(R.string.artists)
+        progressBar = activity.findViewById(R.id.progressBar)
+        progressBar.visibility = View.VISIBLE
         viewModel = ViewModelProvider(this, ArtistViewModel.Factory(activity.application)).get(
             ArtistViewModel::class.java)
         //todo
         /*
-        viewModel.albums.observe(viewLifecycleOwner, Observer<List<Album>> {
+        viewModel.artists.observe(viewLifecycleOwner, Observer<List<Artist>> {
             it.apply {
-                viewModelAdapter!!.albums = this
+                viewModelAdapter!!.artists = this
+                if (isEmpty()) {
+                    Toast.makeText(activity, getString(R.string.artist_there_no_artists), Toast.LENGTH_LONG).show()
+                    progressBar.visibility = View.INVISIBLE
+                }
             }
         })
         */

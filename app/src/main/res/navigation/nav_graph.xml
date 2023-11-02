@@ -8,7 +8,7 @@
         android:id="@+id/menuFragment"
         android:name="co.edu.uniandes.miswmobile.vinilosapp.ui.MenuFragment"
         android:label="fragment_menu"
-        tools:layout="@layout/menu_fragment" >
+        tools:layout="@layout/menu_fragment">
         <action
             android:id="@+id/action_menuFragment_to_albumFragment"
             app:destination="@id/albumFragment" />
@@ -26,4 +26,5 @@
         android:name="co.edu.uniandes.miswmobile.vinilosapp.ui.ArtistFragment"
         android:label="artist_fragment"
         tools:layout="@layout/artist_fragment" />
+
 </navigation>

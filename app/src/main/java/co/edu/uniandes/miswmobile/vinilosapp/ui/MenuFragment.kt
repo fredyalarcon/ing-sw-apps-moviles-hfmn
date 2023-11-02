@@ -19,6 +19,8 @@ class MenuFragment : Fragment() {
     private var _binding: MenuFragmentBinding? = null
     private val binding get() = _binding!!
     private lateinit var buttonAlbums: Button
+    private lateinit var buttonArtist: Button
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -46,6 +48,13 @@ class MenuFragment : Fragment() {
                 navController.navigate(R.id.action_menuFragment_to_albumFragment)
             }
         )
+
+        buttonArtist = binding.buttonArtists
+        buttonArtist.setOnClickListener(
+            View.OnClickListener {
+                val navController = activity.findNavController(R.id.nav_host_fragment)
+                navController.navigate(R.id.action_menuFragment_to_artistFragment)
+            })
     }
 
     override fun onDestroyView() {

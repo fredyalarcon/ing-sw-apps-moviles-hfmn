@@ -26,5 +26,6 @@
     <string name="welcome">Bienvenido\n</string>
     <string name="albums">Albumes</string>
     <string name="artists">Artistas</string>
+    <string name="artist_there_no_artists">No hay artistas disponibles</string>
     <string name="collectors">Coleccionistas</string>
 </resources>
