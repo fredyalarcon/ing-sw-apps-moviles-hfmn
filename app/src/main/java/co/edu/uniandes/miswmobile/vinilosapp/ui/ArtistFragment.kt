@@ -34,7 +34,7 @@ class ArtistFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        recyclerView = binding.artistRv
+        //recyclerView = binding.artistRv
         recyclerView.layoutManager = LinearLayoutManager(context)
         //todo recyclerView.adapter = viewModelAdapter
 

@@ -12,10 +12,18 @@
         <action
             android:id="@+id/action_menuFragment_to_albumFragment"
             app:destination="@id/albumFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_artistFragment"
+            app:destination="@id/artistFragment" />
     </fragment>
     <fragment
         android:id="@+id/albumFragment"
         android:name="co.edu.uniandes.miswmobile.vinilosapp.ui.AlbumFragment"
         android:label="Álbumes"
         tools:layout="@layout/album_fragment" />
+    <fragment
+        android:id="@+id/artistFragment"
+        android:name="co.edu.uniandes.miswmobile.vinilosapp.ui.ArtistFragment"
+        android:label="artist_fragment"
+        tools:layout="@layout/artist_fragment" />
 </navigation>
