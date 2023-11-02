@@ -15,6 +15,7 @@
     <string name="comment_description_placeholder">Descripción del comentario</string>
     <string name="album_name_placeholder">Nombre del album</string>
     <string name="album_description_placeholder">Descripcion del album</string>
+    <string name="album_there_no_albums">No hay álbumes disponibles</string>
     <string name="txt_no_comments">No hay comentarios para este álbum</string>
     <string name="title_albums">Albums</string>
     <string name="title_collectors">Coleccionistas</string>
@@ -25,5 +26,6 @@
     <string name="welcome">Bienvenido\n</string>
     <string name="albums">Álbumes</string>
     <string name="artists">Artistas</string>
+    <string name="artist_there_no_artists">No hay artistas disponibles</string>
     <string name="collectors">Coleccionistas</string>
 </resources>

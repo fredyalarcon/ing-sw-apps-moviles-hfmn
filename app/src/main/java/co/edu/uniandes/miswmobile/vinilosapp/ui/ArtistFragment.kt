@@ -1,72 +1,69 @@
 package co.edu.uniandes.miswmobile.vinilosapp.ui
 
+import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.util.Log
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import co.edu.uniandes.miswmobile.vinilosapp.databinding.AlbumFragmentBinding
-import co.edu.uniandes.miswmobile.vinilosapp.models.Album
-import co.edu.uniandes.miswmobile.vinilosapp.ui.adapters.AlbumsAdapter
-import co.edu.uniandes.miswmobile.vinilosapp.viewmodels.AlbumViewModel
 import co.edu.uniandes.miswmobile.vinilosapp.R
+import co.edu.uniandes.miswmobile.vinilosapp.databinding.ArtistFragmentBinding
+import co.edu.uniandes.miswmobile.vinilosapp.viewmodels.ArtistViewModel
 
-/**
- * A simple [Fragment] subclass as the second destination in the navigation.
- */
-class AlbumFragment : Fragment() {
 
-    private var _binding: AlbumFragmentBinding? = null
+class ArtistFragment : Fragment() {
+
+    private var _binding: ArtistFragmentBinding? = null
     private val binding get() = _binding!!
     private lateinit var recyclerView: RecyclerView
-    private lateinit var viewModel: AlbumViewModel
-    private var viewModelAdapter: AlbumsAdapter? = null
+    private lateinit var viewModel: ArtistViewModel
+    //todo private var viewModelAdapter: ArtistAdater? = null
     private lateinit var progressBar: ProgressBar
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = AlbumFragmentBinding.inflate(inflater, container, false)
+        _binding = ArtistFragmentBinding.inflate(inflater, container, false)
         val view = binding.root
-        viewModelAdapter = AlbumsAdapter()
+        // todo viewModelAdapter = ArtistAdapter()
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        recyclerView = binding.albumsRv
+        recyclerView = binding.artistsRv
         recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = viewModelAdapter
+        //todo recyclerView.adapter = viewModelAdapter
     }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         val activity = requireNotNull(this.activity) {
             "You can only access the viewModel after onActivityCreated()"
         }
-        
+
+        activity.actionBar?.title = getString(R.string.artists)
         progressBar = activity.findViewById(R.id.progressBar)
         progressBar.visibility = View.VISIBLE
-
-        viewModel = ViewModelProvider(this, AlbumViewModel.Factory(activity.application)).get(
-            AlbumViewModel::class.java)
-        viewModel.albums.observe(viewLifecycleOwner, Observer<List<Album>> {
+        viewModel = ViewModelProvider(this, ArtistViewModel.Factory(activity.application)).get(
+            ArtistViewModel::class.java)
+        //todo
+        /*
+        viewModel.artists.observe(viewLifecycleOwner, Observer<List<Artist>> {
             it.apply {
-                viewModelAdapter!!.albums = this
+                viewModelAdapter!!.artists = this
                 if (isEmpty()) {
-                    Toast.makeText(activity, getString(R.string.album_there_no_albums), Toast.LENGTH_LONG).show()
+                    Toast.makeText(activity, getString(R.string.artist_there_no_artists), Toast.LENGTH_LONG).show()
                     progressBar.visibility = View.INVISIBLE
                 }
             }
-
         })
+        */
+        //todo
         viewModel.eventNetworkError.observe(viewLifecycleOwner, Observer<Boolean> { isNetworkError ->
             if (isNetworkError) onNetworkError()
         })
@@ -83,4 +80,5 @@ class AlbumFragment : Fragment() {
             viewModel.onNetworkErrorShown()
         }
     }
+
 }

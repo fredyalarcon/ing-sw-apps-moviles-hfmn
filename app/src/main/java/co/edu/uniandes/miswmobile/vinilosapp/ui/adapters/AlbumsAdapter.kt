@@ -6,8 +6,8 @@ import android.widget.ImageView
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.vinyls_jetpack_application.R
-import com.example.vinyls_jetpack_application.databinding.AlbumItemBinding
+import co.edu.uniandes.miswmobile.vinilosapp.R
+import co.edu.uniandes.miswmobile.vinilosapp.databinding.AlbumItemBinding
 import co.edu.uniandes.miswmobile.vinilosapp.models.Album
 import com.squareup.picasso.Picasso
 

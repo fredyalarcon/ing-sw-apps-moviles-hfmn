@@ -25,6 +25,18 @@ jobs:
           distribution: 'adopt'
           java-version: '11'
 
+      - name: Decode Keystore & Setup local.properties
+        env:
+          ENCODED_STRING: ${{ secrets.KEYSTORE }}
+        run: |
+          TMP_KEYSTORE_FILE_PATH="${RUNNER_TEMP}"/keystore
+          mkdir "${TMP_KEYSTORE_FILE_PATH}"
+          echo $ENCODED_STRING | base64 -di > "${TMP_KEYSTORE_FILE_PATH}"/app.jks
+          echo "RELEASE_STORE_FILE=${TMP_KEYSTORE_FILE_PATH}/app.jks" >> local.properties
+          echo "RELEASE_STORE_PASSWORD=${{ secrets.SIGNING_STORE_PASSWORD }}" >> local.properties
+          echo "RELEASE_KEY_ALIAS=${{ secrets.SIGNING_KEY_ALIAS }}" >> local.properties
+          echo "RELEASE_KEY_PASSWORD=${{ secrets.SIGNING_KEY_PASSWORD }}" >> local.properties
+
       - name: Clean project
         run: ./gradlew clean
 
@@ -44,6 +56,18 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: '11'
+
+      - name: Decode Keystore & Setup local.properties
+        env:
+          ENCODED_STRING: ${{ secrets.KEYSTORE }}
+        run: |
+          TMP_KEYSTORE_FILE_PATH="${RUNNER_TEMP}"/keystore
+          mkdir "${TMP_KEYSTORE_FILE_PATH}"
+          echo $ENCODED_STRING | base64 -di > "${TMP_KEYSTORE_FILE_PATH}"/app.jks
+          echo "RELEASE_STORE_FILE=${TMP_KEYSTORE_FILE_PATH}/app.jks" >> local.properties
+          echo "RELEASE_STORE_PASSWORD=${{ secrets.SIGNING_STORE_PASSWORD }}" >> local.properties
+          echo "RELEASE_KEY_ALIAS=${{ secrets.SIGNING_KEY_ALIAS }}" >> local.properties
+          echo "RELEASE_KEY_PASSWORD=${{ secrets.SIGNING_KEY_PASSWORD }}" >> local.properties
 
       - name: Run Unit Tests
         run: ./gradlew clean test

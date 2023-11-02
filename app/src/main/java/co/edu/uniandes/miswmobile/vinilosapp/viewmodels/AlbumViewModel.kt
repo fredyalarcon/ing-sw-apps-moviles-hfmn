@@ -9,7 +9,7 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import co.edu.uniandes.miswmobile.vinilosapp.models.Album
-import co.edu.uniandes.miswmobile.vinilosapp.network.NetworkServiceAdapter
+import co.edu.uniandes.miswmobile.vinilosapp.repositories.AlbumRepository
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -55,18 +55,23 @@ class AlbumViewModel(application: Application) : AndroidViewModel(application) {
     val isNetworkErrorShown: LiveData<Boolean>
         get() = _isNetworkErrorShown
 
+
+    private val albumsRepository = AlbumRepository(application)
+
     init {
         refreshDataFromNetwork()
     }
 
     private fun refreshDataFromNetwork() {
-        NetworkServiceAdapter.getInstance(getApplication()).getAlbums({
+
+        albumsRepository.refreshData({
             _albums.postValue(it)
             _eventNetworkError.value = false
             _isNetworkErrorShown.value = false
-        }, {
+        },{
             _eventNetworkError.value = true
         })
+
     }
 
     fun onNetworkErrorShown() {

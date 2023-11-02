@@ -1,15 +1,13 @@
 package co.edu.uniandes.miswmobile.vinilosapp.ui
 
-import android.R
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.vinyls_jetpack_application.databinding.ActivityAccessBinding
-import com.example.vinyls_jetpack_application.databinding.AlbumFragmentBinding
+import co.edu.uniandes.miswmobile.vinilosapp.databinding.ActivityAccessBinding
+
 
 public class AccessActivity : AppCompatActivity() {
     private lateinit var _binding: ActivityAccessBinding

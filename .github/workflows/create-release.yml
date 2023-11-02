@@ -2,7 +2,7 @@ name: Create Github Release
 
 on:
   push:
-    branches: [ "main1" ]
+    branches: [ "main" ]
   workflow_dispatch:
     inputs:
       BUMP_STRATEGY:
@@ -23,6 +23,18 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: '11'
+
+      - name: Decode Keystore & Setup local.properties
+        env:
+          ENCODED_STRING: ${{ secrets.KEYSTORE }}
+        run: |
+          TMP_KEYSTORE_FILE_PATH="${RUNNER_TEMP}"/keystore
+          mkdir "${TMP_KEYSTORE_FILE_PATH}"
+          echo $ENCODED_STRING | base64 -di > "${TMP_KEYSTORE_FILE_PATH}"/app.jks
+          echo "RELEASE_STORE_FILE=${TMP_KEYSTORE_FILE_PATH}/app.jks" >> local.properties
+          echo "RELEASE_STORE_PASSWORD=${{ secrets.SIGNING_STORE_PASSWORD }}" >> local.properties
+          echo "RELEASE_KEY_ALIAS=${{ secrets.SIGNING_KEY_ALIAS }}" >> local.properties
+          echo "RELEASE_KEY_PASSWORD=${{ secrets.SIGNING_KEY_PASSWORD }}" >> local.properties
 
       - name: Build with Gradle
         run: ./gradlew assembleRelease && ./gradlew assembleDebug
@@ -96,8 +108,8 @@ jobs:
         run: |
           mv app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/debug/Vinilos_App_Debug-${{ steps.tag_version.outputs.new_tag }}.apk
           mv app/build/outputs/apk/release/app-release.apk app/build/outputs/apk/release/Vinilos_App-${{ steps.tag_version.outputs.new_tag }}.apk
-          echo "apk_debug=app/build/outputs/apk/debug/Vinyls_App_Debug-${{ steps.tag_version.outputs.new_tag }}.apk" >> $GITHUB_OUTPUT
-          echo "apk_release=app/build/outputs/apk/release/Vinyls_App-${{ steps.tag_version.outputs.new_tag }}.apk" >> $GITHUB_OUTPUT
+          echo "apk_debug=app/build/outputs/apk/debug/Vinilos_App_Debug-${{ steps.tag_version.outputs.new_tag }}.apk" >> $GITHUB_OUTPUT
+          echo "apk_release=app/build/outputs/apk/release/Vinilos_App-${{ steps.tag_version.outputs.new_tag }}.apk" >> $GITHUB_OUTPUT
 
       - name: Create a GitHub release
         uses: ncipollo/release-action@v1

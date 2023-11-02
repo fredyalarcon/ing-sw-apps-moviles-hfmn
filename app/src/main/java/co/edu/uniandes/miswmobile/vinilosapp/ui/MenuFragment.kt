@@ -1,7 +1,5 @@
 package co.edu.uniandes.miswmobile.vinilosapp.ui
 
-import android.R
-import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,9 +8,8 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
-
-import com.example.vinyls_jetpack_application.databinding.MenuFragmentBinding
+import co.edu.uniandes.miswmobile.vinilosapp.R
+import co.edu.uniandes.miswmobile.vinilosapp.databinding.MenuFragmentBinding
 
 /**
  * A simple [Fragment] subclass.
@@ -23,6 +20,8 @@ class MenuFragment : Fragment() {
     private var _binding: MenuFragmentBinding? = null
     private val binding get() = _binding!!
     private lateinit var buttonAlbums: Button
+    private lateinit var buttonArtist: Button
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,11 +42,18 @@ class MenuFragment : Fragment() {
         buttonAlbums?.setOnClickListener(
             View.OnClickListener {
                 // Get the navigation host fragment from this Activity
-                val navController = activity.findNavController(com.example.vinyls_jetpack_application.R.id.nav_host_fragment)
+                val navController = activity.findNavController(R.id.nav_host_fragment)
                 // Instantiate the navController using the NavHostFragment
-                navController.navigate(com.example.vinyls_jetpack_application.R.id.action_menuFragment_to_albumFragment)
+                navController.navigate(R.id.action_menuFragment_to_albumFragment)
             }
         )
+
+        buttonArtist = binding.buttonArtists
+        buttonArtist.setOnClickListener(
+            View.OnClickListener {
+                val navController = activity.findNavController(R.id.nav_host_fragment)
+                navController.navigate(R.id.action_menuFragment_to_artistFragment)
+            })
     }
 
     override fun onDestroyView() {
