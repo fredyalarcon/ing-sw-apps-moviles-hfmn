@@ -32,7 +32,7 @@ public class AlbumsListTest {
 
     @Rule
     public ActivityScenarioRule<AccessActivity> mActivityTestRule = new ActivityScenarioRule<>(AccessActivity.class);
-    
+
 
     @Test
     public void mainActivityAlbumsTest() {
