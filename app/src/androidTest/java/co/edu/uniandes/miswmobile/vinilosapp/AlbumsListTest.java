@@ -6,6 +6,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.example.vinyls_jetpack_application.R;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.Timeout;
@@ -20,17 +21,18 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import co.edu.uniandes.miswmobile.vinilosapp.ui.AccessActivity;
+import kotlin.jvm.Throws;
 
-@LargeTest
 @RunWith(AndroidJUnit4.class)
 public class AlbumsListTest {
 
     @Rule
     public ActivityScenarioRule<AccessActivity> mActivityTestRule = new ActivityScenarioRule<>(AccessActivity.class);
-
+    
 
     @Test
     public void mainActivityAlbumsTest() {
@@ -43,5 +45,7 @@ public class AlbumsListTest {
         onView(allOf(withId(R.id.action_bar), withText("Álbumes"), isDisplayed()));
 
         onView(allOf(withId(R.id.albumsRv), isDisplayed()));
+
+
     }
 }
