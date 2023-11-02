@@ -1,9 +1,11 @@
 package co.edu.uniandes.miswmobile.vinilosapp.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -26,7 +28,7 @@ class AlbumFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewModel: AlbumViewModel
     private var viewModelAdapter: AlbumsAdapter? = null
-
+    private lateinit var progressBar: ProgressBar
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,17 +44,27 @@ class AlbumFragment : Fragment() {
         recyclerView = binding.albumsRv
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = viewModelAdapter
+    }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
         val activity = requireNotNull(this.activity) {
             "You can only access the viewModel after onActivityCreated()"
         }
+        progressBar = activity.findViewById(R.id.progressBar)
+        progressBar.visibility = View.VISIBLE
         activity.actionBar?.title = getString(R.string.title_albums)
         viewModel = ViewModelProvider(this, AlbumViewModel.Factory(activity.application)).get(
             AlbumViewModel::class.java)
         viewModel.albums.observe(viewLifecycleOwner, Observer<List<Album>> {
             it.apply {
                 viewModelAdapter!!.albums = this
+                if (isEmpty()) {
+                    Toast.makeText(activity, getString(R.string.album_there_no_albums), Toast.LENGTH_LONG).show()
+                    progressBar.visibility = View.INVISIBLE
+                }
             }
+
         })
         viewModel.eventNetworkError.observe(viewLifecycleOwner, Observer<Boolean> { isNetworkError ->
             if (isNetworkError) onNetworkError()
