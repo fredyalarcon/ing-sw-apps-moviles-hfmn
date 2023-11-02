@@ -14,7 +14,7 @@ import co.edu.uniandes.miswmobile.vinilosapp.models.Musician
 import org.json.JSONArray
 import org.json.JSONObject
 
-class NetworkServiceAdapter constructor(context: Context) {
+open class NetworkServiceAdapter constructor(context: Context) {
     companion object{
         const val BASE_URL= "http://192.168.1.116:3000/"
         //const val BASE_URL= "https://vynils-back-heroku.herokuapp.com/"
@@ -31,7 +31,7 @@ class NetworkServiceAdapter constructor(context: Context) {
         // applicationContext keeps you from leaking the Activity or BroadcastReceiver if someone passes one in.
         Volley.newRequestQueue(context.applicationContext)
     }
-    fun getAlbums(onComplete: (resp: List<Album>) -> Unit, onError: (error: VolleyError) -> Unit) {
+    open fun getAlbums(onComplete: (resp: List<Album>) -> Unit, onError: (error: VolleyError) -> Unit) {
         requestQueue.add(
             getRequest("albums",
                 { response ->
