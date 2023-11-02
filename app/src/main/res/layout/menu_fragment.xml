@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="co.edu.uniandes.miswmobile.vinilosapp.ui.MenuFragment">
+    tools:context=".ui.MenuFragment">
 
     <Button
         android:id="@+id/buttonAlbums"
@@ -21,7 +21,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="7dp"
-        android:enabled="false"
         android:text="@string/artists"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
