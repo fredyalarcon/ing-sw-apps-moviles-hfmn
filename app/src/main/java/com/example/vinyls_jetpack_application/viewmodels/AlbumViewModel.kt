@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import co.edu.uniandes.miswmobile.vinilosapp.repositories.AlbumRepository
 import com.example.vinyls_jetpack_application.models.Album
 import com.example.vinyls_jetpack_application.network.NetworkServiceAdapter
 import java.text.ParseException
@@ -55,18 +56,22 @@ class AlbumViewModel(application: Application) : AndroidViewModel(application) {
     val isNetworkErrorShown: LiveData<Boolean>
         get() = _isNetworkErrorShown
 
+    private val albumsRepository = AlbumRepository(application)
+
     init {
         refreshDataFromNetwork()
     }
 
     private fun refreshDataFromNetwork() {
-        NetworkServiceAdapter.getInstance(getApplication()).getAlbums({
+
+        albumsRepository.refreshData({
             _albums.postValue(it)
             _eventNetworkError.value = false
             _isNetworkErrorShown.value = false
-        }, {
+        },{
             _eventNetworkError.value = true
         })
+
     }
 
     fun onNetworkErrorShown() {
