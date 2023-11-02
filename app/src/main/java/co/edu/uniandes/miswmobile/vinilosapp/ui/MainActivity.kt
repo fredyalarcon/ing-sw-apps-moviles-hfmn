@@ -5,8 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
-import com.example.vinyls_jetpack_application.R
-import com.example.vinyls_jetpack_application.databinding.ActivityMainBinding
+import co.edu.uniandes.miswmobile.vinilosapp.databinding.ActivityMainBinding
+import co.edu.uniandes.miswmobile.vinilosapp.R
 
 class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
