@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import co.edu.uniandes.miswmobile.vinilosapp.R
 import co.edu.uniandes.miswmobile.vinilosapp.databinding.ArtistFragmentBinding
-import co.edu.uniandes.miswmobile.vinilosapp.models.Musician
-import co.edu.uniandes.miswmobile.vinilosapp.ui.adapters.MusiciansAdapter
+import co.edu.uniandes.miswmobile.vinilosapp.models.Performer
+import co.edu.uniandes.miswmobile.vinilosapp.ui.adapters.PerformerAdapter
 import co.edu.uniandes.miswmobile.vinilosapp.viewmodels.ArtistViewModel
 
 
@@ -24,7 +24,7 @@ class ArtistFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewModel: ArtistViewModel
-    private var viewModelAdapter: MusiciansAdapter? = null
+    private var viewModelAdapter: PerformerAdapter? = null
     private lateinit var progressBar: ProgressBar
 
     override fun onCreateView(
@@ -33,7 +33,7 @@ class ArtistFragment : Fragment() {
     ): View? {
         _binding = ArtistFragmentBinding.inflate(inflater, container, false)
         val view = binding.root
-        viewModelAdapter = MusiciansAdapter()
+        viewModelAdapter = PerformerAdapter()
         return view
     }
 
@@ -54,9 +54,9 @@ class ArtistFragment : Fragment() {
         viewModel = ViewModelProvider(this, ArtistViewModel.Factory(activity.application)).get(
             ArtistViewModel::class.java)
 
-        viewModel.artists.observe(viewLifecycleOwner, Observer<List<Musician>> {
+        viewModel.artists.observe(viewLifecycleOwner, Observer<List<Performer>> {
             it.apply {
-                viewModelAdapter!!.musicians = this
+                viewModelAdapter!!.performers = this
                 if (isEmpty()) {
                     Toast.makeText(activity, getString(R.string.artist_there_no_artists), Toast.LENGTH_LONG).show()
                 }

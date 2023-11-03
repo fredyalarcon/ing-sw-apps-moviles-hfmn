@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/menuFragment"
         android:name="co.edu.uniandes.miswmobile.vinilosapp.ui.MenuFragment"
-        android:label="Menu Principal"
+        android:label="@string/main_menu"
         tools:layout="@layout/menu_fragment" >
         <action
             android:id="@+id/action_menuFragment_to_albumFragment"
@@ -19,12 +19,12 @@
     <fragment
         android:id="@+id/albumFragment"
         android:name="co.edu.uniandes.miswmobile.vinilosapp.ui.AlbumFragment"
-        android:label="Álbumes"
+        android:label="@string/albums"
         tools:layout="@layout/album_fragment" />
     <fragment
         android:id="@+id/artistFragment"
         android:name="co.edu.uniandes.miswmobile.vinilosapp.ui.ArtistFragment"
-        android:label="artist_fragment"
+        android:label="@string/artists"
         tools:layout="@layout/artist_fragment" />
 
 </navigation>
