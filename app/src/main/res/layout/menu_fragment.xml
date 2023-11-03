@@ -8,7 +8,7 @@
 
     <Button
         android:id="@+id/buttonAlbums"
-        android:layout_width="0dp"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="87dp"
         android:text="@string/albums"
@@ -18,7 +18,7 @@
 
     <Button
         android:id="@+id/buttonArtists"
-        android:layout_width="0dp"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="7dp"
         android:text="@string/artists"
@@ -28,7 +28,7 @@
 
     <Button
         android:id="@+id/buttonCollectors"
-        android:layout_width="0dp"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="7dp"
         android:enabled="false"

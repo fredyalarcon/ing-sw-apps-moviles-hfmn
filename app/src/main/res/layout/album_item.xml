@@ -29,34 +29,31 @@
                     android:id="@+id/imageView"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@{album.cover}"
-                    android:layout_marginEnd="8dp"/>
+                    android:scaleType="centerCrop"
+                    android:contentDescription="@string/album_cover"
+                    android:src="@{album.cover}" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
                     android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/textView6"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingStart="8dp"
-                        android:paddingTop="3dp"
-                        android:paddingEnd="8dp"
-                        android:paddingBottom="3dp"
                         android:text="@{album.name}"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:textSize="18sp"/>
 
                     <TextView
                         android:id="@+id/textView5"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingStart="8dp"
-                        android:paddingTop="3dp"
-                        android:paddingEnd="8dp"
-                        android:paddingBottom="3dp"
-                        android:text="@{album.releaseDate}" />
+                        android:text="@{album.releaseDate}"
+                        android:textStyle="bold"
+                        android:textSize="16sp" />
 
                 </LinearLayout>
 
