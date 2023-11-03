@@ -59,12 +59,11 @@ class AlbumFragment : Fragment() {
         viewModel.albums.observe(viewLifecycleOwner, Observer<List<Album>> {
             it.apply {
                 viewModelAdapter!!.albums = this
-                if (isEmpty()) {
+                if (this.isEmpty()) {
                     Toast.makeText(activity, getString(R.string.album_there_no_albums), Toast.LENGTH_LONG).show()
-                    progressBar.visibility = View.INVISIBLE
                 }
+                progressBar.visibility = View.INVISIBLE
             }
-
         })
         viewModel.eventNetworkError.observe(viewLifecycleOwner, Observer<Boolean> { isNetworkError ->
             if (isNetworkError) onNetworkError()
