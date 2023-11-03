@@ -17,15 +17,15 @@ class MockNetworkServiceAdapter constructor(context: Context): NetworkServiceAda
     }
     override fun getAlbums(onComplete: (resp: List<Album>) -> Unit, onError: (error: VolleyError) -> Unit) {
         val list = mutableListOf<Album>()
-//        list.add(Album(
-//            albumId = 1,
-//            name = "Legend",
-//            cover = "https://en.wikipedia.org/wiki/File:BobMarley-Legend.jpg",
-//            releaseDate = "2012-04-23T18:25:43.511Z",
-//            description = "Legend is a compilation album by Bob Marley and the Wailers. It was released in May 1984 by Island Records.",
-//            genre = "Rock",
-//            recordLabel = "Elektra"
-//        ))
+        list.add(Album(
+            albumId = 1,
+            name = "Legend",
+            cover = "https://en.wikipedia.org/wiki/File:BobMarley-Legend.jpg",
+            releaseDate = "2012-04-23T18:25:43.511Z",
+            description = "Legend is a compilation album by Bob Marley and the Wailers. It was released in May 1984 by Island Records.",
+            genre = "Rock",
+            recordLabel = "Elektra"
+        ))
         onComplete(list)
     }
 
