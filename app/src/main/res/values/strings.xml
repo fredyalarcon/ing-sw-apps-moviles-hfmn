@@ -25,9 +25,10 @@
     <string name="collector">Coleccionista</string>
     <string name="visitor">Visitante</string>
     <string name="welcome">Bienvenido\n</string>
-    <string name="albums">Albumes</string>
+    <string name="albums">Álbumes</string>
     <string name="artists">Artistas</string>
     <string name="artist_image">Imagen</string>
     <string name="artist_there_no_artists">No hay artistas disponibles</string>
     <string name="collectors">Coleccionistas</string>
+    <string name="main_menu">Menu Principal</string>
 </resources>

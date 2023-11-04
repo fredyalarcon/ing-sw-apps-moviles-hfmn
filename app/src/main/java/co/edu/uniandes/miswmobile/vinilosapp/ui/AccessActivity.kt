@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import co.edu.uniandes.miswmobile.vinilosapp.databinding.ActivityAccessBinding
 
 
-class AccessActivity : AppCompatActivity() {
+public class AccessActivity : AppCompatActivity() {
     private lateinit var _binding: ActivityAccessBinding
     private val binding get() = _binding!!
     private lateinit var buttonVisitor: Button

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable name="artist" type="co.edu.uniandes.miswmobile.vinilosapp.models.Musician"/>
+        <variable name="artist" type="co.edu.uniandes.miswmobile.vinilosapp.models.Performer"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -13,12 +13,13 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:strokeColor="@color/gray"
-            app:strokeWidth="0.5dp">
+            app:strokeWidth="1dp">
 
             <LinearLayout
                 android:layout_width="match_parent"

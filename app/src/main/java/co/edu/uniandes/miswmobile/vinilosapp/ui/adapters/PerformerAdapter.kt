@@ -8,39 +8,39 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import co.edu.uniandes.miswmobile.vinilosapp.R
 import co.edu.uniandes.miswmobile.vinilosapp.databinding.ArtistItemBinding
-import co.edu.uniandes.miswmobile.vinilosapp.models.Musician
+import co.edu.uniandes.miswmobile.vinilosapp.models.Performer
 import com.squareup.picasso.Picasso
 
-class MusiciansAdapter : RecyclerView.Adapter<MusiciansAdapter.MusiciansViewHolder>() {
+class PerformerAdapter : RecyclerView.Adapter<PerformerAdapter.PerformersViewHolder>() {
 
-    var musicians : List<Musician> = emptyList()
+    var performers : List<Performer> = emptyList()
         set(value) {
             field = value
             notifyDataSetChanged()
         }
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MusiciansViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PerformersViewHolder {
         val withDataBinding: ArtistItemBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
-            MusiciansViewHolder.LAYOUT,
+            PerformersViewHolder.LAYOUT,
             parent,
             false
         )
-        return MusiciansViewHolder(withDataBinding)
+        return PerformersViewHolder(withDataBinding)
     }
 
-    override fun onBindViewHolder(holder: MusiciansViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: PerformersViewHolder, position: Int) {
         holder.viewDataBinding.also {
-            val currentArtist = musicians[position]
+            val currentArtist = performers[position]
             it.artist = currentArtist
             Picasso.get().load(currentArtist.image).into(holder.imageView)
         }
     }
 
     override fun getItemCount(): Int {
-        return musicians.size
+        return performers.size
     }
 
-    class MusiciansViewHolder(val viewDataBinding: ArtistItemBinding) :
+    class PerformersViewHolder(val viewDataBinding: ArtistItemBinding) :
         RecyclerView.ViewHolder(viewDataBinding.root) {
         val imageView: ImageView = itemView.findViewById(R.id.imageView)
         companion object {

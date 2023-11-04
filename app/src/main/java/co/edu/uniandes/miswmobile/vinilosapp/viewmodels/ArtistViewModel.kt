@@ -4,19 +4,24 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import co.edu.uniandes.miswmobile.vinilosapp.models.Musician
-import co.edu.uniandes.miswmobile.vinilosapp.network.NetworkServiceAdapter
-import co.edu.uniandes.miswmobile.vinilosapp.repositories.MusiciansRepository
+import co.edu.uniandes.miswmobile.vinilosapp.models.Performer
+import co.edu.uniandes.miswmobile.vinilosapp.repositories.PerformerRepository
 
 class ArtistViewModel(application: Application) :  AndroidViewModel(application) {
 
-    private val musiciansRepository = MusiciansRepository(application)
-    private val _artists = MutableLiveData<List<Musician>>()
-    val artists: LiveData<List<Musician>>
-        get() = _artists
-
+    private val performerRepository = PerformerRepository(application)
+    private val _artists = MutableLiveData<List<Performer>>()
+    val artists: LiveData<List<Performer>>
+//        get() = _artists
+        get() = Transformations.map(_artists) { performersList ->
+            // performers ordenados por nombre
+            performersList.sortedBy { it.name }.map { performer ->
+                performer
+            }
+        }
     private var _eventNetworkError = MutableLiveData<Boolean>(false)
 
     val eventNetworkError: LiveData<Boolean>
@@ -32,7 +37,7 @@ class ArtistViewModel(application: Application) :  AndroidViewModel(application)
     }
 
     private fun refreshDataFromNetwork() {
-        musiciansRepository.refreshData({
+        performerRepository.refreshData({
             _artists.postValue(it)
             _eventNetworkError.value = false
             _isNetworkErrorShown.value = false
