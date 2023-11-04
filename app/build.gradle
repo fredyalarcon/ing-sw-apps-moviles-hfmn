@@ -4,13 +4,24 @@ plugins {
     id 'androidx.navigation.safeargs.kotlin'
 }
 
+def localProperties = new Properties()
+localProperties.load(new FileInputStream(rootProject.file("local.properties")))
+
 android {
-    compileSdk 31
+    signingConfigs {
+        release {
+            storePassword localProperties['RELEASE_STORE_PASSWORD'] ?: '123'
+            keyAlias localProperties['RELEASE_KEY_ALIAS'] ?: 'Key0'
+            keyPassword localProperties['RELEASE_KEY_PASSWORD'] ?: '123'
+            storeFile file(localProperties['RELEASE_STORE_FILE'] ?: 'keystore.jks')
+        }
+    }
+    compileSdk 32
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.example.vinyls_jetpack_application"
-        minSdk 21
+        applicationId "co.edu.uniandes.miswmobile.vinilosapp"
+        minSdk 23
         targetSdk 31
         versionCode 1
         versionName "1.0"
@@ -20,8 +31,16 @@ android {
 
     buildTypes {
         release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+            buildConfigField "String", "BASE_URL", '"https://vynils-back-heroku.herokuapp.com/"'
+        }
+        debug {
+            debuggable true
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "BASE_URL",  '"http://192.168.1.116:3000/"'
         }
     }
     compileOptions {

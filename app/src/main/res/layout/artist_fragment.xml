@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.AlbumFragment"
+    tools:context=".ui.ArtistFragment"
     android:textColor="@color/white"
     android:layout_marginStart="16dp"
     android:layout_marginEnd="16dp">
@@ -17,11 +17,9 @@
         android:visibility="gone" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/albumsRv"
+        android:id="@+id/artistsRv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="8dp"
-        android:clipToPadding="false"
-        tools:listitem="@layout/album_item"/>
+        tools:listitem="@layout/artist_item"/>
 
 </FrameLayout>

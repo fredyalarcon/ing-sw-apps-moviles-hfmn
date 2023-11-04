@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.MenuFragment">
+
+    <Button
+        android:id="@+id/buttonAlbums"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="87dp"
+        android:text="@string/albums"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/buttonArtists"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:text="@string/artists"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonAlbums" />
+
+    <Button
+        android:id="@+id/buttonCollectors"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:enabled="false"
+        android:text="@string/collectors"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonArtists" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
