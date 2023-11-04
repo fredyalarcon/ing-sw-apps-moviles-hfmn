@@ -12,18 +12,18 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import co.edu.uniandes.miswmobile.vinilosapp.R
-import co.edu.uniandes.miswmobile.vinilosapp.databinding.ArtistFragmentBinding
+import co.edu.uniandes.miswmobile.vinilosapp.databinding.PerformerFragmentBinding
 import co.edu.uniandes.miswmobile.vinilosapp.models.Performer
 import co.edu.uniandes.miswmobile.vinilosapp.ui.adapters.PerformerAdapter
-import co.edu.uniandes.miswmobile.vinilosapp.viewmodels.ArtistViewModel
+import co.edu.uniandes.miswmobile.vinilosapp.viewmodels.PerformerViewModel
 
 
 class ArtistFragment : Fragment() {
 
-    private var _binding: ArtistFragmentBinding? = null
+    private var _binding: PerformerFragmentBinding? = null
     private val binding get() = _binding!!
     private lateinit var recyclerView: RecyclerView
-    private lateinit var viewModel: ArtistViewModel
+    private lateinit var viewModel: PerformerViewModel
     private var viewModelAdapter: PerformerAdapter? = null
     private lateinit var progressBar: ProgressBar
 
@@ -31,7 +31,7 @@ class ArtistFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = ArtistFragmentBinding.inflate(inflater, container, false)
+        _binding = PerformerFragmentBinding.inflate(inflater, container, false)
         val view = binding.root
         viewModelAdapter = PerformerAdapter()
         return view
@@ -51,8 +51,8 @@ class ArtistFragment : Fragment() {
         activity.actionBar?.title = getString(R.string.artists)
         progressBar = activity.findViewById(R.id.progressBar)
         progressBar.visibility = View.VISIBLE
-        viewModel = ViewModelProvider(this, ArtistViewModel.Factory(activity.application)).get(
-            ArtistViewModel::class.java)
+        viewModel = ViewModelProvider(this, PerformerViewModel.Factory(activity.application)).get(
+            PerformerViewModel::class.java)
 
         viewModel.artists.observe(viewLifecycleOwner, Observer<List<Performer>> {
             it.apply {

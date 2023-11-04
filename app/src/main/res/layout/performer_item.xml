@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable name="artist" type="co.edu.uniandes.miswmobile.vinilosapp.models.Performer"/>
+        <variable name="performer" type="co.edu.uniandes.miswmobile.vinilosapp.models.Performer"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -31,7 +31,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:scaleType="centerCrop"
-                    android:src="@{artist.image}"
+                    android:src="@{performer.image}"
                     android:contentDescription="@string/artist_image"/>
 
                 <LinearLayout
@@ -46,7 +46,7 @@
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
                         android:textSize="18sp"
-                        android:text="@{artist.name}" />
+                        android:text="@{performer.name}" />
 
                 </LinearLayout>
 

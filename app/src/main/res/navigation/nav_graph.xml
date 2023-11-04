@@ -25,6 +25,6 @@
         android:id="@+id/artistFragment"
         android:name="co.edu.uniandes.miswmobile.vinilosapp.ui.ArtistFragment"
         android:label="@string/artists"
-        tools:layout="@layout/artist_fragment" />
+        tools:layout="@layout/performer_fragment" />
 
 </navigation>
