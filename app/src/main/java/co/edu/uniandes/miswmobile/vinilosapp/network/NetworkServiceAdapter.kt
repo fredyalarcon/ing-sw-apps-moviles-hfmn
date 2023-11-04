@@ -1,6 +1,7 @@
 package co.edu.uniandes.miswmobile.vinilosapp.network
 
 import android.content.Context
+import co.edu.uniandes.miswmobile.vinilosapp.BuildConfig
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
@@ -17,8 +18,9 @@ import org.json.JSONObject
 
 open class NetworkServiceAdapter constructor(context: Context) {
     companion object{
-        // const val BASE_URL= "http://10.0.2.2:3000/"
-        const val BASE_URL= "https://vynils-back-heroku.herokuapp.com/"
+
+        const val BASE_URL= BuildConfig.BASE_URL
+        //const val BASE_URL= "https://vynils-back-heroku.herokuapp.com/"
 
         var instance: NetworkServiceAdapter? = null
         fun getInstance(context: Context) =
