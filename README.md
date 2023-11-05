@@ -40,3 +40,15 @@ Abra Android Studio. En la pantalla de bienvenida, seleccione "Abrir un proyecto
 ## API: 
 
 ### Heroku: https://vynils-back-heroku.herokuapp.com/
+
+## Instalación del apk:
+
+Para instalar el apk en tú dispositivo puedes dirigirte a la sección de "Releases" que se encuentra en el repositorio en la sección de "code" 
+
+![img.png](img.png)
+
+También puedes acceder desde el siguiente enlace https://github.com/fredyalarcon/ing-sw-apps-moviles-hfmn/releases .Luego de dar click en en la sección Releases podrá ver las versiones del apk y descargar la última versión "Latest".
+
+**Nota:** En esta sección aparecerán 2 apk que hacen referencia a los ambientes de producción y debug. 
+- Si desea instalar la versión de producción debe descargar el apk que tiene como nombre  Vinilos_App-v*.*.*.apk. 
+- Para debug puede descargar Vinilos_App_Debug-v*.*.*.apk 
