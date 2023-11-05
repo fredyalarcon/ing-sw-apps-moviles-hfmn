@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -17,6 +18,7 @@ import co.edu.uniandes.miswmobile.vinilosapp.models.Album
 import co.edu.uniandes.miswmobile.vinilosapp.ui.adapters.AlbumsAdapter
 import co.edu.uniandes.miswmobile.vinilosapp.viewmodels.AlbumViewModel
 import co.edu.uniandes.miswmobile.vinilosapp.R
+import com.squareup.picasso.Picasso
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
@@ -29,6 +31,7 @@ class AlbumFragment : Fragment() {
     private lateinit var viewModel: AlbumViewModel
     private var viewModelAdapter: AlbumsAdapter? = null
     private lateinit var progressBar: ProgressBar
+    private val TAG = "AlbumFragment"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -69,6 +72,7 @@ class AlbumFragment : Fragment() {
         viewModel.eventNetworkError.observe(viewLifecycleOwner, Observer<Boolean> { isNetworkError ->
             if (isNetworkError) onNetworkError()
         })
+
     }
 
     override fun onDestroyView() {

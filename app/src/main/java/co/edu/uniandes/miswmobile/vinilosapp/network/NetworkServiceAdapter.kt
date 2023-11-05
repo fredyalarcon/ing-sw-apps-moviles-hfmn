@@ -17,8 +17,8 @@ import org.json.JSONObject
 
 open class NetworkServiceAdapter constructor(context: Context) {
     companion object{
-        // const val BASE_URL= "http://10.0.2.2:3000/"
-        const val BASE_URL= "https://vynils-back-heroku.herokuapp.com/"
+        const val BASE_URL= "http://192.168.101.8:3000/"
+        //const val BASE_URL= "https://vynils-back-heroku.herokuapp.com/"
 
         var instance: NetworkServiceAdapter? = null
         fun getInstance(context: Context) =
@@ -93,7 +93,7 @@ open class NetworkServiceAdapter constructor(context: Context) {
             }))
     }
 
-    fun getPerformer(onComplete:(resp:List<Performer>)->Unit, onError: (error:VolleyError)->Unit){
+    open fun getPerformer(onComplete:(resp:List<Performer>)->Unit, onError: (error:VolleyError)->Unit){
         val list = mutableListOf<Performer>()
         requestQueue.add(getRequest("musicians",
             Response.Listener<String> { response ->
