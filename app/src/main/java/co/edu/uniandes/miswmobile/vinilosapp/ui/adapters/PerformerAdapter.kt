@@ -7,7 +7,7 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import co.edu.uniandes.miswmobile.vinilosapp.R
-import co.edu.uniandes.miswmobile.vinilosapp.databinding.ArtistItemBinding
+import co.edu.uniandes.miswmobile.vinilosapp.databinding.PerformerItemBinding
 import co.edu.uniandes.miswmobile.vinilosapp.models.Performer
 import com.squareup.picasso.Picasso
 
@@ -19,7 +19,7 @@ class PerformerAdapter : RecyclerView.Adapter<PerformerAdapter.PerformersViewHol
             notifyDataSetChanged()
         }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PerformersViewHolder {
-        val withDataBinding: ArtistItemBinding = DataBindingUtil.inflate(
+        val withDataBinding: PerformerItemBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
             PerformersViewHolder.LAYOUT,
             parent,
@@ -31,7 +31,7 @@ class PerformerAdapter : RecyclerView.Adapter<PerformerAdapter.PerformersViewHol
     override fun onBindViewHolder(holder: PerformersViewHolder, position: Int) {
         holder.viewDataBinding.also {
             val currentArtist = performers[position]
-            it.artist = currentArtist
+            it.performer = currentArtist
             Picasso.get().load(currentArtist.image).into(holder.imageView)
         }
     }
@@ -40,12 +40,12 @@ class PerformerAdapter : RecyclerView.Adapter<PerformerAdapter.PerformersViewHol
         return performers.size
     }
 
-    class PerformersViewHolder(val viewDataBinding: ArtistItemBinding) :
+    class PerformersViewHolder(val viewDataBinding: PerformerItemBinding) :
         RecyclerView.ViewHolder(viewDataBinding.root) {
         val imageView: ImageView = itemView.findViewById(R.id.imageView)
         companion object {
             @LayoutRes
-            val LAYOUT = R.layout.artist_item
+            val LAYOUT = R.layout.`performer_item`
         }
     }
 }
