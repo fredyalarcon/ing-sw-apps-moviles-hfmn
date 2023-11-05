@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import co.edu.uniandes.miswmobile.vinilosapp.models.Performer
 import co.edu.uniandes.miswmobile.vinilosapp.repositories.PerformerRepository
 
-class ArtistViewModel(application: Application) :  AndroidViewModel(application) {
+class PerformerViewModel(application: Application) :  AndroidViewModel(application) {
 
     private val performerRepository = PerformerRepository(application)
     private val _artists = MutableLiveData<List<Performer>>()
@@ -52,9 +52,9 @@ class ArtistViewModel(application: Application) :  AndroidViewModel(application)
 
     class Factory(val app: Application) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(ArtistViewModel::class.java)) {
+            if (modelClass.isAssignableFrom(PerformerViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return ArtistViewModel(app) as T
+                return PerformerViewModel(app) as T
             }
             throw IllegalArgumentException("Unable to construct viewmodel")
         }
