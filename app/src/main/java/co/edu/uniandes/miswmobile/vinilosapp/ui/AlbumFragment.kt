@@ -1,11 +1,9 @@
 package co.edu.uniandes.miswmobile.vinilosapp.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -18,7 +16,6 @@ import co.edu.uniandes.miswmobile.vinilosapp.models.Album
 import co.edu.uniandes.miswmobile.vinilosapp.ui.adapters.AlbumsAdapter
 import co.edu.uniandes.miswmobile.vinilosapp.viewmodels.AlbumViewModel
 import co.edu.uniandes.miswmobile.vinilosapp.R
-import com.squareup.picasso.Picasso
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
