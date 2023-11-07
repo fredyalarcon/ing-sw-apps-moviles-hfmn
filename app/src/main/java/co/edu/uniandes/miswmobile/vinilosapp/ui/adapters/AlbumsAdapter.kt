@@ -1,27 +1,25 @@
 package co.edu.uniandes.miswmobile.vinilosapp.ui.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
-import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import co.edu.uniandes.miswmobile.vinilosapp.R
 import co.edu.uniandes.miswmobile.vinilosapp.databinding.AlbumItemBinding
 import co.edu.uniandes.miswmobile.vinilosapp.models.Album
-import com.squareup.picasso.Callback
-import com.squareup.picasso.Picasso
+import com.bumptech.glide.Glide
+import com.bumptech.glide.signature.ObjectKey
 
 
-class AlbumsAdapter : RecyclerView.Adapter<AlbumsAdapter.AlbumViewHolder>() {
+class AlbumsAdapter :
+    RecyclerView.Adapter<AlbumsAdapter.AlbumViewHolder>() {
 
     private lateinit var progressBar: ProgressBar
 
-    var albums :List<Album> = emptyList()
+    var albums: List<Album> = emptyList()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -32,9 +30,8 @@ class AlbumsAdapter : RecyclerView.Adapter<AlbumsAdapter.AlbumViewHolder>() {
             LayoutInflater.from(parent.context),
             AlbumViewHolder.LAYOUT,
             parent,
-            false)
-
-        val albumViewHolder = AlbumViewHolder(withDataBinding)
+            false
+        )
 
         return AlbumViewHolder(withDataBinding)
     }
@@ -53,20 +50,15 @@ class AlbumsAdapter : RecyclerView.Adapter<AlbumsAdapter.AlbumViewHolder>() {
             // Utilizar la copia local para cargar la imagen
             // aserción no nula utilizando el operador de aserción no nula (!!)
             holder.progressBarAlbumItem?.let { progressBar ->
-                Picasso.get()
-                    .load(currentAlbum!!.cover)
-                    .error(R.drawable.progress_animation)
-                    .placeholder(R.drawable.progress_animation)
-                    .into(holder.imageView, object : Callback {
-                        override fun onSuccess() {
-                            progressBar.visibility = View.GONE
-                            Log.d("Picasso", "Imagen cargada con éxito")
-                        }
 
-                        override fun onError(e: Exception?) {
-                            Log.e("Picasso", "Error al cargar la imagen", e)
-                        }
-                    })
+                //Cargar imagenes con la librería Glide
+
+                Glide.with(context)
+                    .load(currentAlbum!!.cover)
+                    .placeholder(R.drawable.progress_animation)
+                    .fitCenter()
+                    .signature(ObjectKey(System.currentTimeMillis().toString()))
+                    .into(holder.imageView)
             }
         }
         holder.viewDataBinding.root.setOnClickListener {
@@ -82,6 +74,7 @@ class AlbumsAdapter : RecyclerView.Adapter<AlbumsAdapter.AlbumViewHolder>() {
         RecyclerView.ViewHolder(viewDataBinding.root) {
         val imageView: ImageView = itemView.findViewById(R.id.imageView)
         val progressBarAlbumItem: ProgressBar = itemView.findViewById(R.id.progressBarAlbumItem)
+
         companion object {
             @LayoutRes
             val LAYOUT = R.layout.album_item
