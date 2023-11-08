@@ -40,7 +40,7 @@ android {
             debuggable true
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField "String", "BASE_URL",  '"http://192.168.101.8:3000/"'
+            buildConfigField "String", "BASE_URL",  '"http://192.168.1.116:3000/"'
         }
     }
     compileOptions {

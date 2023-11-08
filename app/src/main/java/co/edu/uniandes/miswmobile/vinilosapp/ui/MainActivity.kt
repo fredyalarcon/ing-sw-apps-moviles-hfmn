@@ -1,6 +1,8 @@
 package co.edu.uniandes.miswmobile.vinilosapp.ui
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment

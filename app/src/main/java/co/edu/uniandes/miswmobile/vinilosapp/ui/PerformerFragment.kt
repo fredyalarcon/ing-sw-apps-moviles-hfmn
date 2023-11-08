@@ -18,7 +18,7 @@ import co.edu.uniandes.miswmobile.vinilosapp.ui.adapters.PerformerAdapter
 import co.edu.uniandes.miswmobile.vinilosapp.viewmodels.PerformerViewModel
 
 
-class ArtistFragment : Fragment() {
+class PerformerFragment : Fragment() {
 
     private var _binding: PerformerFragmentBinding? = null
     private val binding get() = _binding!!
