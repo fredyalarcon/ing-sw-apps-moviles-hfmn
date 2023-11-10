@@ -9,7 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import co.edu.uniandes.miswmobile.vinilosapp.R
 import co.edu.uniandes.miswmobile.vinilosapp.databinding.PerformerItemBinding
 import co.edu.uniandes.miswmobile.vinilosapp.models.Performer
-import com.squareup.picasso.Picasso
+import com.bumptech.glide.Glide
+import com.bumptech.glide.signature.ObjectKey
 
 class PerformerAdapter : RecyclerView.Adapter<PerformerAdapter.PerformersViewHolder>() {
 
@@ -31,8 +32,16 @@ class PerformerAdapter : RecyclerView.Adapter<PerformerAdapter.PerformersViewHol
     override fun onBindViewHolder(holder: PerformersViewHolder, position: Int) {
         holder.viewDataBinding.also {
             val currentArtist = performers[position]
+            val context = holder.itemView.context
             it.performer = currentArtist
-            Picasso.get().load(currentArtist.image).into(holder.imageView)
+            //Cargar imagenes con la librería Glide
+
+            Glide.with(context)
+                .load(currentArtist.image)
+                .placeholder(R.drawable.progress_animation)
+                .fitCenter()
+                .signature(ObjectKey(System.currentTimeMillis().toString()))
+                .into(holder.imageView)
         }
     }
 
