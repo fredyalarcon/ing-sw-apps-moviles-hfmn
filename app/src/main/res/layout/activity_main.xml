@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    tools:actionBarNavMode="standard"
     tools:context=".ui.MainActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -12,8 +13,11 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
+        android:theme="@style/Theme.VinilosApplication.PopupOverlay"
         app:layout_constraintTop_toTopOf="parent"
-        app:popupTheme="@style/Theme.VinilosApplication.PopupOverlay" />
+        app:menu="@menu/menu_main"
+        app:title="@string/main_menu"
+        app:titleTextColor="#FDFDFD" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_fragment"
