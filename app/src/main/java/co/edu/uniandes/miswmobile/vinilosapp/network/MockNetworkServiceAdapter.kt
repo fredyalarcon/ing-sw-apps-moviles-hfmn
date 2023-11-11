@@ -20,7 +20,7 @@ class MockNetworkServiceAdapter constructor(context: Context): NetworkServiceAda
                 }
             }
     }
-    override fun getAlbums(onComplete: (resp: List<Album>) -> Unit, onError: (error: VolleyError) -> Unit) {
+    override suspend fun getAlbums(): List<Album> {
         val list = mutableListOf<Album>()
         list.add(Album(
             albumId = 1,
@@ -31,10 +31,10 @@ class MockNetworkServiceAdapter constructor(context: Context): NetworkServiceAda
             genre = "Rock",
             recordLabel = "Elektra"
         ))
-        onComplete(list)
+        return list
     }
 
-    override fun getPerformer(onComplete:(resp:List<Performer>)->Unit, onError: (error:VolleyError)->Unit){
+    override suspend fun getPerformer(): List<Performer> {
         val list = mutableListOf<Performer>()
         list.add(Musician(
             birthDate = "1948-07-16T00:00:00.000Z",
@@ -52,7 +52,7 @@ class MockNetworkServiceAdapter constructor(context: Context): NetworkServiceAda
             creationDate = "1970-01-01T00:00:00.000Z"
         ))
 
-        onComplete(list)
+        return list
 
     }
 
