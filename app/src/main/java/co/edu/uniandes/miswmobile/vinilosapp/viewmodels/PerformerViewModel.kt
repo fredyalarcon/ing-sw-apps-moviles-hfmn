@@ -1,6 +1,7 @@
 package co.edu.uniandes.miswmobile.vinilosapp.viewmodels
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -41,17 +42,17 @@ class PerformerViewModel(application: Application) :  AndroidViewModel(applicati
     }
 
     private fun refreshDataFromNetwork() {
-        try {
-            viewModelScope.launch(Dispatchers.Default){
-                withContext(Dispatchers.IO){
+        try{
+            viewModelScope.launch (Dispatchers.Default) {
+                withContext(Dispatchers.IO) {
                     var data = performerRepository.refreshData()
                     _artists.postValue(data)
                 }
                 _eventNetworkError.postValue(false)
                 _isNetworkErrorShown.postValue(false)
             }
-        }
-        catch (e:Exception){
+        } catch(e: Exception) {
+            Log.d("Error", e.toString())
             _eventNetworkError.value = true
         }
     }

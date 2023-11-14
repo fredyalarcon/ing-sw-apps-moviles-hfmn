@@ -17,10 +17,10 @@ class AlbumRepository (val application: Application){
             }
         }
 
-        if (isRunningTest) {
-            return MockNetworkServiceAdapter.getInstance(application).getAlbums()
+        return if (isRunningTest) {
+            MockNetworkServiceAdapter.getInstance(application).getAlbums()
         } else {
-            return NetworkServiceAdapter.getInstance(application).getAlbums()
+            NetworkServiceAdapter.getInstance(application).getAlbums()
         }
     }
 

@@ -8,6 +8,8 @@ import co.edu.uniandes.miswmobile.vinilosapp.models.Performer
 import com.android.volley.Response
 import com.android.volley.VolleyError
 import org.json.JSONArray
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 class MockNetworkServiceAdapter constructor(context: Context): NetworkServiceAdapter(context) {
 
@@ -20,7 +22,7 @@ class MockNetworkServiceAdapter constructor(context: Context): NetworkServiceAda
                 }
             }
     }
-    override suspend fun getAlbums(): List<Album> {
+    override suspend fun getAlbums() = suspendCoroutine<List<Album>> { cont ->
         val list = mutableListOf<Album>()
         list.add(Album(
             albumId = 1,
@@ -31,10 +33,10 @@ class MockNetworkServiceAdapter constructor(context: Context): NetworkServiceAda
             genre = "Rock",
             recordLabel = "Elektra"
         ))
-        return list
+        cont.resume(list)
     }
 
-    override suspend fun getPerformer(): List<Performer> {
+    override suspend fun getPerformer() = suspendCoroutine<List<Performer>> { cont ->
         val list = mutableListOf<Performer>()
         list.add(Musician(
             birthDate = "1948-07-16T00:00:00.000Z",
@@ -52,7 +54,7 @@ class MockNetworkServiceAdapter constructor(context: Context): NetworkServiceAda
             creationDate = "1970-01-01T00:00:00.000Z"
         ))
 
-        return list
+        cont.resume(list)
 
     }
 

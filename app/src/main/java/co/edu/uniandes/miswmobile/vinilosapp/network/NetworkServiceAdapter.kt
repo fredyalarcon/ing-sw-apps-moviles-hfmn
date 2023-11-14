@@ -3,10 +3,13 @@ package co.edu.uniandes.miswmobile.vinilosapp.network
 import android.content.Context
 import android.util.Log
 import co.edu.uniandes.miswmobile.vinilosapp.BuildConfig
+import co.edu.uniandes.miswmobile.vinilosapp.models.Album
+import co.edu.uniandes.miswmobile.vinilosapp.models.Band
+import co.edu.uniandes.miswmobile.vinilosapp.models.Musician
+import co.edu.uniandes.miswmobile.vinilosapp.models.Performer
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
-import com.android.volley.VolleyError
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
@@ -25,11 +28,14 @@ import org.json.JSONObject
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
 open class NetworkServiceAdapter constructor(context: Context) {
-    companion object {
-        const val BASE_URL = BuildConfig.BASE_URL
-        var instance: NetworkServiceAdapter? = null
+    companion object{
+        const val BASE_URL= BuildConfig.BASE_URL
+        private var instance: NetworkServiceAdapter? = null
         fun getInstance(context: Context) =
             instance ?: synchronized(this) {
                 instance ?: NetworkServiceAdapter(context).also {
@@ -42,7 +48,6 @@ open class NetworkServiceAdapter constructor(context: Context) {
         // applicationContext keeps you from leaking the Activity or BroadcastReceiver if someone passes one in.
         Volley.newRequestQueue(context.applicationContext)
     }
-
     open suspend fun getAlbums() = suspendCoroutine<List<Album>> { cont ->
         requestQueue.add(
             getRequest("albums",
@@ -92,91 +97,71 @@ open class NetworkServiceAdapter constructor(context: Context) {
                             )
                         )
                     }
-                    onComplete(list)
+                    cont.resume(list)
                 },
                 {
-                    onError(it)
-                })
-        )
-    }
-
-    suspend fun getMusician(
-        onComplete: (resp: List<Musician>) -> Unit,
-        onError: (error: VolleyError) -> Unit
-    ) {
-        requestQueue.add(
-            getRequest("musicians",
-                { response ->
-                    val resp = JSONArray(response)
-                    val list = mutableListOf<Musician>()
-                    for (i in 0 until resp.length()) {
-                        val item = resp.getJSONObject(i)
-                        list.add(
-                            i,
-                            Musician(
-                                performerId = item.getInt("id"),
-                                name = item.getString("name"),
-                                image = item.getString("image"),
-                                description = item.getString("description"),
-                                birthDate = item.getString("birthDate")
-                            )
-                        )
-                    }
-                    onComplete(list)
-                },
-                {
-                    onError(it)
-                })
-        )
-    }
-
-    open suspend fun getPerformer() = suspendCoroutine<List<Performer>> { cont ->
-        requestQueue.add(
-            getRequest("musicians",
-                { response ->
-                    val list = mutableListOf<Performer>()
-                    val resp = JSONArray(response)
-                    for (i in 0 until resp.length()) {
-                        val item = resp.getJSONObject(i)
-                        list.add(
-                            i,
-                            Musician(
-                                performerId = item.getInt("id"),
-                                name = item.getString("name"),
-                                image = item.getString("image"),
-                                description = item.getString("description"),
-                                birthDate = item.getString("birthDate")
-                            )
-                        )
-                    }
-                    requestQueue.add(
-                        getRequest("bands",
-                            { response ->
-                                val resp = JSONArray(response)
-                                for (i in 0 until resp.length()) {
-                                    val item = resp.getJSONObject(i)
-                                    list.add(
-                                        i,
-                                        Band(
-                                            performerId = item.getInt("id"),
-                                            name = item.getString("name"),
-                                            image = item.getString("image"),
-                                            description = item.getString("description"),
-                                            creationDate = item.getString("creationDate")
-                                        )
-                                    )
-                                }
-                                cont.resume(list)
-                            },
-                            Response.ErrorListener {
-                                cont.resumeWithException(it)
-                            })
-                    )
-                },
-                Response.ErrorListener {
                     cont.resumeWithException(it)
                 })
         )
+    }
+
+    open suspend fun getBand() = suspendCoroutine<List<Band>> { cont ->
+        requestQueue.add(getRequest("bands",
+            { response ->
+                val resp = JSONArray(response)
+                val list = mutableListOf<Band>()
+                for (i in 0 until resp.length()) {
+                    val item = resp.getJSONObject(i)
+                    list.add(i, Band(performerId = item.getInt("id"), name = item.getString("name"), image = item.getString("image"), description = item.getString("description"), creationDate = item.getString("creationDate")))
+                }
+                cont.resume(list)
+            },
+            {
+                cont.resumeWithException(it)
+            }))
+    }
+
+    open suspend fun getMusician() = suspendCoroutine<List<Musician>> { cont ->
+        requestQueue.add(getRequest("musicians",
+            { response ->
+                val resp = JSONArray(response)
+                val list = mutableListOf<Musician>()
+                for (i in 0 until resp.length()) {
+                    val item = resp.getJSONObject(i)
+                    list.add(i, Musician(performerId = item.getInt("id"), name = item.getString("name"), image = item.getString("image"), description = item.getString("description"), birthDate = item.getString("birthDate")))
+                }
+                cont.resume(list)
+            },
+            {
+                cont.resumeWithException(it)
+            }))
+    }
+
+    open suspend fun getPerformer() = suspendCoroutine<List<Performer>> { cont ->
+        val list = mutableListOf<Performer>()
+        requestQueue.add(getRequest("musicians",
+            { response ->
+                val resp = JSONArray(response)
+                for (i in 0 until resp.length()) {
+                    val item = resp.getJSONObject(i)
+                    list.add(i, Musician(performerId = item.getInt("id"), name = item.getString("name"), image = item.getString("image"), description = item.getString("description"), birthDate = item.getString("birthDate")))
+                }
+                requestQueue.add(getRequest("bands",
+                    { response ->
+                        val resp = JSONArray(response)
+                        for (i in 0 until resp.length()) {
+                            val item = resp.getJSONObject(i)
+                            list.add(i, Band(performerId = item.getInt("id"), name = item.getString("name"), image = item.getString("image"), description = item.getString("description"), creationDate = item.getString("creationDate")))
+                        }
+                        cont.resume(list)
+                    },
+                    {
+                        cont.resumeWithException(it)
+                    }))
+            },
+            {
+                cont.resumeWithException(it)
+            }))
     }
 
     open suspend fun createAlbum(
