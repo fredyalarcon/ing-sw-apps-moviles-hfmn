@@ -2,22 +2,20 @@ package co.edu.uniandes.miswmobile.vinilosapp.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.ProgressBar
 import androidx.annotation.LayoutRes
+import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import co.edu.uniandes.miswmobile.vinilosapp.R
 import co.edu.uniandes.miswmobile.vinilosapp.databinding.AlbumItemBinding
 import co.edu.uniandes.miswmobile.vinilosapp.models.Album
 import com.bumptech.glide.Glide
-import com.bumptech.glide.signature.ObjectKey
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 
 
 class AlbumsAdapter :
     RecyclerView.Adapter<AlbumsAdapter.AlbumViewHolder>() {
-
-    private lateinit var progressBar: ProgressBar
 
     var albums: List<Album> = emptyList()
         set(value) {
@@ -37,30 +35,11 @@ class AlbumsAdapter :
     }
 
     override fun onBindViewHolder(holder: AlbumViewHolder, position: Int) {
-        val album = albums[position]
-
         holder.viewDataBinding.also {
-            it.album = album
-            // Hacer una copia local inmutable del álbum
-            val currentAlbum = it.album
+            it.album = albums[position]
 
-            // Obtener el contexto desde el ViewGroup parent del holder
-            val context = holder.itemView.context
-
-            // Utilizar la copia local para cargar la imagen
-            // aserción no nula utilizando el operador de aserción no nula (!!)
-            holder.progressBarAlbumItem?.let { progressBar ->
-
-                //Cargar imagenes con la librería Glide
-
-                Glide.with(context)
-                    .load(currentAlbum!!.cover)
-                    .placeholder(R.drawable.progress_animation)
-                    .fitCenter()
-                    .signature(ObjectKey(System.currentTimeMillis().toString()))
-                    .into(holder.imageView)
-            }
         }
+        holder.bind(albums[position])
         holder.viewDataBinding.root.setOnClickListener {
 
         }
@@ -72,12 +51,19 @@ class AlbumsAdapter :
 
     class AlbumViewHolder(val viewDataBinding: AlbumItemBinding) :
         RecyclerView.ViewHolder(viewDataBinding.root) {
-        val imageView: ImageView = itemView.findViewById(R.id.imageView)
-        val progressBarAlbumItem: ProgressBar = itemView.findViewById(R.id.progressBarAlbumItem)
-
         companion object {
             @LayoutRes
             val LAYOUT = R.layout.album_item
+        }
+        fun bind(album: Album) {
+            Glide.with(itemView)
+                .load(album.cover.toUri().buildUpon().scheme("https").build())
+                .apply(
+                    RequestOptions()
+                        .placeholder(R.drawable.progress_animation)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .error(R.drawable.ic_broken_image))
+                .into(viewDataBinding.imageView)
         }
     }
 }
