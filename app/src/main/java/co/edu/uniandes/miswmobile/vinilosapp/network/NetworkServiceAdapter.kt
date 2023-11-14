@@ -1,6 +1,7 @@
 package co.edu.uniandes.miswmobile.vinilosapp.network
 
 import android.content.Context
+import android.util.Log
 import co.edu.uniandes.miswmobile.vinilosapp.BuildConfig
 import com.android.volley.Request
 import com.android.volley.RequestQueue
@@ -13,6 +14,12 @@ import co.edu.uniandes.miswmobile.vinilosapp.models.Album
 import co.edu.uniandes.miswmobile.vinilosapp.models.Band
 import co.edu.uniandes.miswmobile.vinilosapp.models.Musician
 import co.edu.uniandes.miswmobile.vinilosapp.models.Performer
+import com.android.volley.AuthFailureError
+import com.android.volley.NetworkError
+import com.android.volley.NoConnectionError
+import com.android.volley.ParseError
+import com.android.volley.ServerError
+import com.android.volley.TimeoutError
 import org.json.JSONArray
 import org.json.JSONObject
 import kotlin.coroutines.resume
@@ -172,12 +179,50 @@ open class NetworkServiceAdapter constructor(context: Context) {
         )
     }
 
-    private fun getRequest(
-        path: String,
-        responseListener: Response.Listener<String>,
-        errorListener: Response.ErrorListener
-    ): StringRequest {
-        return StringRequest(Request.Method.GET, BASE_URL + path, responseListener, errorListener)
+    open suspend fun createAlbum(
+        album: Album
+    ): JSONObject = suspendCoroutine { cont ->
+        val body = JSONObject().apply {
+            put("name", album.name)
+            put("cover", album.cover)
+            put("releaseDate", album.releaseDate)
+            put("description", album.description)
+            put("genre", album.genre)
+            put("recordLabel", album.recordLabel)
+        }
+
+        val responseListener = Response.Listener<JSONObject> { response ->
+            // Log de la respuesta exitosa del servidor
+            Log.d("NetworkServiceAdapter", "Respuesta exitosa: $response")
+            cont.resume(body)
+        }
+
+        val errorListener = Response.ErrorListener { error ->
+            Log.d("NetworkServiceAdapter", "Valor enviado: $body")
+            // Manejo específico de errores Volley
+            if (error is NetworkError) {
+                cont.resumeWithException(NetworkErrorException("Problema de red, posiblemente sin conexión"))
+            } else if (error is ServerError && error.networkResponse != null && error.networkResponse.data != null) {
+                val errorResponse = String(error.networkResponse.data)
+                Log.e("NetworkServiceAdapter", "Error en la respuesta del servidor: $errorResponse")
+                val statusCode = error.networkResponse?.statusCode ?: -1
+                Log.e("NetworkServiceAdapter", "Error en el servidor, código de estado HTTP $statusCode: $error")
+                cont.resumeWithException(ServerErrorException("Error en el servidor, código de estado HTTP $statusCode"))
+            } else if (error is AuthFailureError) {
+                cont.resumeWithException(AuthFailureErrorException("Error de autenticación, posiblemente credenciales incorrectas"))
+            } else if (error is ParseError) {
+                cont.resumeWithException(ParseErrorException("Error al analizar la respuesta del servidor"))
+            } else if (error is NoConnectionError) {
+                cont.resumeWithException(NoConnectionErrorException("No hay conexión a Internet"))
+            } else if (error is TimeoutError) {
+                cont.resumeWithException(TimeoutErrorException("Tiempo de espera agotado"))
+            } else {
+                // Otro tipo de error
+                cont.resumeWithException(error)
+            }
+        }
+
+        requestQueue.add(postRequest("albums", body, responseListener, errorListener))
     }
 
     private fun postRequest(
@@ -195,6 +240,14 @@ open class NetworkServiceAdapter constructor(context: Context) {
         )
     }
 
+    private fun getRequest(
+        path: String,
+        responseListener: Response.Listener<String>,
+        errorListener: Response.ErrorListener
+    ): StringRequest {
+        return StringRequest(Request.Method.GET, BASE_URL + path, responseListener, errorListener)
+    }
+
     private fun putRequest(
         path: String,
         body: JSONObject,
@@ -209,4 +262,17 @@ open class NetworkServiceAdapter constructor(context: Context) {
             errorListener
         )
     }
+
+    class NetworkErrorException(message: String) : Exception(message)
+
+    class ServerErrorException(message: String) : Exception(message)
+
+    class AuthFailureErrorException(message: String) : Exception(message)
+
+    class ParseErrorException(message: String) : Exception(message)
+
+    class NoConnectionErrorException(message: String) : Exception(message)
+
+    class TimeoutErrorException(message: String) : Exception(message)
+
 }

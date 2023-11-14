@@ -33,6 +33,10 @@
     <fragment
         android:id="@+id/albumCreateFragment"
         android:name="co.edu.uniandes.miswmobile.vinilosapp.ui.AlbumCreateFragment"
-        android:label="AlbumCreateFragment" />
+        android:label="AlbumCreateFragment" >
+        <action
+            android:id="@+id/action_albumCreateFragment_to_albumFragment"
+            app:destination="@id/albumFragment" />
+    </fragment>
 
 </navigation>

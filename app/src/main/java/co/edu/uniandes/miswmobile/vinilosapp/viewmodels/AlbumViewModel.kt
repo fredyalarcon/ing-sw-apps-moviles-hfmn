@@ -2,7 +2,6 @@ package co.edu.uniandes.miswmobile.vinilosapp.viewmodels
 
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -73,6 +72,21 @@ class AlbumViewModel(application: Application) : AndroidViewModel(application) {
                 withContext(Dispatchers.IO){
                     var data = albumsRepository.refreshData()
                     _albums.postValue(data)
+                }
+                _eventNetworkError.postValue(false)
+                _isNetworkErrorShown.postValue(false)
+            }
+        }
+        catch (e:Exception){
+            _eventNetworkError.value = true
+        }
+    }
+
+    suspend fun createAlbum(album: Album){
+        try {
+            viewModelScope.launch(Dispatchers.Default){
+                withContext(Dispatchers.IO) {
+                    var data = albumsRepository.createAlbum(album)
                 }
                 _eventNetworkError.postValue(false)
                 _isNetworkErrorShown.postValue(false)
