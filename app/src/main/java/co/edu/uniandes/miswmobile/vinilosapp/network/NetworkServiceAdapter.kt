@@ -7,27 +7,20 @@ import co.edu.uniandes.miswmobile.vinilosapp.models.Album
 import co.edu.uniandes.miswmobile.vinilosapp.models.Band
 import co.edu.uniandes.miswmobile.vinilosapp.models.Musician
 import co.edu.uniandes.miswmobile.vinilosapp.models.Performer
-import com.android.volley.Request
-import com.android.volley.RequestQueue
-import com.android.volley.Response
-import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley
-import co.edu.uniandes.miswmobile.vinilosapp.models.Album
-import co.edu.uniandes.miswmobile.vinilosapp.models.Band
-import co.edu.uniandes.miswmobile.vinilosapp.models.Musician
-import co.edu.uniandes.miswmobile.vinilosapp.models.Performer
 import com.android.volley.AuthFailureError
 import com.android.volley.NetworkError
 import com.android.volley.NoConnectionError
 import com.android.volley.ParseError
+import com.android.volley.Request
+import com.android.volley.RequestQueue
+import com.android.volley.Response
 import com.android.volley.ServerError
 import com.android.volley.TimeoutError
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import org.json.JSONArray
 import org.json.JSONObject
-import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
-import kotlin.coroutines.suspendCoroutine
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
@@ -70,36 +63,6 @@ open class NetworkServiceAdapter constructor(context: Context) {
                     cont.resume(list)
                 },
                 Response.ErrorListener {
-                    cont.resumeWithException(it)
-                })
-        )
-    }
-
-    suspend fun getBand(
-        onComplete: (resp: List<Band>) -> Unit,
-        onError: (error: VolleyError) -> Unit
-    ) {
-        requestQueue.add(
-            getRequest("bands",
-                { response ->
-                    val resp = JSONArray(response)
-                    val list = mutableListOf<Band>()
-                    for (i in 0 until resp.length()) {
-                        val item = resp.getJSONObject(i)
-                        list.add(
-                            i,
-                            Band(
-                                performerId = item.getInt("id"),
-                                name = item.getString("name"),
-                                image = item.getString("image"),
-                                description = item.getString("description"),
-                                creationDate = item.getString("creationDate")
-                            )
-                        )
-                    }
-                    cont.resume(list)
-                },
-                {
                     cont.resumeWithException(it)
                 })
         )

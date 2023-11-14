@@ -67,7 +67,7 @@ class AlbumCreateFragment : Fragment() {
                 viewModel.createAlbum(album)
             }
 
-            navController.navigate(R.id.action_albumCreateFragment_to_albumFragment)
+            navController.navigate(R.id.albumFragment)
 
         }
         return binding.root
