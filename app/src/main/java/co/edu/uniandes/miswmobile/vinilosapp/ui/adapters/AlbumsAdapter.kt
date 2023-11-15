@@ -44,7 +44,7 @@ class AlbumsAdapter :
         }
         holder.bind(albums[position])
         holder.viewDataBinding.root.setOnClickListener {
-            onItemClick?.invoke(album)
+            onItemClick?.invoke(albums[position])
         }
     }
 
