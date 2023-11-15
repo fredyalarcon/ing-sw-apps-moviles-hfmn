@@ -36,11 +36,14 @@
     <fragment
         android:id="@+id/albumCreateFragment"
         android:name="co.edu.uniandes.miswmobile.vinilosapp.ui.AlbumCreateFragment"
-        android:label="AlbumCreateFragment" />
+        android:label="AlbumCreateFragment" >
+        <action
+            android:id="@+id/action_albumCreateFragment_to_albumFragment"
+            app:destination="@id/albumFragment" />
+    </fragment>
     <fragment
         android:id="@+id/albumDetail"
         android:name="co.edu.uniandes.miswmobile.vinilosapp.ui.AlbumDetailFragment"
         android:label="@string/album_detail"
         tools:layout="@layout/album_detail_fragment" />
-
 </navigation>

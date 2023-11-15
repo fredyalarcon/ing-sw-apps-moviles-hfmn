@@ -1,6 +1,7 @@
 package co.edu.uniandes.miswmobile.vinilosapp.repositories
 
 import android.app.Application
+import co.edu.uniandes.miswmobile.vinilosapp.models.Album
 import co.edu.uniandes.miswmobile.vinilosapp.models.Performer
 import co.edu.uniandes.miswmobile.vinilosapp.network.NetworkServiceAdapter
 

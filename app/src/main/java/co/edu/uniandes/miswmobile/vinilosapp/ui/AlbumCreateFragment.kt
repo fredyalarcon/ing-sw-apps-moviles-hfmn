@@ -5,7 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.recyclerview.widget.RecyclerView
+import co.edu.uniandes.miswmobile.vinilosapp.R
 import co.edu.uniandes.miswmobile.vinilosapp.databinding.AlbumCreateFragmentBinding
+import co.edu.uniandes.miswmobile.vinilosapp.models.Album
+import co.edu.uniandes.miswmobile.vinilosapp.viewmodels.AlbumViewModel
+import kotlinx.coroutines.launch
 
 /**
  * A simple [Fragment] subclass.
@@ -16,6 +25,9 @@ class AlbumCreateFragment : Fragment() {
 
     private var _binding: AlbumCreateFragmentBinding? = null
     private val binding get() = _binding!!
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var viewModel: AlbumViewModel
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +41,44 @@ class AlbumCreateFragment : Fragment() {
     ): View? {
         _binding = AlbumCreateFragmentBinding.inflate(inflater, container, false)
         _binding!!.lifecycleOwner = this
+
+        viewModel = ViewModelProvider(this).get(AlbumViewModel::class.java)
+
+        //acción cuando dé clik en el botón save de álbum
+        binding.saveAlbum.setOnClickListener{
+            val name = binding.nombre.text.toString()
+            val cover = binding.cover.text.toString()
+            val releaseDate = binding.createDate.text.toString()
+            val description = binding.description.text.toString()
+            val genre = binding.genre.text.toString()
+            val recordLabel = binding.record.text.toString()
+
+            // crear objeto álbum
+            val album = Album(
+                name = name,
+                cover = cover,
+                releaseDate = releaseDate,
+                description = description,
+                genre = genre,
+                recordLabel = recordLabel
+            )
+            // Llamar a la función suspendida dentro de un bloque de código suspendido
+            lifecycleScope.launch {
+                viewModel.createAlbum(album)
+            }
+
+            navController.navigate(R.id.albumFragment)
+
+        }
         return binding.root
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        val activity = requireNotNull(this.activity) {
+            "You can only access the viewModel after onActivityCreated()"
+        }
+        navController = activity.findNavController(R.id.nav_host_fragment)
     }
 
     companion object {
