@@ -6,10 +6,6 @@
         <variable name="album" type="co.edu.uniandes.miswmobile.vinilosapp.models.Album"/>
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -26,25 +22,12 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <ProgressBar
-                    android:id="@+id/progressBarAlbumItem"
-                    style="?android:attr/progressBarStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:visibility="gone"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="20dp"/>
-
                 <ImageView
                     android:id="@+id/imageView"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:scaleType="centerCrop"
-                    android:contentDescription="@string/album_cover"
-                    android:src="@{album.cover}" />
+                    android:contentDescription="@string/album_cover" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -69,8 +52,6 @@
                         android:textSize="16sp" />
 
                 </LinearLayout>
-
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

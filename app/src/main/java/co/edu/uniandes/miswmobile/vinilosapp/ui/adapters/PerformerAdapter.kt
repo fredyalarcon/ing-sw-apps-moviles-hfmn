@@ -2,15 +2,16 @@ package co.edu.uniandes.miswmobile.vinilosapp.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.annotation.LayoutRes
+import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import co.edu.uniandes.miswmobile.vinilosapp.R
 import co.edu.uniandes.miswmobile.vinilosapp.databinding.PerformerItemBinding
 import co.edu.uniandes.miswmobile.vinilosapp.models.Performer
 import com.bumptech.glide.Glide
-import com.bumptech.glide.signature.ObjectKey
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 
 class PerformerAdapter : RecyclerView.Adapter<PerformerAdapter.PerformersViewHolder>() {
 
@@ -31,18 +32,10 @@ class PerformerAdapter : RecyclerView.Adapter<PerformerAdapter.PerformersViewHol
 
     override fun onBindViewHolder(holder: PerformersViewHolder, position: Int) {
         holder.viewDataBinding.also {
-            val currentArtist = performers[position]
-            val context = holder.itemView.context
-            it.performer = currentArtist
-            //Cargar imagenes con la librería Glide
-
-            Glide.with(context)
-                .load(currentArtist.image)
-                .placeholder(R.drawable.progress_animation)
-                .fitCenter()
-                .signature(ObjectKey(System.currentTimeMillis().toString()))
-                .into(holder.imageView)
+            it.performer = performers[position]
         }
+        holder.bind(performers[position])
+        holder.viewDataBinding.root.setOnClickListener {}
     }
 
     override fun getItemCount(): Int {
@@ -51,10 +44,20 @@ class PerformerAdapter : RecyclerView.Adapter<PerformerAdapter.PerformersViewHol
 
     class PerformersViewHolder(val viewDataBinding: PerformerItemBinding) :
         RecyclerView.ViewHolder(viewDataBinding.root) {
-        val imageView: ImageView = itemView.findViewById(R.id.imageView)
         companion object {
             @LayoutRes
-            val LAYOUT = R.layout.`performer_item`
+            val LAYOUT = R.layout.performer_item
+        }
+
+        fun bind(performer: Performer) {
+            Glide.with(itemView)
+                .load(performer.image.toUri().buildUpon().scheme("https").build())
+                .apply(
+                    RequestOptions()
+                        .placeholder(R.drawable.progress_animation)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .error(R.drawable.ic_broken_image))
+                .into(viewDataBinding.imageView)
         }
     }
 }

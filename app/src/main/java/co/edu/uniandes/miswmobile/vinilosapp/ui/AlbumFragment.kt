@@ -16,11 +16,11 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import co.edu.uniandes.miswmobile.vinilosapp.R
 import co.edu.uniandes.miswmobile.vinilosapp.databinding.AlbumFragmentBinding
 import co.edu.uniandes.miswmobile.vinilosapp.models.Album
 import co.edu.uniandes.miswmobile.vinilosapp.ui.adapters.AlbumsAdapter
 import co.edu.uniandes.miswmobile.vinilosapp.viewmodels.AlbumViewModel
-import co.edu.uniandes.miswmobile.vinilosapp.R
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
@@ -76,6 +76,7 @@ class AlbumFragment : Fragment() {
         recyclerView = binding.albumsRv
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = viewModelAdapter
+        viewModelAdapter?.onItemClick = { album -> openAlbum(album) }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -87,7 +88,7 @@ class AlbumFragment : Fragment() {
         progressBar = activity.findViewById(R.id.progressBar)
         progressBar.visibility = View.VISIBLE
 
-        viewModel = ViewModelProvider(this, AlbumViewModel.Factory(activity.application)).get(
+        viewModel = ViewModelProvider(activity, AlbumViewModel.Factory(activity.application)).get(
             AlbumViewModel::class.java)
         viewModel.albums.observe(viewLifecycleOwner, Observer<List<Album>> {
             it.apply {
@@ -102,6 +103,18 @@ class AlbumFragment : Fragment() {
             if (isNetworkError) onNetworkError()
         })
 
+    }
+
+    private fun openAlbum (album: Album) {
+        val activity = requireNotNull(this.activity) {
+            "You can only access the viewModel after onActivityCreated()"
+        }
+        // Get the navigation host fragment from this Activity
+        val navController = activity.findNavController(R.id.nav_host_fragment)
+        // Instantiate the navController using the NavHostFragment
+        val bundle = Bundle()
+        album?.albumId?.let { bundle.putInt("albumId", it) }
+        navController.navigate(R.id.action_albumFragment_to_albumDetail, bundle)
     }
 
     override fun onDestroyView() {
