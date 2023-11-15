@@ -1,11 +1,13 @@
 package co.edu.uniandes.miswmobile.vinilosapp.ui.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import co.edu.uniandes.miswmobile.vinilosapp.R
 import co.edu.uniandes.miswmobile.vinilosapp.databinding.AlbumItemBinding
@@ -24,6 +26,7 @@ class AlbumsAdapter :
             field = value
             notifyDataSetChanged()
         }
+    var onItemClick: ((Album) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlbumViewHolder {
         val withDataBinding: AlbumItemBinding = DataBindingUtil.inflate(
@@ -62,7 +65,7 @@ class AlbumsAdapter :
             }
         }
         holder.viewDataBinding.root.setOnClickListener {
-
+            onItemClick?.invoke(album)
         }
     }
 
