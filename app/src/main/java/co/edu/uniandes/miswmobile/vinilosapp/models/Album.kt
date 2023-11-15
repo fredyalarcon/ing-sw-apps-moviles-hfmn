@@ -1,7 +1,7 @@
 package co.edu.uniandes.miswmobile.vinilosapp.models
 
 data class Album (
-    val albumId:Int,
+    val albumId:Int? = null,
     val name:String,
     val cover:String,
     val releaseDate:String,
