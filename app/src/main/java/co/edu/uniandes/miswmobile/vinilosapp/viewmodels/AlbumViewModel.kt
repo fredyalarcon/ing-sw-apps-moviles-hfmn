@@ -23,6 +23,8 @@ class AlbumViewModel(application: Application) : AndroidViewModel(application) {
 
     private val _albums = MutableLiveData<List<Album>>()
 
+    private lateinit var _current_albums: List<Album>
+
     val albums: LiveData<List<Album>>
         get() = Transformations.map(_albums) { albumsList ->
             // álbumes ordenados por nombre
@@ -30,6 +32,15 @@ class AlbumViewModel(application: Application) : AndroidViewModel(application) {
                 album.copy(releaseDate = formatearFecha(album.releaseDate))
             }
         }
+
+    val album: LiveData<Album>
+        get() = album
+
+
+    fun getAlbum(albumId: Int?): Album? {
+        val value = _current_albums?.find { x -> x.albumId == albumId }
+        return value?.copy(releaseDate = formatearFecha(value?.releaseDate))
+    }
 
     // Función para formatear la fecha
     private fun formatearFecha(fechaString: String?): String {
@@ -73,6 +84,8 @@ class AlbumViewModel(application: Application) : AndroidViewModel(application) {
                 withContext(Dispatchers.IO) {
                     var data = albumsRepository.refreshData()
                     _albums.postValue(data)
+                    _current_albums = data
+
                 }
                 _eventNetworkError.postValue(false)
                 _isNetworkErrorShown.postValue(false)

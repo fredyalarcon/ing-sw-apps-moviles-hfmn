@@ -22,11 +22,16 @@
     <string name="title_albums">Albums</string>
     <string name="title_collectors">Coleccionistas</string>
     <string name="title_comments">Comentarios del álbum</string>
+    <string name="comments">Comentarios</string>
+    <string name="songs">Canciones</string>
+    <string name="releaseDate">Fecha de lanzamiento: </string>
+    <string name="recordLabel">Sello discográfico: </string>
     <string name="title_menu">Menu Principal</string>
     <string name="collector">Coleccionista</string>
     <string name="visitor">Visitante</string>
     <string name="welcome">Bienvenido\n</string>
     <string name="albums">Álbumes</string>
+    <string name="album_detail">Detalle Álbum</string>
     <string name="artists">Artistas</string>
     <string name="artist_image">Imagen</string>
     <string name="artist_there_no_artists">No hay artistas disponibles</string>
