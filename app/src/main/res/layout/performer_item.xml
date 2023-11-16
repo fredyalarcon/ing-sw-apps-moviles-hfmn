@@ -6,10 +6,6 @@
         <variable name="performer" type="co.edu.uniandes.miswmobile.vinilosapp.models.Performer"/>
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -28,10 +24,9 @@
 
                 <ImageView
                     android:id="@+id/imageView"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:scaleType="centerCrop"
-                    android:src="@{performer.image}"
                     android:contentDescription="@string/artist_image"/>
 
                 <LinearLayout
@@ -49,9 +44,6 @@
                         android:text="@{performer.name}" />
 
                 </LinearLayout>
-
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
 </layout>

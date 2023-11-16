@@ -22,11 +22,16 @@
     <string name="title_albums">Albums</string>
     <string name="title_collectors">Coleccionistas</string>
     <string name="title_comments">Comentarios del álbum</string>
+    <string name="comments">Comentarios</string>
+    <string name="songs">Canciones</string>
+    <string name="releaseDate">Fecha de lanzamiento: </string>
+    <string name="recordLabel">Sello discográfico: </string>
     <string name="title_menu">Menu Principal</string>
     <string name="collector">Coleccionista</string>
     <string name="visitor">Visitante</string>
     <string name="welcome">Bienvenido\n</string>
     <string name="albums">Álbumes</string>
+    <string name="album_detail">Detalle Álbum</string>
     <string name="artists">Artistas</string>
     <string name="artist_image">Imagen</string>
     <string name="artist_there_no_artists">No hay artistas disponibles</string>
@@ -34,7 +39,6 @@
     <string name="main_menu">Menu Principal</string>
     <string name="action_save">Guardar</string>
     <string name="action_cancel">Cancelar</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="create_album">Nuevo Álbum</string>
     <string name="track_add_track">Agregar cancion</string>
 </resources>
