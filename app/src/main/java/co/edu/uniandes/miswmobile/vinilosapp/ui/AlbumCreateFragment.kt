@@ -5,15 +5,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.Toast
+import androidx.core.content.res.TypedArrayUtils
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.recyclerview.widget.RecyclerView
 import co.edu.uniandes.miswmobile.vinilosapp.R
 import co.edu.uniandes.miswmobile.vinilosapp.databinding.AlbumCreateFragmentBinding
 import co.edu.uniandes.miswmobile.vinilosapp.models.Album
-import co.edu.uniandes.miswmobile.vinilosapp.viewmodels.AlbumViewModel
+import co.edu.uniandes.miswmobile.vinilosapp.viewmodels.AlbumCreateViewModel
 import kotlinx.coroutines.launch
 
 /**
@@ -25,8 +27,7 @@ class AlbumCreateFragment : Fragment() {
 
     private var _binding: AlbumCreateFragmentBinding? = null
     private val binding get() = _binding!!
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var viewModel: AlbumViewModel
+    private lateinit var viewModel: AlbumCreateViewModel
     private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,8 +42,7 @@ class AlbumCreateFragment : Fragment() {
     ): View? {
         _binding = AlbumCreateFragmentBinding.inflate(inflater, container, false)
         _binding!!.lifecycleOwner = this
-
-        viewModel = ViewModelProvider(this).get(AlbumViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(AlbumCreateViewModel::class.java)
 
         //acción cuando dé clik en el botón save de álbum
         binding.saveAlbum.setOnClickListener{
@@ -66,10 +66,29 @@ class AlbumCreateFragment : Fragment() {
             lifecycleScope.launch {
                 viewModel.createAlbum(album)
             }
-
-            navController.navigate(R.id.albumFragment)
-
+            navController.navigate(R.id.action_albumCreateFragment_to_albumFragment)
         }
+
+        viewModel.genres.observe(viewLifecycleOwner) { genres ->
+            val genresField = binding.genre
+            val genresAdapter = ArrayAdapter(
+                requireContext(),
+                android.R.layout.simple_dropdown_item_1line,
+                genres.orEmpty()
+            )
+            genresField.setAdapter(genresAdapter)
+        }
+
+        viewModel.recordLabels.observe(viewLifecycleOwner) { recordLabes ->
+            val recordsLabelsField = binding.record
+            val recordLabelsAdapter = ArrayAdapter(
+                requireContext(),
+                android.R.layout.simple_dropdown_item_1line,
+                recordLabes.orEmpty()
+            )
+            recordsLabelsField.setAdapter(recordLabelsAdapter)
+        }
+
         return binding.root
     }
 
@@ -79,6 +98,14 @@ class AlbumCreateFragment : Fragment() {
             "You can only access the viewModel after onActivityCreated()"
         }
         navController = activity.findNavController(R.id.nav_host_fragment)
+        viewModel = ViewModelProvider(this, AlbumCreateViewModel.Factory(activity.application)).get(
+            AlbumCreateViewModel::class.java
+        )
+        viewModel.eventNetworkError.observe(
+            viewLifecycleOwner
+        ) { isNetworkError ->
+            if (isNetworkError) onNetworkError()
+        }
     }
 
     companion object {
@@ -100,5 +127,12 @@ class AlbumCreateFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun onNetworkError() {
+        if(!viewModel.isNetworkErrorShown.value!!) {
+            Toast.makeText(activity, "Network Error", Toast.LENGTH_LONG).show()
+            viewModel.onNetworkErrorShown()
+        }
     }
 }

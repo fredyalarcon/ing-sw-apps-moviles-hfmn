@@ -80,6 +80,7 @@ xmlns:tools="http://schemas.android.com/tools">
                 app:icon="@drawable/share"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
+                
         </LinearLayout>
 
         <LinearLayout

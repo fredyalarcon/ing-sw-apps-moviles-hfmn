@@ -17,5 +17,5 @@
 
     <style name="Theme.VinilosApplication.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="Theme.VinilosApplication.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="Theme.VinilosApplication.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark" />
 </resources>
