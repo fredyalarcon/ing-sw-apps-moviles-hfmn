@@ -51,8 +51,8 @@ xmlns:tools="http://schemas.android.com/tools">
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:layout_marginEnd="70dp"
                 android:orientation="vertical">
-
                 <TextView
                     android:id="@+id/textView6"
                     android:layout_width="match_parent"
@@ -70,6 +70,17 @@ xmlns:tools="http://schemas.android.com/tools">
                     android:textStyle="bold" />
 
             </LinearLayout>
+
+            <Button
+                android:id="@+id/buttonShare"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="-60dp"
+                style="@style/Widget.AppCompat.Button.Colored"
+                app:icon="@drawable/share"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+                
         </LinearLayout>
 
         <LinearLayout
@@ -110,7 +121,7 @@ xmlns:tools="http://schemas.android.com/tools">
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
-                    android:text="@{album.recordLabel}"
+                    android:text="@{album.releaseDate}"
                     android:textSize="18sp" />
 
             </LinearLayout>
@@ -134,7 +145,7 @@ xmlns:tools="http://schemas.android.com/tools">
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
-                    android:text="@{album.releaseDate}"
+                    android:text="@{album.recordLabel}"
                     android:textSize="16sp" />
 
             </LinearLayout>
@@ -157,25 +168,26 @@ xmlns:tools="http://schemas.android.com/tools">
 
                 <Button
                     android:id="@+id/buttonSongs"
-                    android:layout_width="150dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
+                    android:gravity="center"
                     android:text="@string/songs"
-                    android:textAlignment="center"
+                    app:icon="@drawable/menu"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
                     android:id="@+id/buttonComments"
-                    android:layout_width="150dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:layout_marginLeft="20dp"
+                    app:icon="@drawable/menu"
+                    android:gravity="center"
                     android:text="@string/comments"
-                    android:textAlignment="center"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"/>
+                    app:layout_constraintStart_toStartOf="parent" />
 
             </LinearLayout>
         </LinearLayout>

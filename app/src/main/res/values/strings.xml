@@ -39,7 +39,6 @@
     <string name="main_menu">Menu Principal</string>
     <string name="action_save">Guardar</string>
     <string name="action_cancel">Cancelar</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="create_album">Nuevo Álbum</string>
     <string name="track_add_track">Agregar cancion</string>
 </resources>
