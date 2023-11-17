@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
@@ -19,8 +20,8 @@ import co.edu.uniandes.miswmobile.vinilosapp.databinding.MenuFragmentBinding
 class MenuFragment : Fragment() {
     private var _binding: MenuFragmentBinding? = null
     private val binding get() = _binding!!
-    private lateinit var buttonAlbums: Button
-    private lateinit var buttonArtist: Button
+    private lateinit var buttonAlbums: LinearLayout
+    private lateinit var buttonArtist: LinearLayout
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
