@@ -145,20 +145,20 @@ class AlbumCreateFragment : Fragment() {
             viewModel.onNetworkErrorShown()
         }
     }
-}
 
-class CreateAlbumDialogFragment(navController: NavController) : DialogFragment() {
+    class CreateAlbumDialogFragment(navController: NavController) : DialogFragment() {
 
-    private val nav = navController
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
-        AlertDialog.Builder(requireContext())
-            .setMessage(getString(R.string.album_added_album_success))
-            .setPositiveButton(getString(R.string.action_accept)) { _, _ ->
-                nav.navigate(R.id.action_albumCreateFragment_to_albumFragment)
-            }
-            .create()
+        private val nav = navController
+        override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
+            AlertDialog.Builder(requireContext())
+                .setMessage(getString(R.string.album_added_album_success))
+                .setPositiveButton(getString(R.string.action_accept)) { _, _ ->
+                    nav.navigate(R.id.action_albumCreateFragment_to_albumFragment)
+                }
+                .create()
 
-    companion object {
-        const val TAG = "CreateAlbumDialog"
+        companion object {
+            const val TAG = "CreateAlbumDialog"
+        }
     }
 }
