@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import co.edu.uniandes.miswmobile.vinilosapp.R
 import co.edu.uniandes.miswmobile.vinilosapp.databinding.PerformerItemBinding
+import co.edu.uniandes.miswmobile.vinilosapp.models.Album
 import co.edu.uniandes.miswmobile.vinilosapp.models.Performer
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -20,6 +21,8 @@ class PerformerAdapter : RecyclerView.Adapter<PerformerAdapter.PerformersViewHol
             field = value
             notifyDataSetChanged()
         }
+
+    var onItemClick: ((Performer) -> Unit)? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PerformersViewHolder {
         val withDataBinding: PerformerItemBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
@@ -35,7 +38,9 @@ class PerformerAdapter : RecyclerView.Adapter<PerformerAdapter.PerformersViewHol
             it.performer = performers[position]
         }
         holder.bind(performers[position])
-        holder.viewDataBinding.root.setOnClickListener {}
+        holder.viewDataBinding.root.setOnClickListener {
+            onItemClick?.invoke(performers[position])
+        }
     }
 
     override fun getItemCount(): Int {
