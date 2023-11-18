@@ -32,7 +32,11 @@
         android:id="@+id/artistFragment"
         android:name="co.edu.uniandes.miswmobile.vinilosapp.ui.PerformerFragment"
         android:label="@string/artists"
-        tools:layout="@layout/performer_fragment" />
+        tools:layout="@layout/performer_fragment" >
+        <action
+            android:id="@+id/action_artistFragment_to_performerDetailFragment"
+            app:destination="@id/performerDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/albumCreateFragment"
         android:name="co.edu.uniandes.miswmobile.vinilosapp.ui.AlbumCreateFragment"
@@ -46,4 +50,8 @@
         android:name="co.edu.uniandes.miswmobile.vinilosapp.ui.AlbumDetailFragment"
         android:label="@string/album_detail"
         tools:layout="@layout/album_detail_fragment" />
+    <fragment
+        android:id="@+id/performerDetailFragment"
+        android:name="co.edu.uniandes.miswmobile.vinilosapp.ui.PerformerDetailFragment"
+        android:label="@string/artists_detail" />
 </navigation>

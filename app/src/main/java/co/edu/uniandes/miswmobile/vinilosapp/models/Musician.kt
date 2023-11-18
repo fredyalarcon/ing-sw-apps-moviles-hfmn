@@ -1,7 +1,7 @@
 package co.edu.uniandes.miswmobile.vinilosapp.models
 
 data class Musician (
-    val birthDate: String,
+    var birthDate: String,
     override val performerId:Int,
     override val name: String,
     override val image: String,
