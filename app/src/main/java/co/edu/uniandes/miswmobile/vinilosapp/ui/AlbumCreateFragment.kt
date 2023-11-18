@@ -1,5 +1,7 @@
 package co.edu.uniandes.miswmobile.vinilosapp.ui
 
+import android.app.AlertDialog
+import android.app.Dialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.content.res.TypedArrayUtils
+import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
@@ -45,7 +48,7 @@ class AlbumCreateFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(AlbumCreateViewModel::class.java)
 
         //acción cuando dé clik en el botón save de álbum
-        binding.saveAlbum.setOnClickListener{
+        binding.saveAlbum.setOnClickListener {
             val name = binding.nombre.text.toString()
             val cover = binding.cover.text.toString()
             val releaseDate = binding.createDate.text.toString()
@@ -66,7 +69,10 @@ class AlbumCreateFragment : Fragment() {
             lifecycleScope.launch {
                 viewModel.createAlbum(album)
             }
-            navController.navigate(R.id.action_albumCreateFragment_to_albumFragment)
+            CreateAlbumDialogFragment(navController).show(
+                childFragmentManager,
+                CreateAlbumDialogFragment.TAG
+            )
         }
 
         viewModel.genres.observe(viewLifecycleOwner) { genres ->
@@ -79,14 +85,18 @@ class AlbumCreateFragment : Fragment() {
             genresField.setAdapter(genresAdapter)
         }
 
-        viewModel.recordLabels.observe(viewLifecycleOwner) { recordLabes ->
+        viewModel.recordLabels.observe(viewLifecycleOwner) { recordLabels ->
             val recordsLabelsField = binding.record
             val recordLabelsAdapter = ArrayAdapter(
                 requireContext(),
                 android.R.layout.simple_dropdown_item_1line,
-                recordLabes.orEmpty()
+                recordLabels.orEmpty()
             )
             recordsLabelsField.setAdapter(recordLabelsAdapter)
+        }
+
+        binding.cancelAlbum.setOnClickListener {
+            navController.navigate(R.id.action_albumCreateFragment_to_albumFragment)
         }
 
         return binding.root
@@ -133,6 +143,22 @@ class AlbumCreateFragment : Fragment() {
         if(!viewModel.isNetworkErrorShown.value!!) {
             Toast.makeText(activity, "Network Error", Toast.LENGTH_LONG).show()
             viewModel.onNetworkErrorShown()
+        }
+    }
+
+    class CreateAlbumDialogFragment(navController: NavController) : DialogFragment() {
+
+        private val nav = navController
+        override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
+            AlertDialog.Builder(requireContext())
+                .setMessage(getString(R.string.album_added_album_success))
+                .setPositiveButton(getString(R.string.action_accept)) { _, _ ->
+                    nav.navigate(R.id.action_albumCreateFragment_to_albumFragment)
+                }
+                .create()
+
+        companion object {
+            const val TAG = "CreateAlbumDialog"
         }
     }
 }
