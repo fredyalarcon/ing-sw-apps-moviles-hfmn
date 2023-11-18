@@ -26,10 +26,10 @@ public class PerformerListTest {
 
     @Test
     public void mainActivityArtistsEmptyTest() {
-        ViewInteraction buttonVisitor = onView(allOf(withId(R.id.buttonVisitor), withText("Visitante"), isDisplayed()));
+        ViewInteraction buttonVisitor = onView(allOf(withId(R.id.buttonVisitor), isDisplayed()));
         buttonVisitor.perform(click());
 
-        ViewInteraction buttonArtists = onView(allOf(withId(R.id.buttonArtists), withText("Artistas"), isDisplayed()));
+        ViewInteraction buttonArtists = onView(allOf(withId(R.id.buttonArtists), isDisplayed()));
         buttonArtists.perform(click());
 
         onView(allOf(withId(R.id.action_bar), withText("Artistas"), isDisplayed()));

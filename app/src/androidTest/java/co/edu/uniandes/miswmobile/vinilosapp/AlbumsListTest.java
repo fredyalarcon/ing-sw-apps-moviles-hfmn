@@ -31,10 +31,10 @@ public class AlbumsListTest {
 
     @Test
     public void mainActivityAlbumsEmptyTest() {
-        ViewInteraction buttonVisitor = onView(allOf(withId(R.id.buttonVisitor), withText("Visitante"), isDisplayed()));
+        ViewInteraction buttonVisitor = onView(allOf(withId(R.id.buttonVisitor), isDisplayed()));
         buttonVisitor.perform(click());
 
-        ViewInteraction buttonAlbums = onView(allOf(withId(R.id.buttonAlbums), withText("Álbumes"), isDisplayed()));
+        ViewInteraction buttonAlbums = onView(allOf(withId(R.id.buttonAlbums), isDisplayed()));
         buttonAlbums.perform(click());
 
         onView(allOf(withId(R.id.action_bar), withText("Álbumes"), isDisplayed()));

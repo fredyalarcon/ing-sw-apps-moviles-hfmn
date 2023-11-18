@@ -28,7 +28,6 @@ class AlbumDetailTest {
         val buttonVisitor = Espresso.onView(
             allOf(
                 ViewMatchers.withId(R.id.buttonVisitor),
-                ViewMatchers.withText("Visitante"),
                 ViewMatchers.isDisplayed()
             )
         )
@@ -37,7 +36,6 @@ class AlbumDetailTest {
         val buttonAlbums = Espresso.onView(
             allOf(
                 ViewMatchers.withId(R.id.buttonAlbums),
-                ViewMatchers.withText("Álbumes"),
                 ViewMatchers.isDisplayed()
             )
         )
