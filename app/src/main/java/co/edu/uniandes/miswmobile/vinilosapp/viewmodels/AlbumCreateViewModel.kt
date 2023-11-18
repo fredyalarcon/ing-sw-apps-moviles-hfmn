@@ -1,7 +1,6 @@
 package co.edu.uniandes.miswmobile.vinilosapp.viewmodels
 
 import android.app.Application
-import android.os.Bundle
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -38,7 +37,7 @@ class AlbumCreateViewModel(application: Application): AndroidViewModel(applicati
         try {
             viewModelScope.launch(Dispatchers.Default){
                 withContext(Dispatchers.IO) {
-                    var data = albumsRepository.createAlbum(album)
+                    albumsRepository.createAlbum(album)
                 }
                 _eventNetworkError.postValue(false)
                 _isNetworkErrorShown.postValue(false)
