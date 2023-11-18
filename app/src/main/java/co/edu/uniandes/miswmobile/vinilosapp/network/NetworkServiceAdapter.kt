@@ -127,6 +127,28 @@ open class NetworkServiceAdapter constructor(context: Context) {
             }))
     }
 
+    open suspend fun getMusician(id: Int) = suspendCoroutine<Musician> { cont ->
+        requestQueue.add(getRequest("musicians/${id}",
+            { response ->
+                val item = JSONObject(response)
+                cont.resume(Musician(performerId = item.getInt("id"), name = item.getString("name"), image = item.getString("image"), description = item.getString("description"), birthDate = item.getString("birthDate")))
+            },
+            {
+                cont.resumeWithException(it)
+            }))
+    }
+
+    open suspend fun getBand(id: Int) = suspendCoroutine<Band> { cont ->
+        requestQueue.add(getRequest("bands/${id}",
+            { response ->
+                val item = JSONObject(response)
+                cont.resume(Band(performerId = item.getInt("id"), name = item.getString("name"), image = item.getString("image"), description = item.getString("description"), creationDate = item.getString("creationDate")))
+            },
+            {
+                cont.resumeWithException(it)
+            }))
+    }
+
     open suspend fun createAlbum(
         album: Album
     ): JSONObject = suspendCoroutine { cont ->
