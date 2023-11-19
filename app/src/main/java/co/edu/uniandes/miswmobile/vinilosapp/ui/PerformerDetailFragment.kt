@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import co.edu.uniandes.miswmobile.vinilosapp.R
 import co.edu.uniandes.miswmobile.vinilosapp.databinding.PerformerDetailFragmentBinding
+import co.edu.uniandes.miswmobile.vinilosapp.models.Band
 import co.edu.uniandes.miswmobile.vinilosapp.models.Musician
 import co.edu.uniandes.miswmobile.vinilosapp.models.Performer
 import co.edu.uniandes.miswmobile.vinilosapp.viewmodels.PerformerViewModel
@@ -55,8 +57,18 @@ class PerformerDetailFragment : Fragment() {
     fun bind(performer: Performer?) {
         if (performer != null && _binding != null) {
             _binding?.performer = performer
-            _binding?.musician = performer as Musician?
-            _binding?.musician?.birthDate = formatDate(performer.birthDate)
+            if (performer is Musician) {
+                _binding?.musician = performer as Musician?
+                //_binding?.musician?.birthDate = formatDate(performer.birthDate)
+                _binding?.textView7?.text = formatDate(performer.birthDate)
+                _binding?.textView11?.text = getString(R.string.birthDate)
+            }
+            if (performer is Band) {
+                _binding?.band = performer as Band?
+                //_binding?.band?.creationDate = formatDate(performer.creationDate)
+                _binding?.textView7?.text = formatDate(performer.creationDate)
+                _binding?.textView11?.text = getString(R.string.createDate)
+            }
             _binding?.progressBarPerformerItem?.let { progressBar ->
                 Glide.with(this)
                     .load(performer. image.toUri().buildUpon().scheme("https").build())

@@ -8,6 +8,7 @@
     <variable name="performerId" type="String"/>
     <variable name="performer" type="co.edu.uniandes.miswmobile.vinilosapp.models.Performer"/>
     <variable name="musician" type="co.edu.uniandes.miswmobile.vinilosapp.models.Musician"/>
+    <variable name="band" type="co.edu.uniandes.miswmobile.vinilosapp.models.Band"/>
 </data>
 
     <ScrollView
@@ -122,7 +123,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
-                    android:text="@{musician.birthDate}"
                     android:textSize="18sp" />
 
             </LinearLayout>
