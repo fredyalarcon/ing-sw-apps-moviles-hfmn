@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -69,25 +68,25 @@ class PerformerDetailFragment : Fragment() {
                 _binding?.textView7?.text = formatDate(performer.creationDate)
                 _binding?.textView11?.text = getString(R.string.createDate)
             }
-            _binding?.progressBarPerformerItem?.let { progressBar ->
-                Glide.with(this)
-                    .load(performer. image.toUri().buildUpon().scheme("https").build())
-                    .apply(
-                        RequestOptions()
-                            .placeholder(R.drawable.progress_animation)
-                            .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .error(R.drawable.ic_broken_image))
-                    .into(binding.imageView)
 
-                Glide.with(this)
-                    .load(performer.image.toUri().buildUpon().scheme("https").build())
-                    .apply(
-                        RequestOptions()
-                            .placeholder(R.drawable.progress_animation)
-                            .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .error(R.drawable.ic_broken_image))
-                    .into(binding.imageView2)
-            }
+            Glide.with(this)
+                .load(performer.image.toUri().buildUpon().scheme("https").build())
+                .apply(
+                    RequestOptions()
+                        .placeholder(R.drawable.progress_animation)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .error(R.drawable.ic_broken_image))
+                .into(binding.imageView)
+
+            Glide.with(this)
+                .load(performer.image.toUri().buildUpon().scheme("https").build())
+                .apply(
+                    RequestOptions()
+                        .placeholder(R.drawable.progress_animation)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .error(R.drawable.ic_broken_image))
+                .into(binding.imageView2)
+
         }
     }
 
