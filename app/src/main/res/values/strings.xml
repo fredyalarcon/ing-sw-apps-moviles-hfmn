@@ -9,6 +9,7 @@
     <string name="album_name_placeholder">Nombre del album</string>
     <string name="album_description_placeholder">Descripcion del album</string>
     <string name="album_cover">Caratula del album</string>
+    <string name="image_artista">Imagen artista</string>
     <string name="album_release_date">Fecha de lanzamiento</string>
     <string name="album_genre">Género</string>
     <string name="album_record_label">Disquera</string>
@@ -23,6 +24,7 @@
     <string name="comments">Comentarios</string>
     <string name="songs">Canciones</string>
     <string name="releaseDate">Fecha de lanzamiento: </string>
+    <string name="createDate">Fecha de creación banda: </string>
     <string name="birthDate">Fecha de nacimiento: </string>
     <string name="recordLabel">Sello discográfico: </string>
     <string name="title_menu">Menu Principal</string>
