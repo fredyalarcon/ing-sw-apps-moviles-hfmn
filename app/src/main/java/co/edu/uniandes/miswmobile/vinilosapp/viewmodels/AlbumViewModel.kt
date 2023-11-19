@@ -22,7 +22,7 @@ import java.util.Locale
 class AlbumViewModel(application: Application) : AndroidViewModel(application) {
 
     private val _albums = MutableLiveData<List<Album>>()
-
+    private val _album = MutableLiveData<Album>()
     private lateinit var _current_albums: List<Album>
 
     val albums: LiveData<List<Album>>
@@ -34,13 +34,7 @@ class AlbumViewModel(application: Application) : AndroidViewModel(application) {
         }
 
     val album: LiveData<Album>
-        get() = album
-
-
-    fun getAlbum(albumId: Int?): Album? {
-        val value = _current_albums?.find { x -> x.albumId == albumId }
-        return value?.copy(releaseDate = formatearFecha(value?.releaseDate))
-    }
+        get() = _album
 
     // Función para formatear la fecha
     private fun formatearFecha(fechaString: String?): String {
@@ -85,7 +79,22 @@ class AlbumViewModel(application: Application) : AndroidViewModel(application) {
                     var data = albumsRepository.refreshData()
                     _albums.postValue(data)
                     _current_albums = data
+                }
+                _eventNetworkError.postValue(false)
+                _isNetworkErrorShown.postValue(false)
+            }
+        }
+        catch (e:Exception){
+            _eventNetworkError.value = true
+        }
+    }
 
+    fun getAlbum(id: Int){
+        try {
+            viewModelScope.launch(Dispatchers.Default){
+                withContext(Dispatchers.IO) {
+                    var data = albumsRepository.detailAlbum(id)
+                    _album.postValue(data)
                 }
                 _eventNetworkError.postValue(false)
                 _isNetworkErrorShown.postValue(false)
