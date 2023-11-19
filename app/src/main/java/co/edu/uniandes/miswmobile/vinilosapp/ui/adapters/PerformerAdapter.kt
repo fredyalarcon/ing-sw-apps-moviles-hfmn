@@ -1,5 +1,6 @@
 package co.edu.uniandes.miswmobile.vinilosapp.ui.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
@@ -17,6 +18,7 @@ import com.bumptech.glide.request.RequestOptions
 class PerformerAdapter : RecyclerView.Adapter<PerformerAdapter.PerformersViewHolder>() {
 
     var performers : List<Performer> = emptyList()
+        @SuppressLint("NotifyDataSetChanged")
         set(value) {
             field = value
             notifyDataSetChanged()

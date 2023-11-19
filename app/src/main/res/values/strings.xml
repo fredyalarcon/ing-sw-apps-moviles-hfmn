@@ -1,9 +1,6 @@
 <resources>
     <string name="app_name">Vinilos Grupo 26</string>
-    <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
     <string name="collector_name_placeholder">Nombre del coleccionista</string>
     <string name="collector_email_placeholder">Correo del coleccionista</string>
     <string name="collector_phone_placeholder">Número telefónico</string>
