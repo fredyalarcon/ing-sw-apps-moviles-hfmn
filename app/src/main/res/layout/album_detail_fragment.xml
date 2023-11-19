@@ -27,25 +27,12 @@ xmlns:tools="http://schemas.android.com/tools">
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ProgressBar
-                android:id="@+id/progressBarAlbumItem"
-                style="?android:attr/progressBarStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
-                android:visibility="gone" />
-
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:contentDescription="@string/album_cover"
-                android:scaleType="centerCrop"
-                android:src="@{album.cover}" />
+                android:scaleType="centerCrop"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -99,8 +86,7 @@ xmlns:tools="http://schemas.android.com/tools">
                 android:layout_height="250dp"
                 android:baselineAligned="false"
                 android:contentDescription="@string/album_cover"
-                android:scaleType="centerCrop"
-                android:src="@{album.cover}" />
+                android:scaleType="centerCrop"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

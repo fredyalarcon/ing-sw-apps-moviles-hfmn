@@ -41,4 +41,9 @@ class AlbumRepository (val application: Application){
         //}
     }
 
+    suspend fun detailAlbum(id: Int): Album{
+        return NetworkServiceAdapter.getInstance(application).getAlbum(id)
+
+    }
+
 }
