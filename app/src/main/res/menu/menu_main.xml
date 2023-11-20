@@ -1,10 +1,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.vinyls_jetpack_application.co.edu.uniandes.misw4203g26.ui.MainActivity">
+    tools:context=".ui.MainActivity">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/add_album"
+        android:icon="@android:drawable/ic_menu_add"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+        android:title="@string/album_add_album"
+        android:visible="false"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/add_track"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:icon="@android:drawable/ic_menu_add"
+        android:title="@string/track_add_track"
+        android:visible="false"
+        app:showAsAction="always" />
 </menu>

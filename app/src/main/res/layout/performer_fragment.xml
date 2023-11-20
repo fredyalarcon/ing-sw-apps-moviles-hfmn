@@ -3,10 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.ArtistFragment"
-    android:textColor="@color/white"
-    android:layout_marginStart="16dp"
-    android:layout_marginEnd="16dp">
+    tools:context=".ui.PerformerFragment"
+    android:textColor="@color/white">
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -20,6 +18,7 @@
         android:id="@+id/artistsRv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/performer_item"/>
+        android:clipToPadding="false"
+        tools:listitem="@layout/performer_item" />
 
 </FrameLayout>

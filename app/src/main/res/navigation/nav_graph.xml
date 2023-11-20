@@ -20,11 +20,38 @@
         android:id="@+id/albumFragment"
         android:name="co.edu.uniandes.miswmobile.vinilosapp.ui.AlbumFragment"
         android:label="@string/albums"
-        tools:layout="@layout/album_fragment" />
+        tools:layout="@layout/album_fragment" >
+        <action
+            android:id="@+id/action_albumFragment_to_albumCreateFragment"
+            app:destination="@id/albumCreateFragment" />
+        <action
+            android:id="@+id/action_albumFragment_to_albumDetail"
+            app:destination="@id/albumDetail" />
+    </fragment>
     <fragment
         android:id="@+id/artistFragment"
-        android:name="co.edu.uniandes.miswmobile.vinilosapp.ui.ArtistFragment"
+        android:name="co.edu.uniandes.miswmobile.vinilosapp.ui.PerformerFragment"
         android:label="@string/artists"
-        tools:layout="@layout/performer_fragment" />
-
+        tools:layout="@layout/performer_fragment" >
+        <action
+            android:id="@+id/action_artistFragment_to_performerDetailFragment"
+            app:destination="@id/performerDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/albumCreateFragment"
+        android:name="co.edu.uniandes.miswmobile.vinilosapp.ui.AlbumCreateFragment"
+        android:label="@string/create_album">
+        <action
+            android:id="@+id/action_albumCreateFragment_to_albumFragment"
+            app:destination="@id/albumFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/albumDetail"
+        android:name="co.edu.uniandes.miswmobile.vinilosapp.ui.AlbumDetailFragment"
+        android:label="@string/album_detail"
+        tools:layout="@layout/album_detail_fragment" />
+    <fragment
+        android:id="@+id/performerDetailFragment"
+        android:name="co.edu.uniandes.miswmobile.vinilosapp.ui.PerformerDetailFragment"
+        android:label="@string/artists_detail" />
 </navigation>

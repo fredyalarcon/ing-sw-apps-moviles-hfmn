@@ -40,7 +40,7 @@ android {
             debuggable true
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField "String", "BASE_URL",  '"http://192.168.1.116:3000/"'
+            buildConfigField "String", "BASE_URL",  '"http://192.168.101.5:3000/"'
         }
     }
     compileOptions {
@@ -66,10 +66,13 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
     // Network invocations lib
     implementation 'com.android.volley:volley:1.2.1'
-    //Librería picasso para el manejo de imágenes
-    implementation 'com.squareup.picasso:picasso:2.71828'
+    //manage images lib
+    implementation 'com.github.bumptech.glide:glide:4.16.0'
+    //manage corutine lib
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.5.1'
 }

@@ -9,16 +9,18 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import co.edu.uniandes.miswmobile.vinilosapp.R
 import co.edu.uniandes.miswmobile.vinilosapp.databinding.PerformerFragmentBinding
+import co.edu.uniandes.miswmobile.vinilosapp.models.Album
 import co.edu.uniandes.miswmobile.vinilosapp.models.Performer
 import co.edu.uniandes.miswmobile.vinilosapp.ui.adapters.PerformerAdapter
 import co.edu.uniandes.miswmobile.vinilosapp.viewmodels.PerformerViewModel
 
 
-class ArtistFragment : Fragment() {
+class PerformerFragment : Fragment() {
 
     private var _binding: PerformerFragmentBinding? = null
     private val binding get() = _binding!!
@@ -41,6 +43,7 @@ class ArtistFragment : Fragment() {
         recyclerView = binding.artistsRv
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = viewModelAdapter
+        viewModelAdapter?.onItemClick = { performer -> openPerformer(performer) }
     }
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -51,7 +54,7 @@ class ArtistFragment : Fragment() {
         activity.actionBar?.title = getString(R.string.artists)
         progressBar = activity.findViewById(R.id.progressBar)
         progressBar.visibility = View.VISIBLE
-        viewModel = ViewModelProvider(this, PerformerViewModel.Factory(activity.application)).get(
+        viewModel = ViewModelProvider(activity, PerformerViewModel.Factory(activity.application)).get(
             PerformerViewModel::class.java)
 
         viewModel.artists.observe(viewLifecycleOwner, Observer<List<Performer>> {
@@ -67,6 +70,18 @@ class ArtistFragment : Fragment() {
         viewModel.eventNetworkError.observe(viewLifecycleOwner, Observer<Boolean> { isNetworkError ->
             if (isNetworkError) onNetworkError()
         })
+    }
+
+    private fun openPerformer (performer: Performer) {
+        val activity = requireNotNull(this.activity) {
+            "You can only access the viewModel after onActivityCreated()"
+        }
+        // Get the navigation host fragment from this Activity
+        val navController = activity.findNavController(R.id.nav_host_fragment)
+        // Instantiate the navController using the NavHostFragment
+        val bundle = Bundle()
+        performer?.performerId?.let { bundle.putInt("performerId", it) }
+        navController.navigate(R.id.action_artistFragment_to_performerDetailFragment, bundle)
     }
 
     override fun onDestroyView() {
