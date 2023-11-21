@@ -1,5 +1,7 @@
 package co.edu.uniandes.miswmobile.vinilosapp.ui
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -47,7 +49,12 @@ class AlbumFragment : Fragment() {
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
         val item = menu.findItem(R.id.add_album)
-        item.isVisible = true
+        val activity = requireNotNull(this.activity) {
+            "You can only access the viewModel after onActivityCreated()"
+        }
+        var preferences: SharedPreferences = activity.getSharedPreferences("co.edu.uniandes.miswmobile.vinilosapp", Context.MODE_PRIVATE);
+        val collector = preferences.getString("collector", "");
+        item.isVisible = !collector.isNullOrEmpty()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
