@@ -7,6 +7,7 @@ import co.edu.uniandes.miswmobile.vinilosapp.models.Album
 import co.edu.uniandes.miswmobile.vinilosapp.models.Band
 import co.edu.uniandes.miswmobile.vinilosapp.models.Musician
 import co.edu.uniandes.miswmobile.vinilosapp.models.Performer
+import co.edu.uniandes.miswmobile.vinilosapp.models.Track
 import com.android.volley.AuthFailureError
 import com.android.volley.NetworkError
 import com.android.volley.NoConnectionError
@@ -284,6 +285,28 @@ open class NetworkServiceAdapter constructor(context: Context) {
         }
 
         requestQueue.add(postRequest("albums", body, responseListener, errorListener))
+    }
+
+    open suspend fun getTracks(idAlbum: Int) = suspendCoroutine<List<Track>> { continuation ->
+        requestQueue.add(getRequest("albums/${idAlbum}/tracks",
+            { response ->
+                val resp = JSONArray(response)
+                val list = mutableListOf<Track>()
+                for (i in 0 until resp.length()) {
+                    val item = resp.getJSONObject(i)
+                    val track = Track(
+                        id = item.getInt("id"),
+                        name = item.getString("name"),
+                        duration = item.getString("duration")
+                    )
+                    list.add(track)
+                }
+                continuation.resume(list)
+            }, {
+                continuation.resumeWithException(it)
+            })
+        )
+
     }
 
     private fun postRequest(
