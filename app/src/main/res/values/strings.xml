@@ -28,7 +28,7 @@
     <string name="birthDate">Fecha de nacimiento: </string>
     <string name="recordLabel">Sello discográfico: </string>
     <string name="title_menu">Menu Principal</string>
-    <string name="collector">Coleccionista</string>
+    <string name="collector">Coleccionista: </string>
     <string name="visitor">Visitante</string>
     <string name="welcome">Bienvenido\n</string>
     <string name="albums">Álbumes</string>
@@ -44,6 +44,16 @@
     <string name="action_accept">Aceptar</string>
     <string name="create_album">Nuevo Álbum</string>
     <string name="track_add_track">Agregar cancion</string>
+    <string name="user">Usuario: </string>
+    <string-array name="collectors">
+        <item></item>
+        <item>Manolo Bellon</item>
+        <item>Jaime Monsalve</item>
+        <item>Collector 1</item>
+        <item>Jhon Doe</item>
+        <item>Sebastian Saenz</item>
+        <item>Kevin Malone</item>
+    </string-array>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 

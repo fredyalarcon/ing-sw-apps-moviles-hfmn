@@ -1,8 +1,9 @@
 package co.edu.uniandes.miswmobile.vinilosapp.ui
 
+import android.annotation.SuppressLint
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -13,6 +14,7 @@ import co.edu.uniandes.miswmobile.vinilosapp.R
 class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
@@ -27,6 +29,15 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.my_toolbar))
         setupActionBarWithNavController(navController)
 
+        var preferences: SharedPreferences = getSharedPreferences("co.edu.uniandes.miswmobile.vinilosapp", Context.MODE_PRIVATE);
+        val collector = preferences.getString("collector", "");
+
+        if (collector.isNullOrEmpty()) {
+            binding.textCollector.text = resources.getString(R.string.visitor)
+        } else {
+            val user = resources.getString(R.string.user)
+            binding.textCollector.text = "$user $collector"
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
