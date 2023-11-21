@@ -53,5 +53,23 @@
     <fragment
         android:id="@+id/performerDetailFragment"
         android:name="co.edu.uniandes.miswmobile.vinilosapp.ui.PerformerDetailFragment"
-        android:label="@string/artists_detail" />
+        android:label="@string/artists_detail" >
+        <action
+            android:id="@+id/action_performerDetailFragment_to_artistAlbumsFragment"
+            app:destination="@id/artistAlbumsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/artistAlbumsFragment"
+        android:name="co.edu.uniandes.miswmobile.vinilosapp.ui.PerformerAlbumsFragment"
+        android:label="artist_albums_fragment"
+        tools:layout="@layout/performer_albums_fragment" >
+        <action
+            android:id="@+id/action_artistAlbumsFragment_to_performerAlbumsAddFragment"
+            app:destination="@id/performerAlbumsAddFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/performerAlbumsAddFragment"
+        android:name="co.edu.uniandes.miswmobile.vinilosapp.ui.PerformerAlbumsAddFragment"
+        android:label="performer_albums_add_fragment"
+        tools:layout="@layout/performer_albums_add_fragment" />
 </navigation>

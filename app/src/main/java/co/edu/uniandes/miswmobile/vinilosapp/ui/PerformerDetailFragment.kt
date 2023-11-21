@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import co.edu.uniandes.miswmobile.vinilosapp.R
 import co.edu.uniandes.miswmobile.vinilosapp.databinding.PerformerDetailFragmentBinding
 import co.edu.uniandes.miswmobile.vinilosapp.models.Band
@@ -45,6 +46,17 @@ class PerformerDetailFragment : Fragment() {
         val activity = requireNotNull(this.activity) {
             "You can only access the viewModel after onActivityCreated()"
         }
+
+        val buttonAlbums = binding.buttonAlbums
+        buttonAlbums?.setOnClickListener(
+            View.OnClickListener {
+                // Get the navigation host fragment from this Activity
+                val navController = activity.findNavController(R.id.nav_host_fragment)
+                // Instantiate the navController using the NavHostFragment
+                navController.navigate(R.id.action_performerDetailFragment_to_artistAlbumsFragment)
+            }
+        )
+
         viewModel = ViewModelProvider(activity, PerformerViewModel.Factory(activity.application)).get(
             PerformerViewModel::class.java)
         bind(viewModel.getPerformer(performerId))
