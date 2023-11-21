@@ -309,6 +309,33 @@ open class NetworkServiceAdapter constructor(context: Context) {
 
     }
 
+    open suspend fun addTrack(track: Track, idAlbum: Int): JSONObject =
+        suspendCoroutine { continuation ->
+            var body = JSONObject().apply {
+                put("name", track.name)
+                put("duration", track.duration)
+            }
+
+            var responseListener = Response.Listener<JSONObject> { response ->
+                continuation.resume(body)
+                Log.d("track", response.hashCode().toString())
+            }
+
+            var errorListener = Response.ErrorListener { error ->
+                continuation.resumeWithException(error)
+                Log.d("track", error.localizedMessage)
+            }
+
+            requestQueue.add(
+                postRequest(
+                    "/albums/${idAlbum}/tracks",
+                    body,
+                    responseListener,
+                    errorListener
+                )
+            )
+        }
+
     private fun postRequest(
         path: String,
         body: JSONObject,
