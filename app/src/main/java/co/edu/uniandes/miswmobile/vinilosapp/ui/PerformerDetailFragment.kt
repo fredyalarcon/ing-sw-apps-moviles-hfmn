@@ -24,13 +24,16 @@ import java.util.Locale
 class PerformerDetailFragment : Fragment() {
 
     private var performerId: Int? = null
+    private var instanceType: String? = null
+    private var name: String? = null
+
+
     private var _binding: PerformerDetailFragmentBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewModel: PerformerViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         arguments?.let {
             performerId = it.getInt("performerId")
         }
@@ -53,7 +56,11 @@ class PerformerDetailFragment : Fragment() {
                 // Get the navigation host fragment from this Activity
                 val navController = activity.findNavController(R.id.nav_host_fragment)
                 // Instantiate the navController using the NavHostFragment
-                navController.navigate(R.id.action_performerDetailFragment_to_artistAlbumsFragment)
+                val bundle = Bundle()
+                performerId?.let { bundle.putInt("performerId", it) }
+                instanceType?.let { bundle.putString("instanceType", it) }
+                name?.let { bundle.putString("name", it) }
+                navController.navigate(R.id.action_performerDetailFragment_to_artistAlbumsFragment, bundle)
             }
         )
 
@@ -68,13 +75,16 @@ class PerformerDetailFragment : Fragment() {
     fun bind(performer: Performer?) {
         if (performer != null && _binding != null) {
             _binding?.performer = performer
+            name = performer.name
             if (performer is Musician) {
+                instanceType = "musicians"
                 _binding?.musician = performer as Musician?
                 //_binding?.musician?.birthDate = formatDate(performer.birthDate)
                 _binding?.textView7?.text = formatDate(performer.birthDate)
                 _binding?.textView11?.text = getString(R.string.birthDate)
             }
             if (performer is Band) {
+                instanceType = "bands"
                 _binding?.band = performer as Band?
                 //_binding?.band?.creationDate = formatDate(performer.creationDate)
                 _binding?.textView7?.text = formatDate(performer.creationDate)

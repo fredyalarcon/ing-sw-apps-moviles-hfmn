@@ -3,14 +3,12 @@ package co.edu.uniandes.miswmobile.vinilosapp
 
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.*
-import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
@@ -19,16 +17,15 @@ import androidx.test.filters.LargeTest
 import co.edu.uniandes.miswmobile.vinilosapp.ui.AccessActivity
 import org.hamcrest.Description
 import org.hamcrest.Matcher
-import org.hamcrest.Matchers
 import org.hamcrest.Matchers.allOf
-import org.hamcrest.Matchers.anything
+import org.hamcrest.Matchers.instanceOf
 import org.hamcrest.Matchers.`is`
 import org.hamcrest.TypeSafeMatcher
 import org.hamcrest.core.AllOf
-import org.hamcrest.core.IsInstanceOf
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+
 
 @LargeTest
 @RunWith(AndroidJUnit4::class)
@@ -40,13 +37,9 @@ class AlbumCreateTest {
 
     @Test
     fun albumCreateTest() {
-        val buttonVisitor = Espresso.onView(
-            Matchers.allOf(
-                ViewMatchers.withId(R.id.buttonVisitor),
-                ViewMatchers.isDisplayed()
-            )
-        )
-        buttonVisitor.perform(ViewActions.click())
+        var selectionText = "Manolo Bellon"
+        onView(withId(R.id.spinner)).perform(click())
+        onData(allOf(`is`(instanceOf(String::class.java)), `is`(selectionText))).perform(click())
 
         val buttonArtists = Espresso.onView(
             AllOf.allOf(
