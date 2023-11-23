@@ -10,9 +10,12 @@ import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import co.edu.uniandes.miswmobile.vinilosapp.R
 import co.edu.uniandes.miswmobile.vinilosapp.databinding.AlbumDetailFragmentBinding
 import co.edu.uniandes.miswmobile.vinilosapp.models.Album
+import co.edu.uniandes.miswmobile.vinilosapp.viewmodels.AlbumCreateViewModel
 import co.edu.uniandes.miswmobile.vinilosapp.viewmodels.AlbumViewModel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -31,6 +34,7 @@ class AlbumDetailFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var viewModel: AlbumViewModel
     private var lastId: Int? = null
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,6 +63,12 @@ class AlbumDetailFragment : Fragment() {
         })
         if (albumId != null) {
             viewModel.getAlbum(albumId!!)
+        }
+
+
+        binding.buttonSongs.setOnClickListener {
+            val action = AlbumDetailFragmentDirections.actionAlbumDetailToAlbumTrackListFragment(albumId!!)
+            navController.navigate(action)
         }
 
         return view
@@ -90,6 +100,15 @@ class AlbumDetailFragment : Fragment() {
                 )
                 .into(binding.imageView2)
         }
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        val activity = requireNotNull(this.activity) {
+            "You can only access the viewModel after onActivityCreated()"
+        }
+        navController = activity.findNavController(R.id.nav_host_fragment)
+
     }
 
     override fun onDestroyView() {

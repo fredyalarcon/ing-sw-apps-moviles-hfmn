@@ -45,6 +45,8 @@
     <string name="action_accept">Aceptar</string>
     <string name="create_album">Nuevo Álbum</string>
     <string name="track_add_track">Agregar cancion</string>
+    <string name="track">Canción</string>
+    <string name="album_there_no_tracks">No hay canciones disponibles</string>
     <string name="user">Usuario: </string>
     <string-array name="collectors">
         <item></item>
