@@ -8,7 +8,6 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.LinearLayout
-import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import co.edu.uniandes.miswmobile.vinilosapp.databinding.ActivityAccessBinding
 import co.edu.uniandes.miswmobile.vinilosapp.R
@@ -51,7 +50,6 @@ class AccessActivity : AppCompatActivity() {
                 AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>,
                                             view: View, position: Int, id: Long) {
-
                     if (position > 0) {
                         var preferences: SharedPreferences = getSharedPreferences(
                             "co.edu.uniandes.miswmobile.vinilosapp",
