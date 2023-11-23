@@ -32,6 +32,7 @@
     <string name="visitor">Visitante</string>
     <string name="welcome">Bienvenido\n</string>
     <string name="albums">Álbumes</string>
+    <string name="album">Álbum</string>
     <string name="album_detail">Detalle Álbum</string>
     <string name="artists">Artistas</string>
     <string name="artists_detail">Detalle Artistas</string>
@@ -143,4 +144,6 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -25,25 +25,19 @@ class AlbumRepository (val application: Application){
     }
 
     suspend fun createAlbum(album: Album): JSONObject{
-        val isRunningTest : Boolean by lazy {
-            try {
-                Class.forName("androidx.test.espresso.Espresso")
-                true
-            } catch (e: ClassNotFoundException) {
-                false
-            }
-        }
+        return NetworkServiceAdapter.getInstance(application).createAlbum(album)
+    }
 
-        //if (isRunningTest) {
-        //    return MockNetworkServiceAdapter.getInstance(application).getAlbums()
-        //} else {
-            return NetworkServiceAdapter.getInstance(application).createAlbum(album)
-        //}
+    suspend fun addAlbumToPerformer(type: String, performerId: Int, albumId: Int): Boolean {
+        return NetworkServiceAdapter.getInstance(application).addAlbumToPerformer(type, performerId, albumId)
     }
 
     suspend fun detailAlbum(id: Int): Album{
         return NetworkServiceAdapter.getInstance(application).getAlbum(id)
+    }
 
+    suspend fun getPerformerAlbums(type: String, id: Int): List<Album> {
+        return NetworkServiceAdapter.getInstance(application).getPerformerAlbums(type, id)
     }
 
 }
