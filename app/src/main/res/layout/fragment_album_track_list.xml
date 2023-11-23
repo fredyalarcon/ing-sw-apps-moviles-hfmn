@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.Comentario_Fragment"
+    tools:context=".ui.AlbumTrackListFragment"
     android:textColor="@color/white">
 
     <ProgressBar
@@ -19,6 +19,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
-        tools:listitem="@layout/comentario_item"/>
+        tools:listitem="@layout/album_track_item"/>
 
 </FrameLayout>

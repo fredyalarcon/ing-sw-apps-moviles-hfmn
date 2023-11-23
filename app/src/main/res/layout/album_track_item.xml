@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
     <data>
-        <variable name="commentary" type="co.edu.uniandes.miswmobile.vinilosapp.models.Comentario" />
+        <variable name="track" type="co.edu.uniandes.miswmobile.vinilosapp.models.Track" />
     </data>
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,7 +33,7 @@
                     android:id="@+id/textView1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{commentary.description}"
+                    android:text="@{track.name}"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -41,7 +41,7 @@
                     android:id="@+id/textView2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{commentary.rating}"
+                    android:text="@{track.duration}"
                     android:textSize="16sp" />
             </LinearLayout>
         </LinearLayout>

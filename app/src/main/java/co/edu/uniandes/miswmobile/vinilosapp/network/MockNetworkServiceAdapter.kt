@@ -25,7 +25,6 @@ class MockNetworkServiceAdapter constructor(context: Context) : NetworkServiceAd
     }
 
     override suspend fun getAlbum(id: Int) = suspendCoroutine<Album> { cont ->
-        val item = mutableListOf<Album>()
         cont.resume(
             Album(
                 albumId = 1,

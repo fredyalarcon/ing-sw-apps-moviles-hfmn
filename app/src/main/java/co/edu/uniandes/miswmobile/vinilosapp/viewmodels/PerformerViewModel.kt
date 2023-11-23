@@ -25,7 +25,6 @@ class PerformerViewModel(application: Application) :  AndroidViewModel(applicati
     private val _artists = MutableLiveData<List<Performer>>()
     private lateinit var _current_performers: List<Performer>
     val artists: LiveData<List<Performer>>
-//        get() = _artists
         get() = Transformations.map(_artists) { performersList ->
             // performers ordenados por nombre
             performersList.sortedBy { it.name }.map { performer ->

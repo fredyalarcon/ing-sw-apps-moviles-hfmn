@@ -21,29 +21,24 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import co.edu.uniandes.miswmobile.vinilosapp.R
-import co.edu.uniandes.miswmobile.vinilosapp.databinding.ComentarioFragmentBinding
-import co.edu.uniandes.miswmobile.vinilosapp.databinding.ComentarioItemBinding
 import co.edu.uniandes.miswmobile.vinilosapp.databinding.FragmentAlbumTrackListBinding
-import co.edu.uniandes.miswmobile.vinilosapp.models.Comentario
 import co.edu.uniandes.miswmobile.vinilosapp.models.Track
 import co.edu.uniandes.miswmobile.vinilosapp.ui.adapters.AlbumTrackAdapter
-import co.edu.uniandes.miswmobile.vinilosapp.ui.adapters.ComentarioAdapter
-import co.edu.uniandes.miswmobile.vinilosapp.viewmodels.ComentarioViewModel
 import co.edu.uniandes.miswmobile.vinilosapp.viewmodels.TrackViewModel
 
 /**
  * A simple [Fragment] subclass.
- * Use the [Comentario_Fragment.newInstance] factory method to
+ * Use the [AlbumTrackListFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class Comentario_Fragment : Fragment() {
+class AlbumTrackListFragment : Fragment() {
 
     private var albumId: Int? = null
-    private var _binding: ComentarioFragmentBinding? = null//*
+    private var _binding: FragmentAlbumTrackListBinding? = null//*
     private val binding get() = _binding!!
     private lateinit var recyclerView: RecyclerView
-    private lateinit var viewModel: ComentarioViewModel
-    private var viewModelAdapter: ComentarioAdapter? = null
+    private lateinit var viewModel: TrackViewModel
+    private var viewModelAdapter: AlbumTrackAdapter? = null
     private lateinit var progressBar: ProgressBar
     private lateinit var navController: NavController
 
@@ -89,9 +84,9 @@ class Comentario_Fragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = ComentarioFragmentBinding.inflate(inflater, container, false)
+        _binding = FragmentAlbumTrackListBinding.inflate(inflater, container, false)
         val view = binding.root
-        viewModelAdapter = ComentarioAdapter()
+        viewModelAdapter = AlbumTrackAdapter()
         return view
     }
 
@@ -113,11 +108,11 @@ class Comentario_Fragment : Fragment() {
         val args: AlbumTrackListFragmentArgs by navArgs()
         Log.d("Args", args.albumId.toString())
 
-        viewModel = ViewModelProvider(activity, ComentarioViewModel.Factory(activity.application, args.albumId)).get(
-            ComentarioViewModel::class.java)
-        viewModel.comentarios.observe(viewLifecycleOwner, Observer<List<Comentario>> {
+        viewModel = ViewModelProvider(activity, TrackViewModel.Factory(activity.application, args.albumId)).get(
+            TrackViewModel::class.java)
+        viewModel.tracks.observe(viewLifecycleOwner, Observer<List<Track>> {
             it.apply {
-                viewModelAdapter!!.comentarios = this
+                viewModelAdapter!!.tracks = this
                 if (this.isEmpty()) {
                     Toast.makeText(activity, getString(R.string.album_there_no_tracks), Toast.LENGTH_LONG).show()
                 }

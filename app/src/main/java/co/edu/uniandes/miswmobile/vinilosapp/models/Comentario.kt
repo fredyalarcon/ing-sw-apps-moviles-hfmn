@@ -1,8 +1,10 @@
 package co.edu.uniandes.miswmobile.vinilosapp.models
 
-data class Comentario (
+import org.json.JSONObject
+
+data class Comentario(
     val id: Int? = null,
     val description: String,
-    val rating: String
-
+    val rating: String,
+    val collector: JSONObject
 )
