@@ -49,9 +49,26 @@
         android:id="@+id/albumDetail"
         android:name="co.edu.uniandes.miswmobile.vinilosapp.ui.AlbumDetailFragment"
         android:label="@string/album_detail"
-        tools:layout="@layout/album_detail_fragment" />
+        tools:layout="@layout/album_detail_fragment" >
+        <action
+            android:id="@+id/action_albumDetail_to_albumTrackListFragment"
+            app:destination="@id/albumTrackListFragment">
+            <argument
+                android:name="albumId"
+                app:argType="integer" />
+        </action>
+    </fragment>
     <fragment
         android:id="@+id/performerDetailFragment"
         android:name="co.edu.uniandes.miswmobile.vinilosapp.ui.PerformerDetailFragment"
         android:label="@string/artists_detail" />
+    <fragment
+        android:id="@+id/albumTrackListFragment"
+        android:name="co.edu.uniandes.miswmobile.vinilosapp.ui.AlbumTrackListFragment"
+        android:label="AlbumTrackListFragment" >
+        <argument
+            android:name="albumId"
+            app:argType="integer" />
+    </fragment>
+
 </navigation>
