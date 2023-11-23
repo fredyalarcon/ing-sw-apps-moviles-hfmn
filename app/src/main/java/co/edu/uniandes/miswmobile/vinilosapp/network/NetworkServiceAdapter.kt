@@ -8,6 +8,7 @@ import co.edu.uniandes.miswmobile.vinilosapp.models.Band
 import co.edu.uniandes.miswmobile.vinilosapp.models.Musician
 import co.edu.uniandes.miswmobile.vinilosapp.models.Performer
 import co.edu.uniandes.miswmobile.vinilosapp.models.Track
+import co.edu.uniandes.miswmobile.vinilosapp.models.Comentario
 import com.android.volley.AuthFailureError
 import com.android.volley.NetworkError
 import com.android.volley.NoConnectionError
@@ -335,6 +336,28 @@ open class NetworkServiceAdapter constructor(context: Context) {
                 )
             )
         }
+
+    open suspend fun getComentario(idAlbum: Int) = suspendCoroutine<List<Comentario>> { continuation ->
+        requestQueue.add(getRequest("albums/${idAlbum}/comments",
+            { response ->
+                val resp = JSONArray(response)
+                val list = mutableListOf<Comentario>()
+                for (i in 0 until resp.length()) {
+                    val item = resp.getJSONObject(i)
+                    val comentario = Comentario(
+                        id = item.getInt("id"),
+                        description = item.getString("description"),
+                        rating = item.getString("rating")
+                    )
+                    list.add(comentario)
+                }
+                continuation.resume(list)
+            }, {
+                continuation.resumeWithException(it)
+            })
+        )
+
+    }
 
     private fun postRequest(
         path: String,
