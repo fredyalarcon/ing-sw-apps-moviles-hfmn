@@ -5,6 +5,7 @@ import android.util.Log
 import co.edu.uniandes.miswmobile.vinilosapp.BuildConfig
 import co.edu.uniandes.miswmobile.vinilosapp.models.Album
 import co.edu.uniandes.miswmobile.vinilosapp.models.Band
+import co.edu.uniandes.miswmobile.vinilosapp.models.Collector
 import co.edu.uniandes.miswmobile.vinilosapp.models.Musician
 import co.edu.uniandes.miswmobile.vinilosapp.models.Performer
 import co.edu.uniandes.miswmobile.vinilosapp.models.Track
@@ -336,6 +337,27 @@ open class NetworkServiceAdapter constructor(context: Context) {
             )
         }
 
+    open suspend fun getCollectors() = suspendCoroutine<List<Collector>> { continuation ->
+        requestQueue.add(getRequest("/collectors",
+            { response ->
+                val resp = JSONArray(response)
+                val list = mutableListOf<Collector>()
+                for (i in 0 until resp.length()) {
+                    val item = resp.getJSONObject(i)
+                    val collector = Collector(
+                        item.getInt("id"),
+                        item.getString("name"),
+                        item.getString("telephone"),
+                        item.getString("email")
+                    )
+                    list.add(collector)
+                }
+                continuation.resume(list)
+            }, {
+                continuation.resumeWithException(it)
+            }
+        ))
+    }
     private fun postRequest(
         path: String,
         body: JSONObject,
