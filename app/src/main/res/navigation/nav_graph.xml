@@ -95,5 +95,12 @@
         <argument
             android:name="albumId"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_albumTrackListFragment_to_trackCreateFragment"
+            app:destination="@id/trackCreateFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/trackCreateFragment"
+        android:name="co.edu.uniandes.miswmobile.vinilosapp.ui.TrackCreateFragment"
+        android:label="TrackCreateFragment" />
 </navigation>
