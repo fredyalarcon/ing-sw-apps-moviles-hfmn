@@ -70,8 +70,7 @@ class AlbumTrackListFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.add_track -> {
-                //cambiar la navegación al formulario de crear canción
-                //navController.navigate(R.id.action_albumFragment_to_albumCreateFragment)
+                navController.navigate(R.id.action_albumTrackListFragment_to_trackCreateFragment)
                 true
             }
             else -> {
