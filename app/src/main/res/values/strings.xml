@@ -16,8 +16,10 @@
     <string name="album_description">Descripción</string>
     <string name="album_there_no_albums">No hay álbumes disponibles</string>
     <string name="album_add_album">Agregar album</string>
+    <string name="album_add_comentario">Agregar comentario</string>
     <string name="album_added_album_success">Se guardo el album exitosamente</string>
     <string name="txt_no_comments">No hay comentarios para este álbum</string>
+    <string name="comentario_added_album_success">Se guardo el comentario exitosamente</string>
     <string name="title_albums">Albums</string>
     <string name="title_collectors">Coleccionistas</string>
     <string name="title_comments">Comentarios del álbum</string>
@@ -47,7 +49,9 @@
     <string name="track_add_track">Agregar cancion</string>
     <string name="track">Canción</string>
     <string name="album_there_no_tracks">No hay canciones disponibles</string>
+    <string name="album_there_no_comentary">No hay comentarios disponibles</string>
     <string name="user">Usuario: </string>
+    <string name="raiting">Raiting</string>
     <string-array name="collectors">
         <item></item>
         <item>Manolo Bellon</item>

@@ -58,6 +58,9 @@
                 android:name="albumId"
                 app:argType="integer" />
         </action>
+        <action
+            android:id="@+id/action_albumDetail_to_albumComentarioFragment"
+            app:destination="@id/albumComentarioFragment"/>
     </fragment>
     <fragment
         android:id="@+id/performerDetailFragment"
@@ -95,5 +98,24 @@
         <argument
             android:name="albumId"
             app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/albumComentarioFragment"
+        android:name="co.edu.uniandes.miswmobile.vinilosapp.ui.AlbumComentarioFragment"
+        android:label="AlbumComentarioFragment" >
+        <action
+            android:id="@+id/action_albumComentarioFragment_to_menuFragment"
+            app:destination="@id/menuFragment" />
+        <action
+            android:id="@+id/action_albumComentarioFragment_to_albumComentarioAddFragment"
+            app:destination="@id/albumComentarioAddFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/albumComentarioAddFragment"
+        android:name="co.edu.uniandes.miswmobile.vinilosapp.ui.AlbumComentarioAddFragment"
+        android:label="AlbumComentarioAddFragment" >
+        <action
+            android:id="@+id/action_albumComentarioAddFragment_to_albumComentarioFragment"
+            app:destination="@id/albumComentarioFragment" />
     </fragment>
 </navigation>
