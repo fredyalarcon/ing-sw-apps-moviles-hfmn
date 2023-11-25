@@ -1,7 +1,9 @@
 package co.edu.uniandes.miswmobile.vinilosapp
 
+import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -12,7 +14,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class PerformerListTest {
+class AlbumTrackTest {
 
     @Rule
     @JvmField
@@ -21,38 +23,44 @@ class PerformerListTest {
     )
 
     @Test
-    fun mainActivityArtistsEmptyTest() {
+    fun mainActivityAlbumTrack() {
+
         val buttonVisitor = Espresso.onView(
             Matchers.allOf(
                 ViewMatchers.withId(R.id.buttonVisitor),
-                ViewMatchers.isCompletelyDisplayed()
+                ViewMatchers.isDisplayed()
             )
         )
         buttonVisitor.perform(ViewActions.click())
-        val buttonArtists = Espresso.onView(
+
+        val buttonAlbums = Espresso.onView(
             Matchers.allOf(
-                ViewMatchers.withId(R.id.buttonArtists),
-                ViewMatchers.isCompletelyDisplayed()
+                ViewMatchers.withId(R.id.buttonAlbums),
+                ViewMatchers.isDisplayed()
             )
         )
-        buttonArtists.perform(ViewActions.click())
+        buttonAlbums.perform(ViewActions.click())
+
         Espresso.onView(
             Matchers.allOf(
                 ViewMatchers.withId(R.id.action_bar),
-                ViewMatchers.withText("Artistas"),
-                ViewMatchers.isCompletelyDisplayed()
+                ViewMatchers.withText("Álbumes"),
+                ViewMatchers.isDisplayed()
             )
         )
-        Espresso.onView(
+
+        val rvAlbumes = Espresso.onView(
             Matchers.allOf(
-                ViewMatchers.withId(R.id.artistsRv),
-                ViewMatchers.isCompletelyDisplayed()
+                ViewMatchers.withId(R.id.albumsRv),
+                ViewMatchers.isDisplayed()
             )
         )
-        try {
-            Thread.sleep(3000)
-        } catch (e: InterruptedException) {
-            e.printStackTrace()
-        }
+
+        rvAlbumes.perform(
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                0,
+                ViewActions.click()
+            )
+        )
     }
 }
