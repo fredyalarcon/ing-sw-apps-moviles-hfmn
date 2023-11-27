@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.PerformerAlbumsFragment">
+    tools:context=".ui.AlbumComentarioFragment"
+    android:textColor="@color/white">
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -14,10 +15,10 @@
         android:visibility="gone" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/performersAlbumsRv"
+        android:id="@+id/albumsRv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
-        tools:listitem="@layout/album_item" />
+        tools:listitem="@layout/album_comentario_item_fragment"/>
 
 </FrameLayout>

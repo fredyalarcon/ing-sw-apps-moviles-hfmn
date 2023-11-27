@@ -58,6 +58,9 @@
                 android:name="albumId"
                 app:argType="integer" />
         </action>
+        <action
+            android:id="@+id/action_albumDetail_to_albumComentarioFragment"
+            app:destination="@id/albumComentarioFragment"/>
     </fragment>
     <fragment
         android:id="@+id/performerDetailFragment"
@@ -99,8 +102,7 @@
             android:id="@+id/action_albumTrackListFragment_to_trackCreateFragment"
             app:destination="@id/trackCreateFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/trackCreateFragment"
+    <fragment android:id="@+id/trackCreateFragment"
         android:name="co.edu.uniandes.miswmobile.vinilosapp.ui.TrackCreateFragment"
         android:label="@string/track_add_track">
         <argument
@@ -109,5 +111,24 @@
         <action
             android:id="@+id/action_trackCreateFragment_to_albumTrackListFragment"
             app:destination="@id/albumTrackListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/albumComentarioFragment"
+        android:name="co.edu.uniandes.miswmobile.vinilosapp.ui.AlbumComentarioFragment"
+        android:label="AlbumComentarioFragment" >
+        <action
+            android:id="@+id/action_albumComentarioFragment_to_menuFragment"
+            app:destination="@id/menuFragment" />
+        <action
+            android:id="@+id/action_albumComentarioFragment_to_albumComentarioAddFragment"
+            app:destination="@id/albumComentarioAddFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/albumComentarioAddFragment"
+        android:name="co.edu.uniandes.miswmobile.vinilosapp.ui.AlbumComentarioAddFragment"
+        android:label="AlbumComentarioAddFragment" >
+        <action
+            android:id="@+id/action_albumComentarioAddFragment_to_albumComentarioFragment"
+            app:destination="@id/albumComentarioFragment" />
     </fragment>
 </navigation>
