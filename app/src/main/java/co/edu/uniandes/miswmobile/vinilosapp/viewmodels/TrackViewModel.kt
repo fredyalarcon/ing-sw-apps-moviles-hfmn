@@ -40,6 +40,7 @@ class TrackViewModel(application: Application, idAlbum: Int): AndroidViewModel(a
                 withContext(Dispatchers.IO) {
                     var data = trackRepository.getTracks(_idAlbum)
                     _tracks.postValue(data)
+                    Log.d("track", "Tracks in albumId: " + _idAlbum + " - "  + data.size)
                 }
                 _eventNetworkError.postValue(false)
                 _isNetworkErrorShown.postValue(false)

@@ -326,8 +326,10 @@ open class NetworkServiceAdapter constructor(context: Context) {
         requestQueue.add(postRequest("$type/$performerId/albums/$albumId", null, responseListener, errorListener))
     }
 
+
     open suspend fun getTracks(idAlbum: Int) = suspendCoroutine<List<Track>> { continuation ->
-        requestQueue.add(getRequest("albums/${idAlbum}/tracks",
+        Log.d("track", "getTracks para album: $idAlbum")
+        requestQueue.add(getRequest("albums/$idAlbum/tracks",
             { response ->
                 val resp = JSONArray(response)
                 val list = mutableListOf<Track>()
