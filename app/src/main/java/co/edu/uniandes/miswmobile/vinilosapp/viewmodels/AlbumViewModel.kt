@@ -9,6 +9,7 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import androidx.test.espresso.IdlingResource
 import co.edu.uniandes.miswmobile.vinilosapp.models.Album
 import co.edu.uniandes.miswmobile.vinilosapp.repositories.AlbumRepository
 import kotlinx.coroutines.Dispatchers
@@ -85,6 +86,7 @@ class AlbumViewModel(application: Application) : AndroidViewModel(application) {
 
     private fun refreshDataFromNetwork() {
         try{
+
             viewModelScope.launch (Dispatchers.Default) {
                 withContext(Dispatchers.IO) {
                     var data = albumsRepository.refreshData()
