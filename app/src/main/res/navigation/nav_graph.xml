@@ -94,7 +94,7 @@
     <fragment
         android:id="@+id/albumTrackListFragment"
         android:name="co.edu.uniandes.miswmobile.vinilosapp.ui.AlbumTrackListFragment"
-        android:label="AlbumTrackListFragment" >
+        android:label="@string/songs" >
         <argument
             android:name="albumId"
             app:argType="integer" />
@@ -104,7 +104,14 @@
     </fragment>
     <fragment android:id="@+id/trackCreateFragment"
         android:name="co.edu.uniandes.miswmobile.vinilosapp.ui.TrackCreateFragment"
-        android:label="TrackCreateFragment" />
+        android:label="@string/track_add_track">
+        <argument
+            android:name="albumId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_trackCreateFragment_to_albumTrackListFragment"
+            app:destination="@id/albumTrackListFragment" />
+    </fragment>
     <fragment
         android:id="@+id/albumComentarioFragment"
         android:name="co.edu.uniandes.miswmobile.vinilosapp.ui.AlbumComentarioFragment"

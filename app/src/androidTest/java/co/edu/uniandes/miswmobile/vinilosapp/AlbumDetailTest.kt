@@ -28,7 +28,7 @@ class AlbumDetailTest {
         val buttonVisitor = Espresso.onView(
             allOf(
                 ViewMatchers.withId(R.id.buttonVisitor),
-                ViewMatchers.isDisplayed()
+                ViewMatchers.isCompletelyDisplayed()
             )
         )
         buttonVisitor.perform(ViewActions.click())
@@ -36,7 +36,7 @@ class AlbumDetailTest {
         val buttonAlbums = Espresso.onView(
             allOf(
                 ViewMatchers.withId(R.id.buttonAlbums),
-                ViewMatchers.isDisplayed()
+                ViewMatchers.isCompletelyDisplayed()
             )
         )
         buttonAlbums.perform(ViewActions.click())
@@ -45,14 +45,14 @@ class AlbumDetailTest {
             allOf(
                 ViewMatchers.withId(R.id.action_bar),
                 ViewMatchers.withText("Álbumes"),
-                ViewMatchers.isDisplayed()
+                ViewMatchers.isCompletelyDisplayed()
             )
         )
 
         val rvAlbumes = Espresso.onView(
             allOf(
                 ViewMatchers.withId(R.id.albumsRv),
-                ViewMatchers.isDisplayed()
+                ViewMatchers.isCompletelyDisplayed()
             )
         )
 

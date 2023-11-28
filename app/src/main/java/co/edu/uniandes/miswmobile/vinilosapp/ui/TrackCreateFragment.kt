@@ -6,8 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.NumberPicker
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.navArgs
 import co.edu.uniandes.miswmobile.vinilosapp.R
+import co.edu.uniandes.miswmobile.vinilosapp.databinding.FragmentTrackCreateBinding
+import co.edu.uniandes.miswmobile.vinilosapp.models.Track
+import co.edu.uniandes.miswmobile.vinilosapp.viewmodels.TrackCreateViewModel
+import kotlinx.coroutines.launch
 
 /**
  * A simple [Fragment] subclass.
@@ -16,10 +26,15 @@ import co.edu.uniandes.miswmobile.vinilosapp.R
  */
 class TrackCreateFragment : Fragment() {
 
+    private var _binding: FragmentTrackCreateBinding? = null
+    private val binding get() = _binding!!
+    private lateinit var viewModel: TrackCreateViewModel
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        arguments?.let {
+        }
     }
 
     override fun onCreateView(
@@ -54,11 +69,54 @@ class TrackCreateFragment : Fragment() {
         // Inicializar el TextView con los valores iniciales
         actualizarDuracion(duracion, minutesPicker.value, segundosPicker.value)
 
+        val args: AlbumTrackListFragmentArgs by navArgs()
+        val track =
+            Track(name = binding.name.text.toString(), duration = binding.duration.toString())
+        binding.saveTrack.setOnClickListener {
+            lifecycleScope.launch {
+                viewModel.addTrack(track, args.albumId)
+            }
+        }
+
+        binding.cancelTrack.setOnClickListener {
+            navController.navigate(R.id.action_trackCreateFragment_to_albumTrackListFragment)
+        }
+
         return view
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        val activity = requireNotNull(this.activity) {
+            "You can only access the viewModel after onActivityCreated()"
+        }
+        navController = activity.findNavController(R.id.nav_host_fragment)
+
+        viewModel = ViewModelProvider(this, TrackCreateViewModel.Factory(activity.application)).get(
+            TrackCreateViewModel::class.java
+        )
+        viewModel.eventNetworkError.observe(
+            viewLifecycleOwner
+        ) { isNetworkError ->
+            if (isNetworkError) onNetworkError()
+        }
+
     }
 
     private fun actualizarDuracion(duracion: TextView, minutos: Int, segundos: Int) {
         duracion.text = String.format("%02d:%02d", minutos, segundos)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun onNetworkError() {
+        if (!viewModel.isNetworkErrorShown.value!!) {
+            Toast.makeText(activity, "Network Error", Toast.LENGTH_LONG).show()
+            viewModel.onNetworkErrorShown()
+        }
     }
 
     companion object {
@@ -66,13 +124,10 @@ class TrackCreateFragment : Fragment() {
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
          *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
          * @return A new instance of fragment TrackCreateFragment.
          */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance() =
             TrackCreateFragment().apply {
                 arguments = Bundle().apply {
 
