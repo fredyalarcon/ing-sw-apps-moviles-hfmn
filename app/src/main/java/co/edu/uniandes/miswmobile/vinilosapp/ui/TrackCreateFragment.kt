@@ -1,5 +1,7 @@
 package co.edu.uniandes.miswmobile.vinilosapp.ui
 
+import android.app.AlertDialog
+import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.NumberPicker
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -30,10 +33,12 @@ class TrackCreateFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var viewModel: TrackCreateViewModel
     private lateinit var navController: NavController
+    private var albumId: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
+            albumId = it.getInt("albumId")
         }
     }
 
@@ -42,13 +47,15 @@ class TrackCreateFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflar el diseño del fragmento
-        val view = inflater.inflate(R.layout.fragment_track_create, container, false)
+        _binding = FragmentTrackCreateBinding.inflate(inflater, container, false)
+        _binding!!.lifecycleOwner = this
+        viewModel = ViewModelProvider(this).get(TrackCreateViewModel::class.java)
 
-        val duracion: TextView = view.findViewById(R.id.duration_track)
+        val duracion: TextView = binding.durationTrack
         // minutos NumberPicker
-        val minutesPicker: NumberPicker = view.findViewById(R.id.minutesPicker)
+        val minutesPicker: NumberPicker = binding.minutesPicker
         // segundos NumberPicker
-        val segundosPicker: NumberPicker = view.findViewById(R.id.secondsPicker)
+        val segundosPicker: NumberPicker = binding.secondsPicker
 
         // Establecer el valor máximo y mínimo
         minutesPicker.maxValue = 59
@@ -69,20 +76,25 @@ class TrackCreateFragment : Fragment() {
         // Inicializar el TextView con los valores iniciales
         actualizarDuracion(duracion, minutesPicker.value, segundosPicker.value)
 
-        val args: AlbumTrackListFragmentArgs by navArgs()
-        val track =
-            Track(name = binding.name.text.toString(), duration = binding.duration.toString())
         binding.saveTrack.setOnClickListener {
+            val track =
+                Track(name = binding.name.text.toString(), duration = binding.durationTrack.text.toString())
+
+            val args: TrackCreateFragmentArgs by navArgs()
             lifecycleScope.launch {
                 viewModel.addTrack(track, args.albumId)
             }
+            CreateTrackDialogFragment(navController, args.albumId).show(
+                childFragmentManager,
+                CreateTrackDialogFragment.TAG
+            )
         }
 
         binding.cancelTrack.setOnClickListener {
             navController.navigate(R.id.action_trackCreateFragment_to_albumTrackListFragment)
         }
 
-        return view
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -133,5 +145,24 @@ class TrackCreateFragment : Fragment() {
 
                 }
             }
+    }
+
+    class CreateTrackDialogFragment(navController: NavController, _albumId: Int) : DialogFragment() {
+
+        private val nav = navController
+        private val albumId = _albumId
+
+        override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
+            AlertDialog.Builder(requireContext())
+                .setMessage(getString(R.string.track_added_success))
+                .setPositiveButton(getString(R.string.action_accept)) { _, _ ->
+                    val action = TrackCreateFragmentDirections.actionTrackCreateFragmentToAlbumTrackListFragment(albumId!!)
+                    nav.navigate(action)
+                }
+                .create()
+
+        companion object {
+            const val TAG = "CreateTrackDialog"
+        }
     }
 }

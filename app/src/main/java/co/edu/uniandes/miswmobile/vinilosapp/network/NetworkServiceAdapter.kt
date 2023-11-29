@@ -2,6 +2,7 @@ package co.edu.uniandes.miswmobile.vinilosapp.network
 
 import android.content.Context
 import android.util.Log
+import co.edu.uniandes.miswmobile.vinilosapp.BuildConfig
 import co.edu.uniandes.miswmobile.vinilosapp.models.Album
 import co.edu.uniandes.miswmobile.vinilosapp.models.Band
 import co.edu.uniandes.miswmobile.vinilosapp.models.Collector
@@ -29,7 +30,7 @@ import kotlin.coroutines.suspendCoroutine
 
 open class NetworkServiceAdapter constructor(context: Context) {
     companion object {
-        const val BASE_URL = "https://vynils-back-heroku.herokuapp.com/" //BuildConfig.BASE_URL
+        const val BASE_URL = BuildConfig.BASE_URL
         private var instance: NetworkServiceAdapter? = null
         fun getInstance(context: Context) =
             instance ?: synchronized(this) {
@@ -385,17 +386,17 @@ open class NetworkServiceAdapter constructor(context: Context) {
 
             var responseListener = Response.Listener<JSONObject> { response ->
                 continuation.resume(body)
-                Log.d("track", response.hashCode().toString())
+                Log.d("track", response.toString())
             }
 
             var errorListener = Response.ErrorListener { error ->
                 continuation.resumeWithException(error)
-                Log.d("track", error.localizedMessage)
+                Log.d("track", error.toString())
             }
 
             requestQueue.add(
                 postRequest(
-                    "/albums/${idAlbum}/tracks",
+                    "albums/${idAlbum}/tracks",
                     body,
                     responseListener,
                     errorListener

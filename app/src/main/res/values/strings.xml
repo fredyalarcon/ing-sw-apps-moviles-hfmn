@@ -52,6 +52,7 @@
     <string name="album_there_no_comentary">No hay comentarios disponibles</string>
     <string name="track_name_placeholder">Nombre de la canción</string>
     <string name="track_duration_placeholder">Duración de la canción</string>
+    <string name="track_added_success">Se guardo el track exitosamente</string>
     <string name="user">Usuario: </string>
     <string name="raiting">Raiting</string>
     <string-array name="collectors">
