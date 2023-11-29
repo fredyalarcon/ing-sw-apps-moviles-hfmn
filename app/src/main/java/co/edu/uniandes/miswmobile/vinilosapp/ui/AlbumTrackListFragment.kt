@@ -70,7 +70,8 @@ class AlbumTrackListFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.add_track -> {
-                navController.navigate(R.id.action_albumTrackListFragment_to_trackCreateFragment)
+                val action = AlbumTrackListFragmentDirections.actionAlbumTrackListFragmentToTrackCreateFragment(albumId!!)
+                navController.navigate(action)
                 true
             }
             else -> {
