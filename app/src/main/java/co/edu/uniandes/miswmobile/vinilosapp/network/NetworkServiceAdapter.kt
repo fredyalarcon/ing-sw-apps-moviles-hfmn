@@ -386,17 +386,17 @@ open class NetworkServiceAdapter constructor(context: Context) {
 
             var responseListener = Response.Listener<JSONObject> { response ->
                 continuation.resume(body)
-                Log.d("track", response.hashCode().toString())
+                Log.d("track", response.toString())
             }
 
             var errorListener = Response.ErrorListener { error ->
                 continuation.resumeWithException(error)
-                Log.d("track", error.localizedMessage)
+                Log.d("track", error.toString())
             }
 
             requestQueue.add(
                 postRequest(
-                    "/albums/${idAlbum}/tracks",
+                    "albums/${idAlbum}/tracks",
                     body,
                     responseListener,
                     errorListener

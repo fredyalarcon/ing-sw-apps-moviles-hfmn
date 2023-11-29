@@ -1,5 +1,7 @@
 package co.edu.uniandes.miswmobile.vinilosapp.ui
 
+import android.app.AlertDialog
+import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.NumberPicker
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -78,10 +81,13 @@ class TrackCreateFragment : Fragment() {
                 Track(name = binding.name.text.toString(), duration = binding.durationTrack.text.toString())
 
             val args: TrackCreateFragmentArgs by navArgs()
-            val i = args.albumId
             lifecycleScope.launch {
                 viewModel.addTrack(track, args.albumId)
             }
+            CreateTrackDialogFragment(navController, args.albumId).show(
+                childFragmentManager,
+                CreateTrackDialogFragment.TAG
+            )
         }
 
         binding.cancelTrack.setOnClickListener {
@@ -139,5 +145,24 @@ class TrackCreateFragment : Fragment() {
 
                 }
             }
+    }
+
+    class CreateTrackDialogFragment(navController: NavController, _albumId: Int) : DialogFragment() {
+
+        private val nav = navController
+        private val albumId = _albumId
+
+        override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
+            AlertDialog.Builder(requireContext())
+                .setMessage(getString(R.string.track_added_success))
+                .setPositiveButton(getString(R.string.action_accept)) { _, _ ->
+                    val action = TrackCreateFragmentDirections.actionTrackCreateFragmentToAlbumTrackListFragment(albumId!!)
+                    nav.navigate(action)
+                }
+                .create()
+
+        companion object {
+            const val TAG = "CreateTrackDialog"
+        }
     }
 }
