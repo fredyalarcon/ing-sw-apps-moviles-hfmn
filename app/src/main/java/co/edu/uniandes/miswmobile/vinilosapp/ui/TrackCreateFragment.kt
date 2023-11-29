@@ -30,10 +30,12 @@ class TrackCreateFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var viewModel: TrackCreateViewModel
     private lateinit var navController: NavController
+    private var albumId: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
+            albumId = it.getInt("albumId")
         }
     }
 
@@ -42,13 +44,15 @@ class TrackCreateFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflar el diseño del fragmento
-        val view = inflater.inflate(R.layout.fragment_track_create, container, false)
+        _binding = FragmentTrackCreateBinding.inflate(inflater, container, false)
+        _binding!!.lifecycleOwner = this
+        viewModel = ViewModelProvider(this).get(TrackCreateViewModel::class.java)
 
-        val duracion: TextView = view.findViewById(R.id.duration_track)
+        val duracion: TextView = binding.durationTrack
         // minutos NumberPicker
-        val minutesPicker: NumberPicker = view.findViewById(R.id.minutesPicker)
+        val minutesPicker: NumberPicker = binding.minutesPicker
         // segundos NumberPicker
-        val segundosPicker: NumberPicker = view.findViewById(R.id.secondsPicker)
+        val segundosPicker: NumberPicker = binding.secondsPicker
 
         // Establecer el valor máximo y mínimo
         minutesPicker.maxValue = 59
@@ -69,10 +73,12 @@ class TrackCreateFragment : Fragment() {
         // Inicializar el TextView con los valores iniciales
         actualizarDuracion(duracion, minutesPicker.value, segundosPicker.value)
 
-        val args: AlbumTrackListFragmentArgs by navArgs()
-        val track =
-            Track(name = binding.name.text.toString(), duration = binding.duration.toString())
         binding.saveTrack.setOnClickListener {
+            val track =
+                Track(name = binding.name.text.toString(), duration = binding.durationTrack.text.toString())
+
+            val args: TrackCreateFragmentArgs by navArgs()
+            val i = args.albumId
             lifecycleScope.launch {
                 viewModel.addTrack(track, args.albumId)
             }
@@ -82,7 +88,7 @@ class TrackCreateFragment : Fragment() {
             navController.navigate(R.id.action_trackCreateFragment_to_albumTrackListFragment)
         }
 
-        return view
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

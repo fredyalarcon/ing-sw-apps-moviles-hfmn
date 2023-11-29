@@ -2,6 +2,7 @@ package co.edu.uniandes.miswmobile.vinilosapp.network
 
 import android.content.Context
 import android.util.Log
+import co.edu.uniandes.miswmobile.vinilosapp.BuildConfig
 import co.edu.uniandes.miswmobile.vinilosapp.models.Album
 import co.edu.uniandes.miswmobile.vinilosapp.models.Band
 import co.edu.uniandes.miswmobile.vinilosapp.models.Collector
@@ -29,7 +30,7 @@ import kotlin.coroutines.suspendCoroutine
 
 open class NetworkServiceAdapter constructor(context: Context) {
     companion object {
-        const val BASE_URL = "https://vynils-back-heroku.herokuapp.com/" //BuildConfig.BASE_URL
+        const val BASE_URL = BuildConfig.BASE_URL
         private var instance: NetworkServiceAdapter? = null
         fun getInstance(context: Context) =
             instance ?: synchronized(this) {
