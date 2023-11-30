@@ -80,11 +80,7 @@ class AlbumViewModel(application: Application) : AndroidViewModel(application) {
 
     private val albumsRepository = AlbumRepository(application)
 
-    init {
-        refreshDataFromNetwork()
-    }
-
-    private fun refreshDataFromNetwork() {
+    fun refreshDataFromNetwork() {
         try{
 
             viewModelScope.launch (Dispatchers.Default) {
