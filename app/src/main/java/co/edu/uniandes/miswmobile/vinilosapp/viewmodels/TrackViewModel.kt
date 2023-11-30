@@ -30,11 +30,7 @@ class TrackViewModel(application: Application, idAlbum: Int): AndroidViewModel(a
     val isNetworkErrorShown: LiveData<Boolean>
         get() = _isNetworkErrorShown
 
-    init {
-        refreshDataFromNetwork()
-    }
-
-    private fun refreshDataFromNetwork() {
+    fun refreshDataFromNetwork() {
         try {
             viewModelScope.launch (Dispatchers.Default) {
                 withContext(Dispatchers.IO) {

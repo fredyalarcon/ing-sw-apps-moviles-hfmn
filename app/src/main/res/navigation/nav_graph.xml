@@ -28,6 +28,9 @@
         <action
             android:id="@+id/action_albumFragment_to_albumDetail"
             app:destination="@id/albumDetail" />
+        <action
+            android:id="@+id/action_albumFragment_to_menuFragment"
+            app:destination="@id/menuFragment" />
     </fragment>
     <fragment
         android:id="@+id/artistFragment"
@@ -101,6 +104,9 @@
         <action
             android:id="@+id/action_albumTrackListFragment_to_trackCreateFragment"
             app:destination="@id/trackCreateFragment" />
+        <action
+            android:id="@+id/action_albumTrackListFragment_to_menuFragment"
+            app:destination="@id/menuFragment" />
     </fragment>
     <fragment android:id="@+id/trackCreateFragment"
         android:name="co.edu.uniandes.miswmobile.vinilosapp.ui.TrackCreateFragment"

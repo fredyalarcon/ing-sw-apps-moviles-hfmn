@@ -63,6 +63,10 @@ class AlbumFragment : Fragment() {
                 navController.navigate(R.id.action_albumFragment_to_albumCreateFragment)
                 true
             }
+            R.id.go_to_menu -> {
+                navController.navigate(R.id.action_albumFragment_to_menuFragment)
+                true
+            }
             else -> {
                 super.onOptionsItemSelected(item)
             }
@@ -97,6 +101,9 @@ class AlbumFragment : Fragment() {
 
         viewModel = ViewModelProvider(activity, AlbumViewModel.Factory(activity.application)).get(
             AlbumViewModel::class.java)
+
+        viewModel.refreshDataFromNetwork()
+
         viewModel.albums.observe(viewLifecycleOwner, Observer<List<Album>> {
             it.apply {
                 viewModelAdapter!!.albums = this
