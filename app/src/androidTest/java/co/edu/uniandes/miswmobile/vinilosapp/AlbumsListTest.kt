@@ -30,23 +30,10 @@ class AlbumsListTest {
         AccessActivity::class.java
     )
 
-    private val idlingResource = SimpleIdlingResource("albumsRv")
-
-    @Before
-    fun setUp() {
-        IdlingRegistry.getInstance().register(idlingResource)
-    }
-
-    @After
-    fun tearDow() {
-        IdlingRegistry.getInstance().unregister(idlingResource)
-    }
-
     @Test
     fun listAlbumsAsVisitorTest() {
 
-        var itemCount: Int = 0
-        var randomItemAlbum: Int = -1
+        var itemCount = 0
 
         val toolbar2 = onView(withId(R.id.toolbar2))
         toolbar2.check(matches(isDisplayed()))
@@ -78,8 +65,7 @@ class AlbumsListTest {
 
     @Test
     fun listAlbumsAsCollectorTest() {
-        var itemCount: Int = 0
-        var randomItemAlbum: Int = -1
+        var itemCount = 0
 
         val toolbar2 = onView(withId(R.id.toolbar2))
         toolbar2.check(matches(isDisplayed()))
@@ -87,7 +73,7 @@ class AlbumsListTest {
         val buttonCollectors = onView(withId(R.id.buttonCollector))
         buttonCollectors.check(matches(isDisplayed()))
 
-        var randomItem = -1
+        var randomItem: Int
         var itemSelected: Any = ""
         onView(withId(R.id.spinner)).check { view, _ ->
             val appCompatSpinner = view as Spinner
