@@ -33,7 +33,7 @@ class ComentarioViewModel(application: Application, idAlbum: Int): AndroidViewMo
     val isNetworkErrorShown: LiveData<Boolean>
         get() = _isNetworkErrorShown
 
-    fun getComentario(id: Int) {
+    /*fun getComentario(id: Int) {
         try{
             viewModelScope.launch (Dispatchers.Default) {
                 withContext(Dispatchers.IO) {
@@ -71,7 +71,7 @@ class ComentarioViewModel(application: Application, idAlbum: Int): AndroidViewMo
         catch (e:Exception){
             _eventNetworkError.value = true
         }
-    }
+    }*/
 
     init {
         refreshDataFromNetwork()

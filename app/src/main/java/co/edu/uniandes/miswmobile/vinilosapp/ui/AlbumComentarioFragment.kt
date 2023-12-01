@@ -105,13 +105,13 @@ class AlbumComentarioFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = viewModelAdapter
 
-        val activity = requireNotNull(this.activity) {
+        /*val activity = requireNotNull(this.activity) {
             "You can only access the viewModel after onActivityCreated()"
         }
         val albumId = arguments?.getInt("albumId") ?: 0
         val viewModelFactory = ComentarioViewModel.Factory(activity.application, albumId)
         viewModel = ViewModelProvider(activity, viewModelFactory)
-            .get(ComentarioViewModel::class.java)
+            .get(ComentarioViewModel::class.java)*/
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -122,6 +122,11 @@ class AlbumComentarioFragment : Fragment() {
         navController = activity.findNavController(R.id.nav_host_fragment)
         progressBar = activity.findViewById(R.id.progressBar)
         progressBar.visibility = View.VISIBLE
+
+        val albumId = arguments?.getInt("albumId") ?: 0
+        val viewModelFactory = ComentarioViewModel.Factory(activity.application, albumId)
+        viewModel = ViewModelProvider(activity, viewModelFactory)
+            .get(ComentarioViewModel::class.java)
 
         viewModel.comentarios.observe(viewLifecycleOwner, Observer<List<Comentario>> {
             it.apply {
