@@ -10,9 +10,13 @@ import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import co.edu.uniandes.miswmobile.vinilosapp.R
 import co.edu.uniandes.miswmobile.vinilosapp.databinding.AlbumDetailFragmentBinding
 import co.edu.uniandes.miswmobile.vinilosapp.models.Album
+import co.edu.uniandes.miswmobile.vinilosapp.models.Performer
+import co.edu.uniandes.miswmobile.vinilosapp.viewmodels.AlbumCreateViewModel
 import co.edu.uniandes.miswmobile.vinilosapp.viewmodels.AlbumViewModel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -26,11 +30,14 @@ import com.bumptech.glide.signature.ObjectKey
  * create an instance of this fragment.
  */
 class AlbumDetailFragment : Fragment() {
+    private var name: String? = null
+
     private var albumId: Int? = null
     private var _binding: AlbumDetailFragmentBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewModel: AlbumViewModel
     private var lastId: Int? = null
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,6 +68,23 @@ class AlbumDetailFragment : Fragment() {
             viewModel.getAlbum(albumId!!)
         }
 
+
+        binding.buttonSongs.setOnClickListener {
+            val action = AlbumDetailFragmentDirections.actionAlbumDetailToAlbumTrackListFragment(albumId!!)
+            navController.navigate(action)
+        }
+        val buttonComents = binding.buttonComments
+        buttonComents ?.setOnClickListener(
+            View.OnClickListener {
+                // Get the navigation host fragment from this Activity
+                val navController = activity.findNavController(R.id.nav_host_fragment)
+                // Instantiate the navController using the NavHostFragment
+                val bundle = Bundle()
+                albumId?.let { bundle.putInt("albumId", it) }
+                name?.let { bundle.putString("name", it) }
+                navController.navigate(R.id.action_albumDetail_to_albumComentarioFragment, bundle)
+            }
+        )
         return view
     }
 
@@ -69,7 +93,7 @@ class AlbumDetailFragment : Fragment() {
         Log.d("AlbumDetailFragment", "bind called with album: $album")
         if (album != null && _binding != null) {
             _binding?.album = album
-
+            name = album.name
             Glide.with(this)
                 .load(album.cover.toUri().buildUpon().scheme("https").build())
                 .apply(
@@ -90,6 +114,15 @@ class AlbumDetailFragment : Fragment() {
                 )
                 .into(binding.imageView2)
         }
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        val activity = requireNotNull(this.activity) {
+            "You can only access the viewModel after onActivityCreated()"
+        }
+        navController = activity.findNavController(R.id.nav_host_fragment)
+
     }
 
     override fun onDestroyView() {

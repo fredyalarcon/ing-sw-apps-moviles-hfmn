@@ -90,6 +90,8 @@
                         android:id="@+id/genre"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:labelFor="@id/input_genre"
+                        android:hint="@string/album_genre"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -106,7 +108,9 @@
                     <AutoCompleteTextView
                         android:id="@+id/record"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:labelFor="@id/input_record"
+                        android:hint="@string/album_record_label"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -151,7 +155,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom|center_horizontal"
-                        android:enabled="true"
+                        android:enabled="false"
                         android:gravity="end"
                         android:text="@string/action_save" />
                 </LinearLayout>

@@ -3,11 +3,15 @@ package co.edu.uniandes.miswmobile.vinilosapp.ui
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
+import android.widget.Button
 import android.widget.Toast
 import androidx.core.content.res.TypedArrayUtils
 import androidx.fragment.app.DialogFragment
@@ -19,6 +23,7 @@ import co.edu.uniandes.miswmobile.vinilosapp.R
 import co.edu.uniandes.miswmobile.vinilosapp.databinding.AlbumCreateFragmentBinding
 import co.edu.uniandes.miswmobile.vinilosapp.models.Album
 import co.edu.uniandes.miswmobile.vinilosapp.viewmodels.AlbumCreateViewModel
+import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.launch
 
 /**
@@ -32,6 +37,13 @@ class AlbumCreateFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var viewModel: AlbumCreateViewModel
     private lateinit var navController: NavController
+    private lateinit var albumName: TextInputEditText
+    private lateinit var albumCover: TextInputEditText
+    private lateinit var albumCreateDate: TextInputEditText
+    private lateinit var albumDescription: TextInputEditText
+    private lateinit var albumGenre: AutoCompleteTextView
+    private lateinit var albumRecord: AutoCompleteTextView
+    private lateinit var albumSaveButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,14 +59,29 @@ class AlbumCreateFragment : Fragment() {
         _binding!!.lifecycleOwner = this
         viewModel = ViewModelProvider(this).get(AlbumCreateViewModel::class.java)
 
+        albumSaveButton = binding.saveAlbum
+        albumName = binding.nombre
+        albumCover = binding.cover
+        albumCreateDate = binding.createDate
+        albumDescription = binding.description
+        albumGenre = binding.genre
+        albumRecord = binding.record
+
+        var isNameValid = false
+        var isCoverValid = false
+        var isCreateDateValid = false
+        var isDescriptionValid = false
+        var isGenreValid = false
+        var isRecordValid = false
+
         //acción cuando dé clik en el botón save de álbum
-        binding.saveAlbum.setOnClickListener {
-            val name = binding.nombre.text.toString()
-            val cover = binding.cover.text.toString()
-            val releaseDate = binding.createDate.text.toString()
-            val description = binding.description.text.toString()
-            val genre = binding.genre.text.toString()
-            val recordLabel = binding.record.text.toString()
+        albumSaveButton.setOnClickListener {
+            val name = albumName.text.toString()
+            val cover = albumCover.text.toString()
+            val releaseDate = albumCreateDate.text.toString()
+            val description = albumDescription.text.toString()
+            val genre = albumGenre.text.toString()
+            val recordLabel = albumRecord.text.toString()
 
             // crear objeto álbum
             val album = Album(
@@ -98,6 +125,58 @@ class AlbumCreateFragment : Fragment() {
         binding.cancelAlbum.setOnClickListener {
             navController.navigate(R.id.action_albumCreateFragment_to_albumFragment)
         }
+
+        class ValidationTextWatcher(private val validationCallBack: () -> Unit): TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                validationCallBack.invoke()
+                albumSaveButton.isEnabled = isNameValid && isCoverValid && isCreateDateValid &&
+                        isDescriptionValid && isGenreValid && isRecordValid
+                albumSaveButton.alpha= 1f
+            }
+
+        }
+
+        albumName.addTextChangedListener(
+            ValidationTextWatcher {
+                isNameValid = albumName.text.toString().isNotEmpty()
+            }
+        )
+
+        albumCover.addTextChangedListener(
+            ValidationTextWatcher {
+                isCoverValid = albumCover.text.toString().isNotEmpty()
+            }
+        )
+
+        albumCreateDate.addTextChangedListener(
+            ValidationTextWatcher {
+                isCreateDateValid = albumCreateDate.text.toString().isNotEmpty()
+            }
+        )
+
+        albumDescription.addTextChangedListener(
+            ValidationTextWatcher {
+                isDescriptionValid = albumDescription.text.toString().isNotEmpty()
+            }
+        )
+
+        albumGenre.addTextChangedListener(
+            ValidationTextWatcher {
+                isGenreValid = albumGenre.text.toString().isNotEmpty()
+            }
+        )
+
+        albumRecord.addTextChangedListener(
+            ValidationTextWatcher {
+                isRecordValid = albumRecord.text.toString().isNotEmpty()
+            }
+        )
 
         return binding.root
     }

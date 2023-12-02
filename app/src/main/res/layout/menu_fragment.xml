@@ -30,6 +30,7 @@
                 android:id="@+id/imageView6"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/icon_album"
                 app:srcCompat="@drawable/album" />
 
             <TextView
@@ -47,6 +48,7 @@
                 android:id="@+id/imageView7"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/icon_arrow"
                 app:srcCompat="@drawable/chevron_right" />
 
         </LinearLayout>
@@ -71,6 +73,7 @@
                 android:id="@+id/imageView4"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/icon_artist"
                 app:srcCompat="@drawable/artist" />
 
             <TextView
@@ -88,6 +91,7 @@
                 android:id="@+id/imageView5"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/icon_arrow"
                 app:srcCompat="@drawable/chevron_right" />
 
         </LinearLayout>
@@ -112,6 +116,7 @@
                 android:id="@+id/imageView8"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/icon_collector"
                 app:srcCompat="@drawable/groups" />
 
             <TextView
@@ -129,6 +134,7 @@
                 android:id="@+id/imageView9"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/icon_arrow"
                 app:srcCompat="@drawable/chevron_right" />
 
         </LinearLayout>

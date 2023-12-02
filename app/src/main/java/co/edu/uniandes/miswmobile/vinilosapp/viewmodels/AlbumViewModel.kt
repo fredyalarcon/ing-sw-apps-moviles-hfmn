@@ -2,7 +2,6 @@ package co.edu.uniandes.miswmobile.vinilosapp.viewmodels
 
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,6 +9,7 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import androidx.test.espresso.IdlingResource
 import co.edu.uniandes.miswmobile.vinilosapp.models.Album
 import co.edu.uniandes.miswmobile.vinilosapp.repositories.AlbumRepository
 import kotlinx.coroutines.Dispatchers
@@ -22,6 +22,8 @@ import java.util.Locale
 class AlbumViewModel(application: Application) : AndroidViewModel(application) {
 
     private val _albums = MutableLiveData<List<Album>>()
+    private val _performerAlbums = MutableLiveData<List<Album>>()
+    private val _performerAlbumsToAdd = MutableLiveData<HashMap<Int?, String>>()
     private val _album = MutableLiveData<Album>()
     private lateinit var _current_albums: List<Album>
 
@@ -32,6 +34,16 @@ class AlbumViewModel(application: Application) : AndroidViewModel(application) {
                 album.copy(releaseDate = formatearFecha(album.releaseDate))
             }
         }
+
+    val performerAlbums: LiveData<List<Album>>
+        get() = Transformations.map(_performerAlbums) { albumsList ->
+            albumsList.sortedBy { it.name }.map { album ->
+                album.copy(releaseDate = formatearFecha(album.releaseDate))
+            }
+        }
+
+    val performerAlbumsToAdd: LiveData<HashMap<Int?, String>>
+        get() = _performerAlbumsToAdd
 
     val album: LiveData<Album>
         get() = _album
@@ -68,12 +80,9 @@ class AlbumViewModel(application: Application) : AndroidViewModel(application) {
 
     private val albumsRepository = AlbumRepository(application)
 
-    init {
-        refreshDataFromNetwork()
-    }
-
-    private fun refreshDataFromNetwork() {
+    fun refreshDataFromNetwork() {
         try{
+
             viewModelScope.launch (Dispatchers.Default) {
                 withContext(Dispatchers.IO) {
                     var data = albumsRepository.refreshData()
@@ -88,6 +97,47 @@ class AlbumViewModel(application: Application) : AndroidViewModel(application) {
             _eventNetworkError.value = true
         }
     }
+
+    fun getPerformerAlbums(type: String, id: Int) {
+        try{
+            viewModelScope.launch (Dispatchers.Default) {
+                withContext(Dispatchers.IO) {
+                    var data = albumsRepository.getPerformerAlbums(type, id)
+                    _performerAlbums.postValue(data)
+
+                    var toAdd = _current_albums.associateBy({it.albumId}, {it.name})
+
+                    if (data.isNotEmpty()) {
+                        val keys = data.map { x -> x.albumId }
+                        toAdd = toAdd.filterKeys { key -> !keys.contains(key) }
+                    }
+
+                    _performerAlbumsToAdd.postValue(toAdd as HashMap<Int?, String>?)
+                    _eventNetworkError.postValue(false)
+                    _isNetworkErrorShown.postValue(false)
+                }
+            }
+        }
+        catch (e:Exception){
+            _eventNetworkError.value = true
+        }
+    }
+
+    fun addAlbumToPerformer(type: String, performerId: Int, albumId: Int){
+        try {
+            viewModelScope.launch(Dispatchers.Default){
+                withContext(Dispatchers.IO) {
+                    albumsRepository.addAlbumToPerformer(type, performerId, albumId)
+                }
+                _eventNetworkError.postValue(false)
+                _isNetworkErrorShown.postValue(false)
+            }
+        }
+        catch (e:Exception){
+            _eventNetworkError.value = true
+        }
+    }
+
 
     fun getAlbum(id: Int){
         try {

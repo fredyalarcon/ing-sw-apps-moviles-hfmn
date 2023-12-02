@@ -57,6 +57,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@{performer.name}"
+                    android:contentDescription="@{@string/name_artist + ' ' + performer.name}"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -65,6 +66,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@{performer.name}"
+                    android:contentDescription="@{@string/name_artist + ' ' + performer.performerId}"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -132,7 +134,7 @@
                 android:text="@{performer.description}"
                 android:textSize="16sp" />
                 <Button
-                    android:id="@+id/buttonSongs"
+                    android:id="@+id/buttonAlbums"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="250dp"

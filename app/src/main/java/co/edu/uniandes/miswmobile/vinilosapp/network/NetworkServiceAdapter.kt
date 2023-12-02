@@ -5,8 +5,11 @@ import android.util.Log
 import co.edu.uniandes.miswmobile.vinilosapp.BuildConfig
 import co.edu.uniandes.miswmobile.vinilosapp.models.Album
 import co.edu.uniandes.miswmobile.vinilosapp.models.Band
+import co.edu.uniandes.miswmobile.vinilosapp.models.Collector
+import co.edu.uniandes.miswmobile.vinilosapp.models.Comentario
 import co.edu.uniandes.miswmobile.vinilosapp.models.Musician
 import co.edu.uniandes.miswmobile.vinilosapp.models.Performer
+import co.edu.uniandes.miswmobile.vinilosapp.models.Track
 import com.android.volley.AuthFailureError
 import com.android.volley.NetworkError
 import com.android.volley.NoConnectionError
@@ -286,9 +289,217 @@ open class NetworkServiceAdapter constructor(context: Context) {
         requestQueue.add(postRequest("albums", body, responseListener, errorListener))
     }
 
+    open suspend fun addAlbumToPerformer(type: String, performerId: Int, albumId: Int)
+    : Boolean = suspendCoroutine { cont ->
+        val responseListener = Response.Listener<JSONObject> { response ->
+            // Log de la respuesta exitosa del servidor
+            Log.d("NetworkServiceAdapter", "Respuesta exitosa: $response")
+            cont.resume(true)
+        }
+
+        val errorListener = Response.ErrorListener { error ->
+            // Manejo específico de errores Volley
+            if (error is NetworkError) {
+                cont.resumeWithException(NetworkErrorException("Problema de red, posiblemente sin conexión"))
+            } else if (error is ServerError && error.networkResponse != null && error.networkResponse.data != null) {
+                val errorResponse = String(error.networkResponse.data)
+                Log.e("NetworkServiceAdapter", "Error en la respuesta del servidor: $errorResponse")
+                val statusCode = error.networkResponse?.statusCode ?: -1
+                Log.e(
+                    "NetworkServiceAdapter",
+                    "Error en el servidor, código de estado HTTP $statusCode: $error"
+                )
+                cont.resumeWithException(ServerErrorException("Error en el servidor, código de estado HTTP $statusCode"))
+            } else if (error is AuthFailureError) {
+                cont.resumeWithException(AuthFailureErrorException("Error de autenticación, posiblemente credenciales incorrectas"))
+            } else if (error is ParseError) {
+                cont.resumeWithException(ParseErrorException("Error al analizar la respuesta del servidor"))
+            } else if (error is NoConnectionError) {
+                cont.resumeWithException(NoConnectionErrorException("No hay conexión a Internet"))
+            } else if (error is TimeoutError) {
+                cont.resumeWithException(TimeoutErrorException("Tiempo de espera agotado"))
+            } else {
+                // Otro tipo de error
+                cont.resumeWithException(error)
+            }
+        }
+
+        requestQueue.add(postRequest("$type/$performerId/albums/$albumId", null, responseListener, errorListener))
+    }
+
+
+    open suspend fun getTracks(idAlbum: Int) = suspendCoroutine<List<Track>> { continuation ->
+        Log.d("track", "getTracks para album: $idAlbum")
+        requestQueue.add(getRequest("albums/$idAlbum/tracks",
+            { response ->
+                val resp = JSONArray(response)
+                val list = mutableListOf<Track>()
+                for (i in 0 until resp.length()) {
+                    val item = resp.getJSONObject(i)
+                    val track = Track(
+                        id = item.getInt("id"),
+                        name = item.getString("name"),
+                        duration = item.getString("duration")
+                    )
+                    list.add(track)
+                }
+                continuation.resume(list)
+            }, {
+                continuation.resumeWithException(it)
+            })
+        )
+
+    }
+    open suspend fun getPerformerAlbums(type: String, id: Int) = suspendCoroutine<List<Album>> { cont ->
+        requestQueue.add(
+            getRequest("$type/$id/albums",
+                { response ->
+                    val resp = JSONArray(response)
+                    val list = mutableListOf<Album>()
+                    for (i in 0 until resp.length()) {
+                        val item = resp.getJSONObject(i)
+                        val album = Album(
+                            albumId = item.getInt("id"),
+                            name = item.getString("name"),
+                            cover = item.getString("cover"),
+                            releaseDate = item.getString("releaseDate"),
+                            description = item.getString("description"),
+                            genre = item.getString("genre"),
+                            recordLabel = item.getString("recordLabel")
+                        )
+                        list.add(i, album) //se agrega a medida que se procesa la respuesta
+                    }
+                    cont.resume(list)
+                },
+                Response.ErrorListener {
+                    cont.resumeWithException(it)
+                })
+        )
+    }
+
+    open suspend fun addTrack(track: Track, idAlbum: Int): JSONObject =
+        suspendCoroutine { continuation ->
+            var body = JSONObject().apply {
+                put("name", track.name)
+                put("duration", track.duration)
+            }
+
+            var responseListener = Response.Listener<JSONObject> { response ->
+                continuation.resume(body)
+                Log.d("track", response.toString())
+            }
+
+            var errorListener = Response.ErrorListener { error ->
+                continuation.resumeWithException(error)
+                Log.d("track", error.toString())
+            }
+
+            requestQueue.add(
+                postRequest(
+                    "albums/${idAlbum}/tracks",
+                    body,
+                    responseListener,
+                    errorListener
+                )
+            )
+        }
+
+    open suspend fun getCollectors() = suspendCoroutine<List<Collector>> { continuation ->
+        requestQueue.add(getRequest("/collectors",
+            { response ->
+                val resp = JSONArray(response)
+                val list = mutableListOf<Collector>()
+                for (i in 0 until resp.length()) {
+                    val item = resp.getJSONObject(i)
+                    val collector = Collector(
+                        item.getInt("id"),
+                        item.getString("name"),
+                        item.getString("telephone"),
+                        item.getString("email")
+                    )
+                    list.add(collector)
+                }
+                continuation.resume(list)
+            }, {
+                continuation.resumeWithException(it)
+            }
+        ))
+    }
+    open suspend fun getComentario(idAlbum: Int) = suspendCoroutine<List<Comentario>> {continuation ->
+        requestQueue.add(getRequest("albums/${idAlbum}/comments",
+            { response ->
+                val resp = JSONArray(response)
+                val list = mutableListOf<Comentario>()
+                for (i in 0 until resp.length()) {
+                    val item = resp.getJSONObject(i)
+                    val comentario = Comentario(
+                        id = item.getInt("id"),
+                        description = item.getString("description"),
+                        rating = item.getString("rating"),
+                        collector = Collector(
+                            id = item.getInt("id"),
+                            name = if (item.has("name")) item.getString("name") else "",
+                            telephone = if (item.has("telephone")) item.getString("telephone") else "",
+                            email = if (item.has("email")) item.getString("email") else ""
+                        )
+                    )
+                    list.add(comentario)
+                }
+                continuation.resume(list)
+            }, {
+                continuation.resumeWithException(it)
+            })
+        )
+    }
+    open suspend fun addComentarioToAlbum(comentario: Comentario, albumId: Int)
+    : JSONObject = suspendCoroutine { cont ->
+        val body = JSONObject().apply {
+            put("description", comentario.description)
+            put("rating", comentario.rating)
+            put("collector", comentario.collector)
+        }
+
+        val responseListener = Response.Listener<JSONObject> { response ->
+            // Log de la respuesta exitosa del servidor
+            Log.d("NetworkServiceAdapter", "Respuesta exitosa: $response")
+            cont.resume(body)
+        }
+
+        val errorListener = Response.ErrorListener { error ->
+            Log.d("NetworkServiceAdapter", "Valor enviado: $body")
+            // Manejo específico de errores Volley
+            if (error is NetworkError) {
+                cont.resumeWithException(NetworkErrorException("Problema de red, posiblemente sin conexión"))
+            } else if (error is ServerError && error.networkResponse != null && error.networkResponse.data != null) {
+                val errorResponse = String(error.networkResponse.data)
+                Log.e("NetworkServiceAdapter", "Error en la respuesta del servidor: $errorResponse")
+                val statusCode = error.networkResponse?.statusCode ?: -1
+                Log.e(
+                    "NetworkServiceAdapter",
+                    "Error en el servidor, código de estado HTTP $statusCode: $error"
+                )
+                cont.resumeWithException(ServerErrorException("Error en el servidor, código de estado HTTP $statusCode"))
+            } else if (error is AuthFailureError) {
+                cont.resumeWithException(AuthFailureErrorException("Error de autenticación, posiblemente credenciales incorrectas"))
+            } else if (error is ParseError) {
+                cont.resumeWithException(ParseErrorException("Error al analizar la respuesta del servidor"))
+            } else if (error is NoConnectionError) {
+                cont.resumeWithException(NoConnectionErrorException("No hay conexión a Internet"))
+            } else if (error is TimeoutError) {
+                cont.resumeWithException(TimeoutErrorException("Tiempo de espera agotado"))
+            } else {
+                // Otro tipo de error
+                cont.resumeWithException(error)
+            }
+        }
+
+        requestQueue.add(postRequest("albums/$albumId/comments", body, responseListener, errorListener))
+    }
+
+
     private fun postRequest(
         path: String,
-        body: JSONObject,
+        body: JSONObject?,
         responseListener: Response.Listener<JSONObject>,
         errorListener: Response.ErrorListener
     ): JsonObjectRequest {

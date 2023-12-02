@@ -10,14 +10,22 @@
     <string name="album_description_placeholder">Descripcion del album</string>
     <string name="album_cover">Caratula del album</string>
     <string name="image_artista">Imagen artista</string>
+    <string name="name_artist">Nombre artista</string>
     <string name="album_release_date">Fecha de lanzamiento</string>
     <string name="album_genre">Género</string>
     <string name="album_record_label">Disquera</string>
     <string name="album_description">Descripción</string>
     <string name="album_there_no_albums">No hay álbumes disponibles</string>
     <string name="album_add_album">Agregar album</string>
+    <string name="album_add_comentario">Agregar comentario</string>
     <string name="album_added_album_success">Se guardo el album exitosamente</string>
+    <string name="list_albums">Listado de álbumes</string>
+    <string name="album_share">Compartir álbum</string>
+    <string name="album_dropdown">Selecciona un álbum</string>
+    <string name="loading_tracks">Cargando canciones...</string>
+    <string name="no_tracks_available">No hay canciones disponibles en este álbum.</string>
     <string name="txt_no_comments">No hay comentarios para este álbum</string>
+    <string name="comentario_added_album_success">Se guardo el comentario exitosamente</string>
     <string name="title_albums">Albums</string>
     <string name="title_collectors">Coleccionistas</string>
     <string name="title_comments">Comentarios del álbum</string>
@@ -28,14 +36,16 @@
     <string name="birthDate">Fecha de nacimiento: </string>
     <string name="recordLabel">Sello discográfico: </string>
     <string name="title_menu">Menu Principal</string>
-    <string name="collector">Coleccionista</string>
+    <string name="collector">Coleccionista: </string>
     <string name="visitor">Visitante</string>
     <string name="welcome">Bienvenido\n</string>
     <string name="albums">Álbumes</string>
+    <string name="album">Álbum</string>
     <string name="album_detail">Detalle Álbum</string>
     <string name="artists">Artistas</string>
     <string name="artists_detail">Detalle Artistas</string>
     <string name="artist_image">Imagen</string>
+    <string name="artist_name">Nombre del Artista</string>
     <string name="artist_there_no_artists">No hay artistas disponibles</string>
     <string name="collectors">Coleccionistas</string>
     <string name="main_menu">Menu Principal</string>
@@ -43,7 +53,29 @@
     <string name="action_cancel">Cancelar</string>
     <string name="action_accept">Aceptar</string>
     <string name="create_album">Nuevo Álbum</string>
-    <string name="track_add_track">Agregar cancion</string>
+    <string name="track_add_track">Agregar canción</string>
+    <string name="track">Canción</string>
+    <string name="album_there_no_tracks">No hay canciones disponibles</string>
+    <string name="album_there_no_comentary">No hay comentarios disponibles</string>
+    <string name="track_name_placeholder">Nombre de la canción</string>
+    <string name="track_duration_placeholder">Duración de la canción</string>
+    <string name="track_added_success">Se guardo el track exitosamente</string>
+    <string name="user">Usuario: </string>
+    <string name="raiting">Raiting</string>
+    <string name="icon_album">Icono Álbum</string>
+    <string name="icon_artist">Icono Artista</string>
+    <string name="icon_arrow">Icono Flecha</string>
+    <string name="icon_visitor">Icono Visitante</string>
+    <string name="icon_collector">Icono Coleccionista</string>
+    <string-array name="collectors">
+        <item></item>
+        <item>Manolo Bellon</item>
+        <item>Jaime Monsalve</item>
+        <item>Collector 1</item>
+        <item>Jhon Doe</item>
+        <item>Sebastian Saenz</item>
+        <item>Kevin Malone</item>
+    </string-array>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
@@ -133,4 +165,6 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
