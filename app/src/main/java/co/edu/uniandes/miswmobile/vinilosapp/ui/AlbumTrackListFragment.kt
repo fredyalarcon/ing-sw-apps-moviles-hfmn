@@ -74,6 +74,10 @@ class AlbumTrackListFragment : Fragment() {
                 navController.navigate(action)
                 true
             }
+            R.id.go_to_menu -> {
+                navController.navigate(R.id.action_albumTrackListFragment_to_menuFragment)
+                true
+            }
             else -> {
                 super.onOptionsItemSelected(item)
             }
@@ -113,6 +117,8 @@ class AlbumTrackListFragment : Fragment() {
 
         viewModel = ViewModelProvider(activity, TrackViewModel.Factory(activity.application, args.albumId)).get(
             TrackViewModel::class.java)
+
+        viewModel.refreshDataFromNetwork()
 
         viewModel.tracks.observe(viewLifecycleOwner, Observer<List<Track>> {
             it.apply {
