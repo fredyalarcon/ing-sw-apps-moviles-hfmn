@@ -18,7 +18,8 @@
             android:id="@+id/album"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            />
+            android:labelFor="@id/input_album"
+            android:hint="@string/album"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
