@@ -425,24 +425,23 @@ open class NetworkServiceAdapter constructor(context: Context) {
             }
         ))
     }
-    open suspend fun getComentario(idAlbum: Int) = suspendCoroutine<List<Comentario>> { continuation ->
+    open suspend fun getComentario(idAlbum: Int) = suspendCoroutine<List<Comentario>> {continuation ->
         requestQueue.add(getRequest("albums/${idAlbum}/comments",
             { response ->
                 val resp = JSONArray(response)
                 val list = mutableListOf<Comentario>()
                 for (i in 0 until resp.length()) {
                     val item = resp.getJSONObject(i)
-                    val collector = Collector(
-                        id = item.getInt("id"),
-                        name = item.getString("name"),
-                        telephone = item.getString("telephone"),
-                        email = item.getString("email")
-                    )
                     val comentario = Comentario(
                         id = item.getInt("id"),
                         description = item.getString("description"),
                         rating = item.getString("rating"),
-                        collector = collector
+                        collector = Collector(
+                            id = item.getInt("id"),
+                            name = if (item.has("name")) item.getString("name") else "",
+                            telephone = if (item.has("telephone")) item.getString("telephone") else "",
+                            email = if (item.has("email")) item.getString("email") else ""
+                        )
                     )
                     list.add(comentario)
                 }
@@ -451,13 +450,12 @@ open class NetworkServiceAdapter constructor(context: Context) {
                 continuation.resumeWithException(it)
             })
         )
-
     }
     open suspend fun addComentarioToAlbum(comentario: Comentario, albumId: Int)
     : JSONObject = suspendCoroutine { cont ->
         val body = JSONObject().apply {
             put("description", comentario.description)
-            put("description", comentario.description)
+            put("rating", comentario.rating)
             put("collector", comentario.collector)
         }
 
@@ -495,7 +493,7 @@ open class NetworkServiceAdapter constructor(context: Context) {
             }
         }
 
-        requestQueue.add(postRequest("$albumId/comments", body, responseListener, errorListener))
+        requestQueue.add(postRequest("albums/$albumId/comments", body, responseListener, errorListener))
     }
 
 

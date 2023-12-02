@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.AlbumFragment"
+    android:screenReaderFocusable="true"
     android:textColor="@color/white">
 
     <ProgressBar
@@ -18,6 +19,8 @@
         android:id="@+id/albumsRv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/album_item"/>
+        android:clipToPadding="false"
+        android:contentDescription="@string/list_albums"
+        tools:listitem="@layout/album_item" />
 
 </FrameLayout>
