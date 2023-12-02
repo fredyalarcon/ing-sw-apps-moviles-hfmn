@@ -31,7 +31,7 @@ xmlns:tools="http://schemas.android.com/tools">
                 android:id="@+id/imageView"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:contentDescription="@string/album_cover"
+                android:contentDescription="@{@string/album_cover + ' ' + album.name}"
                 android:scaleType="centerCrop"/>
 
             <LinearLayout
@@ -63,6 +63,7 @@ xmlns:tools="http://schemas.android.com/tools">
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="-60dp"
+                android:contentDescription="@string/album_share"
                 style="@style/Widget.AppCompat.Button.Colored"
                 app:icon="@drawable/share"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -143,6 +144,7 @@ xmlns:tools="http://schemas.android.com/tools">
                 android:layout_margin="10dp"
                 android:minHeight="70dp"
                 android:text="@{album.description}"
+                android:contentDescription="@{@string/album_detail + ' ' + album.name}"
                 android:textSize="16sp" />
 
             <LinearLayout

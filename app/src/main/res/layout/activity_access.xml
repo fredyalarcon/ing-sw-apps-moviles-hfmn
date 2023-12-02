@@ -39,6 +39,7 @@
                 android:id="@+id/imageView6"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/icon_visitor"
                 app:srcCompat="@drawable/person_search" />
 
             <TextView
@@ -50,12 +51,13 @@
                 android:gravity="center_vertical"
                 android:text="@string/visitor"
                 android:textAlignment="inherit"
-                android:textSize="20sp" />
+                android:textSize="16sp" />
 
             <ImageView
                 android:id="@+id/imageView7"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/icon_arrow"
                 app:srcCompat="@drawable/chevron_right" />
 
         </LinearLayout>
@@ -79,6 +81,7 @@
                 android:id="@+id/imageView4"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/icon_collector"
                 app:srcCompat="@drawable/person_play" />
 
             <TextView
@@ -90,12 +93,16 @@
                 android:gravity="center_vertical"
                 android:text="@string/collector"
                 android:textAlignment="inherit"
-                android:textSize="20sp" />
+                android:textSize="16sp" />
 
             <Spinner
                 android:id="@+id/spinner"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:overlapAnchor="false"
+                android:layout_height="48dp"
+                android:textSize="16sp"/>
 
 
         </LinearLayout>

@@ -98,31 +98,38 @@ class AlbumTrackListFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
         val activity = requireNotNull(this.activity) {
             "You can only access the viewModel after onActivityCreated()"
         }
+
         navController = activity.findNavController(R.id.nav_host_fragment)
+
         progressBar = activity.findViewById(R.id.progressBar)
-        progressBar.visibility = View.VISIBLE
+        progressBar?.contentDescription = getString(R.string.loading_tracks)
+        progressBar?.visibility = View.VISIBLE
 
         val args: AlbumTrackListFragmentArgs by navArgs()
-        Log.d("Args", args.albumId.toString())
 
         viewModel = ViewModelProvider(activity, TrackViewModel.Factory(activity.application, args.albumId)).get(
             TrackViewModel::class.java)
+
         viewModel.tracks.observe(viewLifecycleOwner, Observer<List<Track>> {
             it.apply {
-                viewModelAdapter!!.tracks = this
+                viewModelAdapter?.tracks = this
                 if (this.isEmpty()) {
-                    Toast.makeText(activity, getString(R.string.album_there_no_tracks), Toast.LENGTH_LONG).show()
+                    Toast.makeText(activity, getString(R.string.album_there_no_tracks), Toast.LENGTH_LONG)?.apply {
+                        view?.contentDescription = getString(R.string.no_tracks_available)
+                        show()
+                    }
                 }
-                progressBar.visibility = View.INVISIBLE
+                progressBar?.visibility = View.INVISIBLE
             }
         })
+
         viewModel.eventNetworkError.observe(viewLifecycleOwner, Observer<Boolean> { isNetworkError ->
             if (isNetworkError) onNetworkError()
         })
-
     }
 
     override fun onDestroyView() {
