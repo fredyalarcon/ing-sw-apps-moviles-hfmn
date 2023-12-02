@@ -3,12 +3,17 @@ package co.edu.uniandes.miswmobile.vinilosapp.ui
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.NumberPicker
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -20,6 +25,7 @@ import co.edu.uniandes.miswmobile.vinilosapp.R
 import co.edu.uniandes.miswmobile.vinilosapp.databinding.FragmentTrackCreateBinding
 import co.edu.uniandes.miswmobile.vinilosapp.models.Track
 import co.edu.uniandes.miswmobile.vinilosapp.viewmodels.TrackCreateViewModel
+import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.launch
 
 /**
@@ -34,7 +40,10 @@ class TrackCreateFragment : Fragment() {
     private lateinit var viewModel: TrackCreateViewModel
     private lateinit var navController: NavController
     private var albumId: Int? = null
-
+    private val args: TrackCreateFragmentArgs by navArgs()
+    private lateinit var trackNameInput: TextInputEditText
+    private lateinit var trackDurationInput: TextInputEditText
+    private lateinit var saveTrackButton: Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -50,6 +59,7 @@ class TrackCreateFragment : Fragment() {
         _binding = FragmentTrackCreateBinding.inflate(inflater, container, false)
         _binding!!.lifecycleOwner = this
         viewModel = ViewModelProvider(this).get(TrackCreateViewModel::class.java)
+
 
         val duracion: TextView = binding.durationTrack
         // minutos NumberPicker
@@ -76,11 +86,53 @@ class TrackCreateFragment : Fragment() {
         // Inicializar el TextView con los valores iniciales
         actualizarDuracion(duracion, minutesPicker.value, segundosPicker.value)
 
-        binding.saveTrack.setOnClickListener {
-            val track =
-                Track(name = binding.name.text.toString(), duration = binding.durationTrack.text.toString())
+        binding.cancelTrack.setOnClickListener {
+            navController.navigate(R.id.action_trackCreateFragment_to_albumTrackListFragment)
+        }
 
-            val args: TrackCreateFragmentArgs by navArgs()
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        var isTrackNameValid = false
+        var isTrackDurationValid = false
+        trackNameInput = binding.name
+        trackDurationInput = binding.durationTrack
+        saveTrackButton = binding.saveTrack
+
+        class ValidationTextWatcher(private val validationCallBack: () -> Unit): TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                validationCallBack.invoke()
+                saveTrackButton.isEnabled = isTrackNameValid && isTrackDurationValid
+                saveTrackButton.alpha = 1f
+            }
+
+        }
+
+        trackNameInput.addTextChangedListener(
+            ValidationTextWatcher {
+                isTrackNameValid = trackNameInput.text.toString().isNotEmpty()
+            }
+        )
+
+        trackDurationInput.addTextChangedListener(
+            ValidationTextWatcher{
+                isTrackDurationValid = trackDurationInput.text.toString().isNotEmpty() &&
+                        trackDurationInput.text.toString() != "00:00"
+            }
+        )
+
+        saveTrackButton.setOnClickListener {
+            val track =
+                Track(name = binding.name.text.toString(),
+                    duration = binding.durationTrack.text.toString())
             lifecycleScope.launch {
                 viewModel.addTrack(track, args.albumId)
             }
@@ -90,11 +142,6 @@ class TrackCreateFragment : Fragment() {
             )
         }
 
-        binding.cancelTrack.setOnClickListener {
-            navController.navigate(R.id.action_trackCreateFragment_to_albumTrackListFragment)
-        }
-
-        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
