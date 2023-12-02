@@ -100,7 +100,21 @@ class AlbumCreateTest {
         )
         textInputEditText5.perform(scrollTo(), replaceText("Dico 10"), closeSoftKeyboard())
 
+        val textInputEditText6 = Espresso.onView(
+            AllOf.allOf(
+                withId(R.id.input_record),
+                isDisplayed()
+            )
+        )
+        textInputEditText6.perform(scrollTo(), replaceText("EMI"), closeSoftKeyboard())
 
+        val saveButton = Espresso.onView(
+            AllOf.allOf(
+                withId(R.id.saveAlbum),
+                isDisplayed()
+            )
+        )
+        saveButton.perform(scrollTo(), click())
     }
 
     private fun childAtPosition(

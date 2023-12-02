@@ -17,28 +17,30 @@ import kotlinx.coroutines.withContext
 class TrackCreateViewModel(application: Application): AndroidViewModel(application)  {
 
     private val trackRepository = TrackRepository(application)
-
     private var _eventNetworkError = MutableLiveData<Boolean>(false)
     private var _isNetworkErrorShown = MutableLiveData<Boolean>(false)
-
     val eventNetworkError: LiveData<Boolean>
         get() = _eventNetworkError
     val isNetworkErrorShown: LiveData<Boolean>
         get() = _isNetworkErrorShown
+    private val isLoading = MutableLiveData<Boolean>()
 
 
     suspend fun addTrack(track: Track, idAlbum: Int) {
         try {
             viewModelScope.launch(Dispatchers.Default){
                 withContext(Dispatchers.IO) {
+                    isLoading.postValue(true)
                     trackRepository.addTrack(track, idAlbum)
+                    isLoading.postValue(false)
                 }
                 _eventNetworkError.postValue(false)
                 _isNetworkErrorShown.postValue(false)
             }
         } catch (e: Exception) {
-            Log.d("Track", e.localizedMessage)
+            Log.d("Track", e.message.toString())
             _eventNetworkError.value = true
+            isLoading.postValue(false)
         }
     }
 

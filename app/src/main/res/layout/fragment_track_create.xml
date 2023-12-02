@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.AlbumCreateFragment"
+    tools:context=".ui.TrackCreateFragment"
     android:orientation="vertical"
     android:layout_gravity="top">
 
@@ -40,7 +40,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/name"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:required="true"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -118,7 +119,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|center_horizontal"
-                    android:enabled="true"
+                    android:enabled="false"
                     android:gravity="end"
                     android:text="@string/action_save" />
             </LinearLayout>
